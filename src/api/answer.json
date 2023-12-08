@@ -1,0 +1,919 @@
+[
+  [
+    {
+      "linkId": "chief-complaint",
+      "item": [
+        {
+          "linkId": "chief-complaint-kcd8",
+          "text": "증상을 검색해 주세요",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "S34",
+                "system": "http://www.hl7korea.or.kr/CodeSystem/kostat-kcd-8",
+                "display": "S34 복부, 아래등 및 골반 부위의 신경 및 허리척수의 손상"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "chief-complaint-sub",
+          "item": [
+            {
+              "linkId": "chief-complaint-starttime-help",
+              "text": "증상 발현일을 선택해주세요"
+            },
+            {
+              "linkId": "chief-complaint-starttime"
+            }
+          ]
+        },
+        {
+          "linkId": "chief-complaint-sub",
+          "item": [
+            {
+              "linkId": "chief-complaint-starttime-help",
+              "text": "증상 발현일을 선택해주세요"
+            },
+            {
+              "linkId": "chief-complaint-starttime"
+            }
+          ],
+          "text": "S01"
+        },
+        {
+          "linkId": "chief-complaint-sub",
+          "item": [
+            {
+              "linkId": "chief-complaint-starttime-help",
+              "text": "증상 발현일을 선택해주세요"
+            },
+            {
+              "linkId": "chief-complaint-starttime",
+              "answer": [
+                {
+                  "valueQuantity": {
+                    "value": "1",
+                    "unit": "주 전 부터"
+                  }
+                }
+              ]
+            }
+          ],
+          "text": "S34"
+        }
+      ],
+      "text": "주증상"
+    }
+  ],
+  [
+    {
+      "linkId": "common-questions",
+      "item": [
+        {
+          "linkId": "body-site-search",
+          "text": "해부학적 위치를 검색해주세요.",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "699648003",
+                "system": "http://snomed.info/sct",
+                "display": "허리"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "body-site-search-sub",
+          "item": [
+            {
+              "linkId": "anatomic-part-laterality",
+              "text": "어느 쪽인가요?"
+            },
+            {
+              "linkId": "clinical-course",
+              "text": "진행 양상이 어떻나요?"
+            },
+            {
+              "linkId": "problem-frequency",
+              "text": "얼마나 자주 나타나나요?"
+            },
+            {
+              "linkId": "symptoms-duration",
+              "text": "얼마나 지속 되나요?"
+            },
+            {
+              "linkId": "pain-severity-today",
+              "text": "오늘의 통증이 어느정도인가요?"
+            },
+            {
+              "linkId": "pain-severity-worst",
+              "text": "가장 아플 때는 통증이 어느정도인가요?"
+            }
+          ]
+        },
+        {
+          "linkId": "body-site-search-sub",
+          "item": [
+            {
+              "linkId": "anatomic-part-laterality",
+              "text": "어느 쪽인가요?",
+              "answer": [
+                {
+                  "valueCoding": {
+                    "code": "51440002",
+                    "system": "http://snomed.info/sct",
+                    "display": "양측"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "clinical-course",
+              "text": "진행 양상이 어떻나요?",
+              "answer": [
+                {
+                  "valueCoding": {
+                    "code": "61751001",
+                    "system": "http://snomed.info/sct",
+                    "display": "서서히"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "problem-frequency",
+              "text": "얼마나 자주 나타나나요?",
+              "answer": [
+                {
+                  "valueCoding": {
+                    "code": "307486002",
+                    "system": "http://snomed.info/sct",
+                    "display": "이번 한번"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "symptoms-duration",
+              "text": "얼마나 지속 되나요?",
+              "answer": [
+                {
+                  "valueCoding": {
+                    "code": "162447003",
+                    "system": "http://snomed.info/sct",
+                    "display": "몇 주"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "pain-severity-today",
+              "text": "오늘의 통증이 어느정도인가요?",
+              "answer": [
+                {
+                  "valueInteger": 5
+                }
+              ]
+            },
+            {
+              "linkId": "pain-severity-worst",
+              "text": "가장 아플 때는 통증이 어느정도인가요?",
+              "answer": [
+                {
+                  "valueInteger": 7
+                }
+              ]
+            }
+          ],
+          "text": "699648003"
+        }
+      ],
+      "text": "공통질문"
+    }
+  ],
+  [
+    {
+      "linkId": "current-problem",
+      "item": [
+        {
+          "linkId": "current-problem-snomedct",
+          "text": "증상을 검색해 주세요",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "255046005",
+                "system": "http://snomed.info/sct",
+                "display": "신경내분비 종양"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "297713002",
+                "system": "http://snomed.info/sct",
+                "display": "궤양 및 염증 없는 다리 정맥류"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "current-problem-snomedct-sub",
+          "item": [
+            {
+              "linkId": "current-problem-starttime-help",
+              "text": "증상 발현일을 선택해주세요"
+            },
+            {
+              "linkId": "current-problem-starttime",
+              "text": "대략적 기간?"
+            }
+          ]
+        },
+        {
+          "linkId": "current-problem-snomedct-sub",
+          "item": [
+            {
+              "linkId": "current-problem-starttime-help",
+              "text": "증상 발현일을 선택해주세요"
+            },
+            {
+              "linkId": "current-problem-starttime",
+              "text": "대략적 기간?",
+              "answer": [
+                {
+                  "valueQuantity": {
+                    "value": "1",
+                    "unit": "년 전"
+                  }
+                }
+              ]
+            }
+          ],
+          "text": "255046005"
+        },
+        {
+          "linkId": "current-problem-snomedct-sub",
+          "item": [
+            {
+              "linkId": "current-problem-starttime-help",
+              "text": "증상 발현일을 선택해주세요"
+            },
+            {
+              "linkId": "current-problem-starttime",
+              "text": "대략적 기간?",
+              "answer": [
+                {
+                  "valueQuantity": {
+                    "value": "5",
+                    "unit": "개월 전"
+                  }
+                }
+              ]
+            }
+          ],
+          "text": "297713002"
+        }
+      ],
+      "text": "현병력"
+    }
+  ],
+  [
+    {
+      "linkId": "social-history",
+      "item": [
+        {
+          "linkId": "smoking",
+          "text": "흡연 여부를 선택해 주세요.",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "77176002",
+                "system": "http://snomed.info/sct",
+                "display": "흡연자"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "kind-of-smoking",
+          "text": "담배 종류를 알려주세요.",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "735239006",
+                "system": "http://snomed.info/sct",
+                "display": "전자담배(니코틴이 포함되지 않은 액상)"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "current-smoking",
+          "item": [
+            {
+              "linkId": "current-smoking-daily",
+              "text": "그렇다면 흡연량은 어떻게 되나요?",
+              "answer": [
+                {
+                  "valueQuantity": {
+                    "value": "10",
+                    "unit": "개피"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "current-smoking-duration",
+              "text": "흡연기간",
+              "answer": [
+                {
+                  "valueQuantity": {
+                    "value": "1",
+                    "unit": "년 전"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "past-smoking",
+          "item": [
+            {
+              "linkId": "past-smoking-daily",
+              "text": "금연 전의 흡연량은?"
+            },
+            {
+              "linkId": "past-smoking-duration",
+              "text": "흡연기간"
+            }
+          ]
+        },
+        {
+          "linkId": "stop-smoking",
+          "item": [
+            {
+              "linkId": "stop-smoking-duration",
+              "text": "금연기간 (년)"
+            }
+          ],
+          "text": "금연 후의 금연 기간은?"
+        },
+        {
+          "linkId": "alcohol",
+          "text": "음주 여부를 입력해 주세요.",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "105542008",
+                "system": "http://snomed.info/sct",
+                "display": "금주"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "current-kind-of-drinker",
+          "text": "주로 어떤 종류의 술을 마셨나요?",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "000000003",
+                "system": "http://bumin.co.kr/bumin-code",
+                "display": "양주"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "current-alcohol",
+          "item": [
+            {
+              "linkId": "current-quantity-of-drinker",
+              "text": "그렇다면 음주량은 어떻게 되나요?"
+            },
+            {
+              "linkId": "current-frequency-of-drinker",
+              "text": "횟수"
+            }
+          ]
+        },
+        {
+          "linkId": "past-alcohol",
+          "item": [
+            {
+              "linkId": "past-quantity-of-drinker",
+              "text": "금주 전의 음주량은?",
+              "answer": [
+                {
+                  "valueQuantity": {
+                    "value": "5",
+                    "unit": "잔"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "past-frequency-of-drinker",
+              "text": "횟수",
+              "answer": [
+                {
+                  "valueQuantity": {
+                    "value": "1",
+                    "unit": "회/주"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "past-stop-alcohol-duration",
+          "text": "금주 기간은?",
+          "answer": [
+            {
+              "valueQuantity": {
+                "value": "6",
+                "unit": "년"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "job",
+          "text": "직업을 선택해 주세요.",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "000000102",
+                "system": "http://bumin.co.kr/bumin-code",
+                "display": "전문가 및 관련 종사자"
+              }
+            }
+          ]
+        }
+      ],
+      "text": "사회력"
+    }
+  ],
+  [
+    {
+      "linkId": "family",
+      "item": [
+        {
+          "linkId": "family-relation",
+          "item": [
+            {
+              "linkId": "family-relation-sub",
+              "item": [
+                {
+                  "linkId": "family-condition-kcd8",
+                  "text": "병명(KCD8 코드)"
+                },
+                {
+                  "linkId": "family-condition-sub",
+                  "item": [
+                    {
+                      "linkId": "family-condition-starttime-help",
+                      "text": "증상 발현일을 선택해주세요"
+                    },
+                    {
+                      "linkId": "family-condition-starttime"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "family-relation-sub",
+              "item": [
+                {
+                  "linkId": "family-condition-kcd8",
+                  "text": "병명(KCD8 코드)",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "code": "A52.3",
+                        "system": "http://www.hl7korea.or.kr/CodeSystem/kostat-kcd-8",
+                        "display": "A52.3 상세불명의 신경매독"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "family-condition-sub",
+                  "item": [
+                    {
+                      "linkId": "family-condition-starttime-help",
+                      "text": "증상 발현일을 선택해주세요"
+                    },
+                    {
+                      "linkId": "family-condition-starttime"
+                    }
+                  ]
+                },
+                {
+                  "linkId": "family-condition-sub",
+                  "item": [
+                    {
+                      "linkId": "family-condition-starttime-help",
+                      "text": "증상 발현일을 선택해주세요"
+                    },
+                    {
+                      "linkId": "family-condition-starttime",
+                      "answer": [
+                        {
+                          "valueQuantity": {
+                            "value": "1",
+                            "unit": "시간 전 부터"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "text": "72705000-A52.3"
+                }
+              ],
+              "text": "72705000"
+            },
+            {
+              "linkId": "family-relation-sub",
+              "item": [
+                {
+                  "linkId": "family-condition-kcd8",
+                  "text": "병명(KCD8 코드)",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "code": "S62.25",
+                        "system": "http://www.hl7korea.or.kr/CodeSystem/kostat-kcd-8",
+                        "display": "S62.25 제1중수골 머리의 골절"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "family-condition-sub",
+                  "item": [
+                    {
+                      "linkId": "family-condition-starttime-help",
+                      "text": "증상 발현일을 선택해주세요"
+                    },
+                    {
+                      "linkId": "family-condition-starttime"
+                    }
+                  ]
+                },
+                {
+                  "linkId": "family-condition-sub",
+                  "item": [
+                    {
+                      "linkId": "family-condition-starttime-help",
+                      "text": "증상 발현일을 선택해주세요"
+                    },
+                    {
+                      "linkId": "family-condition-starttime",
+                      "answer": [
+                        {
+                          "valueQuantity": {
+                            "value": "1",
+                            "unit": "시간 전 부터"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "text": "394857004-S62.25"
+                }
+              ],
+              "text": "394857004"
+            }
+          ],
+          "text": "가족력이 있는 가족 관계를 선택해 주세요.",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "72705000",
+                "system": "http://snomed.info/sct",
+                "display": "Mother"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "394857004",
+                "system": "http://snomed.info/sct",
+                "display": "Maternal grandfather"
+              }
+            }
+          ]
+        }
+      ],
+      "text": "가족력"
+    }
+  ],
+  [
+    {
+      "linkId": "review of system",
+      "item": [
+        {
+          "linkId": "mental-status",
+          "text": "정신상태",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "366979004",
+                "system": "http://snomed.info/sct",
+                "display": "우울감"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "general-appearance-select",
+          "text": "전신 외관",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "84229001",
+                "system": "http://snomed.info/sct",
+                "display": "피로"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "weight-loss-amount",
+          "text": "6개월간 체중이 몇 Kg 감소하었나요?",
+          "answer": [
+            {
+              "valueQuantity": {
+                "value": "30",
+                "unit": "kg",
+                "code": "kg"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "weight-loss-rate",
+          "text": "6개월간 체중이 몇 % 감소하었나요?",
+          "answer": [
+            {
+              "valueQuantity": {
+                "value": "40",
+                "unit": "%",
+                "code": "percent"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "skin",
+          "text": "피부"
+        },
+        {
+          "linkId": "head",
+          "text": "머리",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "404640003",
+                "system": "http://snomed.info/sct",
+                "display": "어지럼"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "25064002",
+                "system": "http://snomed.info/sct",
+                "display": "두통"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "eye",
+          "text": "눈",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "63102001",
+                "system": "http://snomed.info/sct",
+                "display": "시각 장애"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "ent",
+          "text": "귀, 코 및 입안",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "162397003",
+                "system": "http://snomed.info/sct",
+                "display": "인두통"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "neck",
+          "text": "목",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "161882006",
+                "system": "http://snomed.info/sct",
+                "display": "목경직"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "breast",
+          "text": "가슴",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "54302000",
+                "system": "http://snomed.info/sct",
+                "display": "유두에서 분비물이 나옴"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "resp-system",
+          "text": "호흡기계",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "49727002",
+                "system": "http://snomed.info/sct",
+                "display": "기침"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "c-v-system",
+          "text": "심혈관계",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "404640003",
+                "system": "http://snomed.info/sct",
+                "display": "어지럼"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "g-i-system",
+          "text": "소화기계",
+          "answer": [
+            {
+              "valueCoding": {
+                "code": "62315008",
+                "system": "http://snomed.info/sct",
+                "display": "설사"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "g-u-system",
+          "text": "비뇨기계"
+        },
+        {
+          "linkId": "back-extremity",
+          "text": "등과 사지"
+        }
+      ],
+      "text": "계통문진"
+    }
+  ],
+  [
+    {
+      "linkId": "vital-sign",
+      "item": [
+        {
+          "linkId": "weight",
+          "text": "몸무게",
+          "answer": [
+            {
+              "valueQuantity": {
+                "value": "86",
+                "unit": "kg",
+                "code": "kg"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "height",
+          "text": "키",
+          "answer": [
+            {
+              "valueQuantity": {
+                "value": "170",
+                "unit": "cm",
+                "code": "cm"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "bmi",
+          "text": "BMI"
+        },
+        {
+          "linkId": "blood-pressure",
+          "item": [
+            {
+              "linkId": "systolic-blood-pressure",
+              "text": "수축기",
+              "answer": [
+                {
+                  "valueQuantity": {
+                    "value": "60",
+                    "unit": "mmHg",
+                    "code": "mmHg"
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "diastolic-blood-pressure",
+              "text": "이완기",
+              "answer": [
+                {
+                  "valueQuantity": {
+                    "value": "120",
+                    "unit": "mmHg",
+                    "code": "mmHg"
+                  }
+                }
+              ]
+            }
+          ],
+          "text": "혈압"
+        },
+        {
+          "linkId": "heart-rate",
+          "text": "맥박수 (분당횟수)",
+          "answer": [
+            {
+              "valueQuantity": {
+                "value": "123",
+                "unit": "회/분",
+                "code": "pulse"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "respiratory-rate",
+          "text": "호흡수 (분당횟수)",
+          "answer": [
+            {
+              "valueQuantity": {
+                "value": "133",
+                "unit": "회/분",
+                "code": "pulse"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "body-temperature",
+          "text": "체온",
+          "answer": [
+            {
+              "valueQuantity": {
+                "value": "38",
+                "unit": "℃",
+                "code": "Cel"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "abdominal-circumference",
+          "text": "배둘레",
+          "answer": [
+            {
+              "valueQuantity": {
+                "value": "100",
+                "unit": "cm",
+                "code": "cm"
+              }
+            }
+          ]
+        }
+      ],
+      "text": "생체징후"
+    }
+  ]
+]
