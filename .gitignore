@@ -26,6 +26,7 @@ dist-ssr
 
 https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
 
+.yarn
 .yarn/*
 !.yarn/cache
 !.yarn/patches
