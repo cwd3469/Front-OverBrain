@@ -4,7 +4,11 @@ import OLayout from '@components/common/OLayout';
 const MainPage = () => {
   return (
     <OLayout>
-      <OButton>버튼</OButton>
+      <div className="flex flex-row items-center gap-3">
+        <OButton size="large">label</OButton>
+        <OButton size="medium">label</OButton>
+        <OButton size="small">label</OButton>
+      </div>
     </OLayout>
   );
 };
