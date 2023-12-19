@@ -1,12 +1,35 @@
-import React from 'react';
+import { ButtonHTMLAttributes, FC } from 'react';
+import { cva, VariantProps } from 'class-variance-authority';
+import { cn } from '@/utils/twMerge';
 
-const OButton = (props: { children: JSX.Element | JSX.Element[] | string | number }) => {
-  const { children } = props;
+export const ButtonVariants = cva('rounded-[12px]', {
+  variants: {
+    variant: {
+      contained: 'text-wGray-50',
+    },
+    size: {
+      medium: 'p-[18px] text-base text',
+    },
+    palette: {
+      primary: 'bg-primary-400',
+    },
+  },
+  defaultVariants: {
+    variant: 'contained',
+    size: 'medium',
+    palette: 'primary',
+  },
+});
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof ButtonVariants> {
+  label?: string;
+  children?: React.ReactElement | string;
+}
+
+const OButton: FC<ButtonProps> = ({ variant, size, children, palette, label, ...props }) => {
   return (
-    <button
-      type="submit"
-      className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-    >
+    <button className={cn(ButtonVariants({ variant, size, palette }))} {...props}>
+      {label && label}
       {children}
     </button>
   );
