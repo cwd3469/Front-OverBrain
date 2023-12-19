@@ -35,6 +35,8 @@ const RAW_RUNTIME_STATE =
           ["@vitejs/plugin-react", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:4.2.1"],\
           ["autoprefixer", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:10.4.16"],\
           ["axios", "npm:1.6.2"],\
+          ["class-variance-authority", "npm:0.7.0"],\
+          ["clsx", "npm:2.0.0"],\
           ["eslint", "npm:8.55.0"],\
           ["eslint-config-prettier", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:9.1.0"],\
           ["eslint-config-standard-with-typescript", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:40.0.0"],\
@@ -1864,11 +1866,30 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["class-variance-authority", [\
+      ["npm:0.7.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/class-variance-authority-npm-0.7.0-1a63840197-10c0.zip/node_modules/class-variance-authority/",\
+        "packageDependencies": [\
+          ["class-variance-authority", "npm:0.7.0"],\
+          ["clsx", "npm:2.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["clean-stack", [\
       ["npm:2.2.0", {\
         "packageLocation": "../../../.yarn/berry/cache/clean-stack-npm-2.2.0-a8ce435a5c-10c0.zip/node_modules/clean-stack/",\
         "packageDependencies": [\
           ["clean-stack", "npm:2.2.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["clsx", [\
+      ["npm:2.0.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/clsx-npm-2.0.0-afafbbe44a-10c0.zip/node_modules/clsx/",\
+        "packageDependencies": [\
+          ["clsx", "npm:2.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4451,6 +4472,8 @@ const RAW_RUNTIME_STATE =
           ["@vitejs/plugin-react", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:4.2.1"],\
           ["autoprefixer", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:10.4.16"],\
           ["axios", "npm:1.6.2"],\
+          ["class-variance-authority", "npm:0.7.0"],\
+          ["clsx", "npm:2.0.0"],\
           ["eslint", "npm:8.55.0"],\
           ["eslint-config-prettier", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:9.1.0"],\
           ["eslint-config-standard-with-typescript", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:40.0.0"],\
