@@ -1868,7 +1868,7 @@ const RAW_RUNTIME_STATE =
     ]],\
     ["class-variance-authority", [\
       ["npm:0.7.0", {\
-        "packageLocation": "../../../.yarn/berry/cache/class-variance-authority-npm-0.7.0-1a63840197-10c0.zip/node_modules/class-variance-authority/",\
+        "packageLocation": "./.yarn/cache/class-variance-authority-npm-0.7.0-1a63840197-e11c57edf4.zip/node_modules/class-variance-authority/",\
         "packageDependencies": [\
           ["class-variance-authority", "npm:0.7.0"],\
           ["clsx", "npm:2.0.0"]\
@@ -1887,7 +1887,7 @@ const RAW_RUNTIME_STATE =
     ]],\
     ["clsx", [\
       ["npm:2.0.0", {\
-        "packageLocation": "../../../.yarn/berry/cache/clsx-npm-2.0.0-afafbbe44a-10c0.zip/node_modules/clsx/",\
+        "packageLocation": "./.yarn/cache/clsx-npm-2.0.0-afafbbe44a-c09f43b314.zip/node_modules/clsx/",\
         "packageDependencies": [\
           ["clsx", "npm:2.0.0"]\
         ],\
@@ -5460,7 +5460,7 @@ const RAW_RUNTIME_STATE =
     ]],\
     ["tailwind-merge", [\
       ["npm:2.1.0", {\
-        "packageLocation": "../../../.yarn/berry/cache/tailwind-merge-npm-2.1.0-3ed0757f90-10c0.zip/node_modules/tailwind-merge/",\
+        "packageLocation": "./.yarn/cache/tailwind-merge-npm-2.1.0-3ed0757f90-8a8a7fc7fd.zip/node_modules/tailwind-merge/",\
         "packageDependencies": [\
           ["tailwind-merge", "npm:2.1.0"],\
           ["@babel/runtime", "npm:7.23.6"]\
