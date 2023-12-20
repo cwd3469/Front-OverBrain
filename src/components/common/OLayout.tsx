@@ -5,7 +5,7 @@ export type MenuInfo = {
 };
 
 type Props = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   menuInfoList?: MenuInfo[];
 };
 
