@@ -5,9 +5,26 @@ type Store = {
   inc: () => void;
 };
 
-const usePurpose = create<Store>()((set) => ({
-  count: 1,
-  inc: () => set((state) => ({ count: state.count + 1 })),
+export type Target = {
+  title: string;
+  contents: string;
+};
+type State = {
+  target: Target[];
+};
+type Action = {
+  actionTargetPost: (target: Target) => void;
+};
+
+const usePurpose = create<State & Action>()((set) => ({
+  target: [],
+  actionTargetPost: (target: Target) =>
+    set((state) => {
+      let oldTarget = state.target;
+      const newTarget = [...oldTarget, target];
+      const newState = { ...state, target: newTarget };
+      return newState;
+    }),
 }));
 
 export default usePurpose;
