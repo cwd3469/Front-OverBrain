@@ -23,16 +23,16 @@ const MainPage = () => {
   return (
     <OLayout>
       <div className="flex flex-col gap-2">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        {todo.map((item, index) => {
+          return <OCard key={index}>{item}</OCard>;
+        })}
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <OTextField {...register('todo', { required: true })} />
           <OButton type="submit" size="small">
             저장
           </OButton>
         </form>
         {errors.todo && <span>This field is required</span>}
-        {todo.map((item, index) => {
-          return <OCard key={index}>{item}</OCard>;
-        })}
       </div>
     </OLayout>
   );
