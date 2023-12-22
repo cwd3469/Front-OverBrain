@@ -17,11 +17,12 @@ const SigninPage = () => {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
+    console.log(watch('userID'));
   };
   return (
     <OLayout>
       <div className="flex flex-col gap-2">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <OTextField {...register('userID', { required: true })} />
           <OTextField {...register('pw', { required: true })} type="password" />
           <OButton type="submit" size="small">
@@ -29,7 +30,6 @@ const SigninPage = () => {
           </OButton>
         </form>
       </div>
-      {JSON.stringify(watch)}
     </OLayout>
   );
 };

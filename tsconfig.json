@@ -25,6 +25,7 @@
       "@/*": ["src/*"]
     }
   },
+  "plugins": ["require('@tailwindcss/forms')"],
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
