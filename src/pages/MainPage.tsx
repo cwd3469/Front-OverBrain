@@ -11,28 +11,29 @@ const MainPage = () => {
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    setTodo((prev) => {
-      return [...prev, data.todo];
-    });
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const newTodo = data.todo;
+    await setTodo((prev) => [...prev, newTodo]);
+    reset();
   };
+
   return (
     <OLayout>
       <div className="flex flex-col gap-2">
-        {todo.map((item, index) => {
-          return <OCard key={index}>{item}</OCard>;
-        })}
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-          <OTextField {...register('todo', { required: true })} />
+        <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
+          <OTextField {...register('todo')} />
           <OButton type="submit" size="small">
             저장
           </OButton>
         </form>
         {errors.todo && <span>This field is required</span>}
+        {todo.map((item, index) => {
+          return <OCard key={index}>{item}</OCard>;
+        })}
       </div>
     </OLayout>
   );
