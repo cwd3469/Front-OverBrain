@@ -1,3 +1,4 @@
+import { Target } from '@/types/main';
 import { create } from 'zustand';
 
 type Store = {
@@ -5,10 +6,6 @@ type Store = {
   inc: () => void;
 };
 
-export type Target = {
-  title: string;
-  contents: string;
-};
 type State = {
   target: Target[];
 };
