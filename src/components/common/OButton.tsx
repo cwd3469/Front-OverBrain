@@ -20,7 +20,7 @@ const ColorVariants = cva('rounded-[12px] bg-primary-400', {
   },
 });
 
-export const ButtonVariants = cva('rounded-[12px] bg-primary-400', {
+export const ButtonVariants = cva('rounded-[12px] ', {
   variants: {
     size: {
       large: 'p-[22px] min-w-[139px] text-xl leading-5 font-bold',
@@ -30,22 +30,31 @@ export const ButtonVariants = cva('rounded-[12px] bg-primary-400', {
     variant: {
       contained: 'text-white',
     },
+    palette: {
+      primary: 'bg-primary-400',
+      secondary: 'bg-secondary-400',
+      error: 'bg-error-400',
+      warning: 'bg-warning-500',
+      info: 'bg-info-400',
+      success: 'bg-success-400',
+      'inherit-text': '',
+      'inherit-white': '',
+    },
   },
   defaultVariants: {
     variant: 'contained',
     size: 'medium',
+    palette: 'primary',
   },
 });
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof ButtonVariants> {
   children?: React.ReactNode;
-  palette?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'inherit-text' | 'inherit-white';
 }
 
 const OButton: FC<ButtonProps> = ({ variant, size, children, palette, ...props }) => {
-  const paletteFiled = `bg-${palette}`;
   return (
-    <button className={cn(ButtonVariants({ variant, size }))} {...props}>
+    <button className={cn(ButtonVariants({ variant, size, palette }))} {...props}>
       {children}
     </button>
   );
