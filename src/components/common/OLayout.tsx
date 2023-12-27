@@ -10,9 +10,9 @@ type Props = {
 
 const OLayout = ({ children }: Props) => {
   return (
-    <div className="h-screen">
-      <div className="flex flex-col justify-center flex-1 min-h-full px-6 py-12 lg:px-8 ">
-        <div className="container p-3 bg-slate-200">{children}</div>
+    <div className="min-h-screen ">
+      <div className="container absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+        <div className="p-3 bg-slate-200">{children}</div>
       </div>
     </div>
   );
