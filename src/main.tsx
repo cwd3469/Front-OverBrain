@@ -3,11 +3,21 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainPage from '@/pages/MainPage';
+import SigninPage from '@/pages/SigninPage';
+import BoardPage from '@/pages/BoardPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <MainPage />,
+  },
+  {
+    path: '/signin',
+    element: <SigninPage />,
+  },
+  {
+    path: '/board',
+    element: <BoardPage />,
   },
 ]);
 
