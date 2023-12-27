@@ -7,6 +7,7 @@ const OTextField = (props: Props, ref: Ref) => {
   const { label } = props;
   return (
     <div>
+      {label && <p className="text-base">{label}</p>}
       <input
         ref={ref}
         {...props}
