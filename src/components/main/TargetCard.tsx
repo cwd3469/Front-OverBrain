@@ -1,5 +1,5 @@
 import { Target } from '@/types/main';
-import { OButton, OCard } from '@components/common';
+import { OCard } from '@components/common';
 import OTextarea from '@components/common/OTextarea';
 import dayjs from 'dayjs';
 type Props = Target & {
@@ -15,13 +15,13 @@ const TargetCard = ({ title, contents, createdAt, endAt, startAt, modifyAt, onDe
   const endDate = dayFormat(endAt);
   const startDate = dayFormat(startAt);
   const modifyDate = modifyAt && dayFormat(modifyAt);
-
+  const onDeleteBtn = () => onDelete(id);
   return (
     <OCard>
       <div className="flex flex-col gap-2">
         <div className="flex justify-between">
           <p className="text-xl font-bold">{title}</p>
-          <button className="w-4 h-4 text-xs bg-slate-200" onClick={() => onDelete(id)}>
+          <button className="w-4 h-4 text-xs bg-slate-200" onClick={onDeleteBtn}>
             X
           </button>
         </div>
