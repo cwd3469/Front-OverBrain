@@ -44,17 +44,11 @@ const MainPage = () => {
             />
             <OTextField {...register('startAt')} type="date" label="시작 날짜" />
             <OTextField {...register('endAt')} type="date" label="끝 날짜" />
-            <OButton type="submit" size="small">
+            <OButton type="submit" size="small" variant="outlined">
               저장
             </OButton>
           </form>
-          {todo.length ? (
-            <OButton palette="success" onClick={handleStartPage}>
-              시작하기
-            </OButton>
-          ) : (
-            ''
-          )}
+          {todo.length ? <OButton onClick={handleStartPage}>시작하기</OButton> : ''}
         </div>
         {todo.length ? (
           <div className="flex flex-col w-full gap-3 overflow-y-scroll sm:w-1/2 lg:w-1/3 xl:w-144 h-[600px] p-2 bg-slate-100">
