@@ -13,7 +13,7 @@ type Action = {
   actionTargetPost: (target: Target) => void;
 };
 
-const usePurpose = create<State & Action>()((set) => ({
+const useCurrentTarget = create<State & Action>()((set) => ({
   target: [],
   actionTargetPost: (target: Target) =>
     set((state) => {
@@ -24,4 +24,4 @@ const usePurpose = create<State & Action>()((set) => ({
     }),
 }));
 
-export default usePurpose;
+export default useCurrentTarget;
