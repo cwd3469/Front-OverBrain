@@ -24,6 +24,13 @@ const MainPage = () => {
     reset();
   };
 
+  const onDeleteTarget = (id: string) => {
+    setTodo((prev) => {
+      const filter = prev.filter((el, idx) => el.id !== id);
+      return filter;
+    });
+  };
+
   const handleStartPage = () => navigate('/board');
 
   return (
@@ -53,7 +60,7 @@ const MainPage = () => {
         {todo.length ? (
           <div className="flex flex-col w-full gap-3 overflow-y-scroll sm:w-1/2 lg:w-1/3 xl:w-144 h-[600px] p-2 bg-slate-100">
             {todo.map((item, index) => {
-              return <TargetCard key={index} {...item} onDelete={(id) => console.log(item)} />;
+              return <TargetCard key={index} {...item} onDelete={onDeleteTarget} />;
             })}
           </div>
         ) : (
