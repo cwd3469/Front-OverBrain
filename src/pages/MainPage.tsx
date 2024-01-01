@@ -5,31 +5,19 @@ import { useNavigate } from 'react-router-dom';
 import { Target } from '@/types/main';
 import OTextarea from '@components/common/OTextarea';
 import TargetCard from '@components/main/TargetCard';
-
-const newID = () => {
-  return Math.random().toString(36).substr(2, 16);
-};
+import useCurrentTarget from '@/controllers/useCurrentTarget';
 
 const MainPage = () => {
   const [todo, setTodo] = useState<Target[]>([]);
   const navigate = useNavigate();
+  const { target, createTarget, deleteTarget } = useCurrentTarget();
   const { register, handleSubmit, reset } = useForm<Target>();
 
   const onSubmit: SubmitHandler<Target> = async ({ title, contents, startAt, endAt }: Target) => {
-    const createdAt = new Date();
-    const id = newID();
-    if (!contents || !title || !endAt || !startAt) return;
-    const newTarget: Target = { id, title, contents, createdAt, startAt, endAt };
-    await setTodo((prev) => [...prev, newTarget]);
+    await createTarget({ title, contents, startAt, endAt });
     reset();
   };
-
-  const onDeleteTarget = (id: string) => {
-    setTodo((prev) => {
-      const filter = prev.filter((el, idx) => el.id !== id);
-      return filter;
-    });
-  };
+  const onDelete = (id: string) => deleteTarget(id);
 
   const handleStartPage = () => navigate('/board');
 
@@ -55,12 +43,12 @@ const MainPage = () => {
               저장
             </OButton>
           </form>
-          {todo.length ? <OButton onClick={handleStartPage}>시작하기</OButton> : ''}
+          {target.length ? <OButton onClick={handleStartPage}>시작하기</OButton> : ''}
         </div>
-        {todo.length ? (
+        {target.length ? (
           <div className="flex flex-col w-full gap-3 overflow-y-scroll sm:w-1/2 lg:w-1/3 xl:w-144 h-[600px] p-2 bg-slate-100">
-            {todo.map((item, index) => {
-              return <TargetCard key={index} {...item} onDelete={onDeleteTarget} />;
+            {target.map((item, index) => {
+              return <TargetCard key={index} {...item} onDelete={onDelete} />;
             })}
           </div>
         ) : (

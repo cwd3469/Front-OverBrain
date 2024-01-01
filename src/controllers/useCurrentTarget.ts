@@ -1,27 +1,46 @@
 import { Target } from '@/types/main';
 import { create } from 'zustand';
 
-type Store = {
-  count: number;
-  inc: () => void;
+export type CreateTargetType = {
+  title: string;
+  contents?: string;
+  startAt: Date;
+  endAt: Date;
 };
 
 type State = {
   target: Target[];
 };
+
 type Action = {
-  actionTargetPost: (target: Target) => void;
+  createTarget: (target: CreateTargetType) => void;
+  deleteTarget: (id: string) => void;
+};
+
+const newID = () => {
+  return Math.random().toString(36).substr(2, 16);
 };
 
 const useCurrentTarget = create<State & Action>()((set) => ({
   target: [],
-  actionTargetPost: (target: Target) =>
+  createTarget: (params: CreateTargetType) =>
     set((state) => {
-      let oldTarget = state.target;
-      const newTarget = [...oldTarget, target];
-      const newState = { ...state, target: newTarget };
+      let oldTargetList = state.target;
+      const { title, contents, startAt, endAt } = params;
+      if (!contents || !title || !endAt || !startAt) return state;
+      const createdAt = new Date();
+      const id = newID();
+      const newTarget: Target = { id, title, contents, createdAt, startAt, endAt };
+      const newTargetList = [...oldTargetList, newTarget];
+      const newState = { ...state, target: newTargetList };
       return newState;
     }),
+  deleteTarget: (id: string) => {
+    set((state) => {
+      const filter = state.target.filter((el, idx) => el.id !== id);
+      return { ...state, target: filter };
+    });
+  },
 }));
 
 export default useCurrentTarget;
