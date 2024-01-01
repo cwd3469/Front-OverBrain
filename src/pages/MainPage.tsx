@@ -8,7 +8,6 @@ import TargetCard from '@components/main/TargetCard';
 import useCurrentTarget from '@/controllers/useCurrentTarget';
 
 const MainPage = () => {
-  const [todo, setTodo] = useState<Target[]>([]);
   const navigate = useNavigate();
   const { target, createTarget, deleteTarget } = useCurrentTarget();
   const { register, handleSubmit, reset } = useForm<Target>();
