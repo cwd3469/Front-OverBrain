@@ -44,7 +44,7 @@ const MainPage = () => {
             />
             <OTextField {...register('startAt')} type="date" label="시작 날짜" />
             <OTextField {...register('endAt')} type="date" label="끝 날짜" />
-            <OButton type="submit" size="small" variant="outlined">
+            <OButton type="submit" size="small" variant="contained">
               저장
             </OButton>
           </form>
