@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import OButton from '@components/common/OButton';
+import OLayout from '@components/common/OLayout';
+import { DefaultTextFiled } from '@components/common/textFiled';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { OLayout, OTextField, OCard, OButton } from '@components/common/index';
 
 type Inputs = {
   userID: string;
@@ -21,13 +23,11 @@ const SigninPage = () => {
   };
   return (
     <OLayout>
-      <div className="flex flex-col gap-2">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-          <OTextField {...register('userID', { required: true })} />
-          <OTextField {...register('pw', { required: true })} type="password" />
-          <OButton type="submit" size="small">
-            로그인
-          </OButton>
+      <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DefaultTextFiled {...register('userID', { required: true })} />
+          <DefaultTextFiled {...register('pw', { required: true })} type="password" />
+          <OButton type="submit">로그인</OButton>
         </form>
       </div>
     </OLayout>

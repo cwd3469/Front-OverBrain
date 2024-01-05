@@ -1,3 +1,5 @@
+import styled from '@emotion/styled';
+
 export type MenuInfo = {
   name: string;
   link: string;
@@ -10,12 +12,22 @@ type Props = {
 
 const OLayout = ({ children }: Props) => {
   return (
-    <div className="min-h-screen ">
-      <div className="container absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-        <div className="p-3 bg-slate-200 rounded-md ">{children}</div>
-      </div>
-    </div>
+    <Container>
+      <ContainerBody>{children}</ContainerBody>
+    </Container>
   );
 };
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+const ContainerBody = styled.div`
+  padding: 3rem;
+  border-radius: 30px;
+  background-color: #eee;
+`;
 export default OLayout;

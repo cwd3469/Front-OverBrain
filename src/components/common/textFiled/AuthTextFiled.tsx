@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
-import DefaultTextFiled, { DefaultTextFiledProps } from './DefaultTextFiled';
-import { MessageBox, TextFiledContainer, type MessageBoxProps } from './LabelTextFiled';
+import { DefaultTextFiled, MessageBox, type DefaultTextFiledProps, type MessageBoxProps } from './DefaultTextFiled';
 
 type Props = DefaultTextFiledProps &
   MessageBoxProps & {
@@ -12,7 +11,7 @@ type Props = DefaultTextFiledProps &
 
 const AuthTextFiled = ({ message, time, ...props }: Props) => {
   return (
-    <TextFiledContainer>
+    <Container>
       <DefaultTextFiled {...props} />
       <AuthBox>
         <MessageBox message={message} />
@@ -22,9 +21,16 @@ const AuthTextFiled = ({ message, time, ...props }: Props) => {
           </AuthTimer>
         )}
       </AuthBox>
-    </TextFiledContainer>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+`;
 
 const AuthTimer = styled.p`
   font-size: 14px;

@@ -1,28 +1,6 @@
-import DefaultTextFiled, { type DefaultTextFiledProps } from './DefaultTextFiled';
+import { DefaultTextFiled, MessageBox, type DefaultTextFiledProps, type MessageBoxProps } from './DefaultTextFiled';
 import styled from '@emotion/styled';
 import IcRequire from '@/assets/svg/ic_require.svg?react';
-import IcBullet from '@/assets/svg/ic_bullet.svg?react';
-import IcBulletError from '@/assets/svg/ic_bullet_error.svg?react';
-
-export type MessageBoxProps = {
-  message?: {
-    state: 'error' | 'success';
-    context: string;
-  };
-};
-
-export const MessageBox = (props: MessageBoxProps) => {
-  const { message } = props;
-  return message ? (
-    <LabelMessageBox>
-      {message.state === 'error' && <IcBulletError className="icon_box" />}
-      {message.state === 'success' && <IcBullet className="icon_box" />}
-      <LabelMessage state={message.state}>{message.context}</LabelMessage>
-    </LabelMessageBox>
-  ) : (
-    <></>
-  );
-};
 
 type Props = DefaultTextFiledProps &
   MessageBoxProps & {
@@ -30,9 +8,10 @@ type Props = DefaultTextFiledProps &
     require?: boolean;
   };
 
+/**상태 메시지 */
 const LabelTextFiled = ({ label, message, require, ...props }: Props) => {
   return (
-    <TextFiledContainer>
+    <Container>
       {label && (
         <LabelName>
           {label} {require && <IcRequire />}
@@ -40,13 +19,11 @@ const LabelTextFiled = ({ label, message, require, ...props }: Props) => {
       )}
       <DefaultTextFiled {...props} />
       <MessageBox message={message} />
-    </TextFiledContainer>
+    </Container>
   );
 };
 
-export default LabelTextFiled;
-
-export const TextFiledContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -60,27 +37,4 @@ const LabelName = styled.label`
   color: var(--CoolGray-CoolGray700, #4e5962);
 `;
 
-type MessageProps = {
-  state?: 'error' | 'success';
-};
-
-const LabelMessageBox = styled.div`
-  display: flex;
-  gap: 4px;
-  align-self: stretch;
-  & .icon_box {
-    width: 24px;
-    height: 24px;
-  }
-`;
-
-const LabelMessage = styled.div<MessageProps>`
-  font-size: 14px;
-  line-height: 20px;
-  ${(props) =>
-    props.state === 'error'
-      ? 'color: var(--Function-Red_Default, #F15050);'
-      : props.state === 'success'
-      ? 'color: var(--Function-Green_Dark, #109138);'
-      : ''};
-`;
+export default LabelTextFiled;

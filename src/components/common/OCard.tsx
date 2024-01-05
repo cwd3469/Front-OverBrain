@@ -1,8 +1,8 @@
+import styled from '@emotion/styled';
+
 type Props = {
   children?: React.ReactNode;
 };
-const OCard = ({ children }: Props) => {
-  return <div className="flex flex-col p-4 bg-white shadow-lg bg-TG000 rounded-xl">{children}</div>;
-};
+const OCard = styled.div``;
 
 export default OCard;

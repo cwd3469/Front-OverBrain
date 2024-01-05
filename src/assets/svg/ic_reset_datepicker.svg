@@ -1,0 +1,12 @@
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="ic_reset_datepicker" clip-path="url(#clip0_915_500)">
+<circle id="Circle" cx="8" cy="8" r="8" fill="#B4BFC8"/>
+<path id="Vector" d="M11 5L5 11" stroke="white" stroke-miterlimit="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M5.00024 5L11.0002 11" stroke="white" stroke-miterlimit="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_915_500">
+<rect width="16" height="16" fill="white"/>
+</clipPath>
+</defs>
+</svg>

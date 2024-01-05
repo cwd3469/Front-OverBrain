@@ -1,6 +1,6 @@
 import { Target } from '@/types/main';
-import { OCard } from '@components/common';
-import OTextarea from '@components/common/OTextarea';
+import OCard from '@components/common/OCard';
+import { MultiLineTextFiled } from '@components/common/textFiled';
 import dayjs from 'dayjs';
 type Props = Target & {
   onDelete: (id: string) => void;
@@ -18,41 +18,32 @@ const TargetCard = ({ title, contents, createdAt, endAt, startAt, modifyAt, onDe
   const onDeleteBtn = () => onDelete(id);
   return (
     <OCard>
-      <div className="flex flex-col gap-2">
-        <div className="flex justify-between">
-          <p className="text-xl font-bold">{title}</p>
-          <button className="w-4 h-4 text-xs bg-slate-200" onClick={onDeleteBtn}>
-            X
-          </button>
+      <button onClick={onDeleteBtn}>X</button>
+      <MultiLineTextFiled
+        value={contents}
+        disabled
+        style={{
+          width: '100%',
+          height: '6.25em',
+          border: 'none',
+          resize: 'none',
+        }}
+      />
+      <div>
+        <div>
+          <div>생성 날짜 :</div>
+          <p>{createdDate}</p>
         </div>
-        <div className="p-2 rounded-lg bg-slate-200">
-          <OTextarea
-            value={contents}
-            disabled
-            style={{
-              width: '100%',
-              height: '6.25em',
-              border: 'none',
-              resize: 'none',
-            }}
-          />
+        <div>
+          <div>시작 날짜 :</div>
+          <p>{startDate}</p>
         </div>
-        <div className="flex flex-col">
-          <div className="flex flex-row justify-between">
-            <div>생성 날짜 :</div>
-            <p className="text-base">{createdDate}</p>
-          </div>
-          <div className="flex flex-row justify-between">
-            <div>시작 날짜 :</div>
-            <p className="text-base">{startDate}</p>
-          </div>
-          <div className="flex flex-row justify-between">
-            <div>끝 날짜 :</div>
-            <p className="text-base">{endDate}</p>
-          </div>
+        <div>
+          <div>끝 날짜 :</div>
+          <p>{endDate}</p>
         </div>
-        {modifyDate && <p className="text-base">{modifyDate}</p>}
       </div>
+      {modifyDate && <p>{modifyDate}</p>}
     </OCard>
   );
 };

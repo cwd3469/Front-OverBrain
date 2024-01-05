@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { collection, addDoc, getDocs, DocumentData } from 'firebase/firestore';
 import FirebaseConfig from '@/utils/firebase';
 import LPButton from '../common/OButton';
+import { DefaultTextFiled } from '@components/common/textFiled';
 const { db } = FirebaseConfig();
 
 type KeyValue = { [key: string]: string };
@@ -54,26 +55,16 @@ const FirebaseCrud = () => {
   }, [arr]);
 
   return (
-    <div className="flex flex-col gap-2 p-10 ">
+    <div>
       {useInfoArr.map((el, index) => {
         return (
           <div key={index}>
-            <label htmlFor={el.name + index} className="block text-sm font-medium leading-6 text-gray-900">
-              {el.name}
-            </label>
-            <div className="mt-2">
-              <input
-                id={el.name + index}
-                name={el.name + index}
-                value={el.value}
-                className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                onChange={(e) => userInfoOnChange(el.name, e.target.value)}
-              />
-            </div>
+            <label htmlFor={el.name + index}>{el.name}</label>
+            <DefaultTextFiled />
           </div>
         );
       })}
-      <div className="flex flex-row gap=2">
+      <div>
         <LPButton onClick={() => setData()}>로그인</LPButton>
         <LPButton onClick={() => getData()}>get</LPButton>
       </div>

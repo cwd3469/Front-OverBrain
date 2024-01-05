@@ -1,25 +1,28 @@
 import styled from '@emotion/styled';
+import IcBullet from '@/assets/svg/ic_bullet.svg?react';
+import IcBulletError from '@/assets/svg/ic_bullet_error.svg?react';
 
 type Props = {
   fieldSize?: 'lg' | 'mb' | 'sm';
 };
 
-export type DefaultTextFiledProps = React.InputHTMLAttributes<HTMLInputElement> & Props;
+type DefaultTextFiledProps = React.InputHTMLAttributes<HTMLInputElement> & Props;
 
 const DefaultTextFiled = styled.input<Props>`
   //layout
   display: flex;
   padding: 12px 16px;
-  width: 100%;
   //font
   font-size: 14px;
   line-height: 18px;
+  width: 100%;
   //style
   border-radius: var(--Radius_MD, 6px);
   border: 1px solid var(--CoolGray-CoolGray300, #b4bfc8);
   background-color: var(--TrueGray-White, #fff);
   &::placeholder {
     color: var(--CoolGray-CoolGray400, #9aa9b7);
+    font-weight: 400;
   }
   &:focus-visible {
     outline: 1px solid var(--CoolGray-CoolGray600, #677683);
@@ -37,4 +40,49 @@ const DefaultTextFiled = styled.input<Props>`
       : ''}
 `;
 
-export default DefaultTextFiled;
+type MessageBoxProps = {
+  /**상태 메시지 */
+  message?: {
+    state: 'error' | 'success';
+    context: string;
+  };
+};
+
+const MessageBox = ({ message }: MessageBoxProps) => {
+  return message ? (
+    <LabelMessageBox>
+      {message.state === 'error' && <IcBulletError className="icon_box" />}
+      {message.state === 'success' && <IcBullet className="icon_box" />}
+      <LabelMessage state={message.state}>{message.context}</LabelMessage>
+    </LabelMessageBox>
+  ) : (
+    <></>
+  );
+};
+
+type MessageProps = {
+  state?: 'error' | 'success';
+};
+
+const LabelMessageBox = styled.div`
+  display: flex;
+  gap: 4px;
+  align-self: stretch;
+  & .icon_box {
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+const LabelMessage = styled.div<MessageProps>`
+  font-size: 14px;
+  line-height: 20px;
+  ${(props) =>
+    props.state === 'error'
+      ? 'color: var(--Function-Red_Default, #F15050);'
+      : props.state === 'success'
+      ? 'color: var(--Function-Green_Dark, #109138);'
+      : ''};
+`;
+
+export { DefaultTextFiled, MessageBox, type MessageBoxProps, type DefaultTextFiledProps };

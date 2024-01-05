@@ -13,11 +13,13 @@ const MultiLineTextFiled = styled.textarea`
   border: none;
   resize: none;
   //style
+  box-sizing: border-box;
   border-radius: var(--Radius_MD, 6px);
   border: 1px solid var(--CoolGray-CoolGray600, #677683);
   background-color: var(--TrueGray-White, #fff);
   &::placeholder {
     color: var(--CoolGray-CoolGray400, #9aa9b7);
+    font-weight: 400;
   }
   &:focus-visible {
     outline: 1px solid var(--CoolGray-CoolGray600, #677683);
