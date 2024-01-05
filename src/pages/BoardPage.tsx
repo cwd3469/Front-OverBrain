@@ -1,4 +1,5 @@
 import useCurrentTarget from '@/controllers/useCurrentTarget';
+import OLayout from '@components/common/OLayout';
 import TargetCard from '@components/main/TargetCard';
 
 const BoardPage = () => {
