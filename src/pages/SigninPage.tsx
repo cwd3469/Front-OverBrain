@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import OButton from '@components/common/OButton';
-import OLayout from '@components/common/OLayout';
+import OLayout from '@components/common/layout/OLayout';
 import { DefaultTextFiled } from '@components/common/textFiled';
 import { useForm, SubmitHandler } from 'react-hook-form';
 

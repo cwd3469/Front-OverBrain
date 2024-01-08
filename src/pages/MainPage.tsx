@@ -5,7 +5,9 @@ import TargetCard from '@components/main/TargetCard';
 import useCurrentTarget from '@/controllers/useCurrentTarget';
 import { MultiLineTextFiled, LabelTextFiled } from '@components/common/textFiled';
 import OButton from '@components/common/OButton';
-import OLayout from '@components/common/OLayout';
+import OLayout from '@components/common/layout/OLayout';
+import styled from '@emotion/styled';
+import OContainer from '@components/common/layout/OContainer';
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -23,20 +25,21 @@ const MainPage = () => {
   return (
     <OLayout>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <LabelTextFiled {...register('title')} placeholder="목표를 작성해 주세요." />
-        <MultiLineTextFiled
-          {...register('contents')}
-          placeholder="구체적으로 작성해 주세요."
-          style={{
-            width: '100%',
-            height: '20.25em',
-            border: 'none',
-            resize: 'none',
-          }}
-        />
-        <LabelTextFiled {...register('startAt')} type="date" label="시작 날짜" />
-        <LabelTextFiled {...register('endAt')} type="date" label="끝 날짜" />
-        <OButton type="submit">저장</OButton>
+        <MainPageSelect>
+          <LabelTextFiled {...register('title')} placeholder="목표를 작성해 주세요." />
+          <MultiLineTextFiled
+            {...register('contents')}
+            placeholder="구체적으로 작성해 주세요."
+            style={{
+              width: '100%',
+              height: '20.25em',
+              resize: 'none',
+            }}
+          />
+          <LabelTextFiled {...register('startAt')} type="date" label="시작 날짜" />
+          <LabelTextFiled {...register('endAt')} type="date" label="끝 날짜" />
+          <OButton type="submit">저장</OButton>
+        </MainPageSelect>
       </form>
       {target.map((item, index) => {
         return <TargetCard key={index} {...item} onDelete={onDelete} />;
@@ -46,3 +49,9 @@ const MainPage = () => {
 };
 
 export default MainPage;
+
+const MainPageSelect = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--RadiusXL, 16px);
+`;

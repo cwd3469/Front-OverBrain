@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import OContainer from './OContainer';
+import { css } from '@emotion/css';
 
 export type MenuInfo = {
   name: string;
@@ -13,21 +15,21 @@ type Props = {
 const OLayout = ({ children }: Props) => {
   return (
     <Container>
-      <PageBox>{children}</PageBox>
+      <OContainer className={style}>{children}</OContainer>
     </Container>
   );
 };
 
 const Container = styled.div`
-  padding-top: 64px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
   height: 100vh;
   background: var(--CoolGray-CoolGray025, #f9fafb);
+  position: relative;
 `;
 
-const PageBox = styled.div`
+const style = css`
   border-radius: var(--RadiusXL, 16px);
   background: var(--TrueGray-White, #fff);
   padding: var(--RadiusXL, 16px) 24px;
