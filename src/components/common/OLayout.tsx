@@ -13,21 +13,24 @@ type Props = {
 const OLayout = ({ children }: Props) => {
   return (
     <Container>
-      <ContainerBody>{children}</ContainerBody>
+      <PageBox>{children}</PageBox>
     </Container>
   );
 };
 
 const Container = styled.div`
+  padding-top: 64px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: 100vh;
+  background: var(--CoolGray-CoolGray025, #f9fafb);
 `;
 
-const ContainerBody = styled.div`
-  padding: 3rem;
-  border-radius: 30px;
-  background-color: #eee;
+const PageBox = styled.div`
+  border-radius: var(--RadiusXL, 16px);
+  background: var(--TrueGray-White, #fff);
+  padding: var(--RadiusXL, 16px) 24px;
 `;
+
 export default OLayout;
