@@ -33,28 +33,52 @@
   --CoolGray-CoolGray800: #2d3e4f;
   --CoolGray-CoolGray900: #1a1e20;
 
-  /*Primary*/
-  --Function-Mint_Background: #f3fbfa;
-  --Function-Mint_Lighter: #afe9e1;
-  --Function-Mint_Light: #78ded5;
-  --Function-Mint_Default: #1abcb7;
-  --Function-Mint_Dark: #0f7675;
+  /*primary*/
+  --Function-Primary-50: #e0f4ff;
+  --Function-Primary-100: #b1e4ff;
+  --Function-Primary-200: #7cd2ff;
+  --Function-Primary-300: #43c0ff;
+  --Function-Primary-400: #00b1ff;
+  --Function-Primary-500: #00a5fd;
+  --Function-Primary-600: #0097ee;
+  --Function-Primary-700: #0084d9;
+  --Function-Primary-800: #0073c5;
+  --Function-Primary-900: #0152a2;
+  --Function-Primary: #00b1ff;
 
-  /*Secondary*/
-  --Function-Blue_Background: #f6fbfe;
-  --Function-Blue_Lighter: #99d7f2;
-  --Function-Blue_Light: #66c2eb;
-  --Function-Blue_Default: #009ade;
-  --Function-Blue_Dark: #315995;
+  /* secondary */
+  --Function-Secondary-50: #ddf7f6;
+  --Function-Secondary-100: #a9eae7;
+  --Function-Secondary-200: #6dddda;
+  --Function-Secondary-300: #00cece;
+  --Function-Secondary-400: #00c4c7;
+  --Function-Secondary-500: #00b9c1;
+  --Function-Secondary-600: #00a9af;
+  --Function-Secondary-700: #009496;
+  --Function-Secondary-800: #00807f;
+  --Function-Secondary-900: #005c55;
+  --Function-Secondary: #00cece;
 
-  /*Danger*/
-  --Function-Red_Default: #f15050;
+  /* info */
+  --Function-info-50: #e0f4ff;
+  --Function-info-500: #00b1ff;
+  --Function-info-700: #0084d9;
+  --Function-info: #00b1ff;
 
-  /*Orange*/
-  --Function-Orange_Lighter: #fbe1d0;
+  /* success */
+  --Function-Success-50: #e5f5ed;
+  --Function-Success-400: #45b889;
+  --Function-Success-700: #008a5c;
+  --Function-Success: #45b889;
 
-  /*Green */
-  --Function-Green_Default: #49c834;
-  --Function-Green_Dark: #109138;
-  --Function-Green_Lighter: #d7f4e3;
+  /* warning */
+  --Function-Warning-50: #fff3e1;
+  --Function-Warning-300: #ffb855;
+  --Function-Warning-500: #ff8e1c;
+  --Function-Warning: #ffb855;
+
+  /* error */
+  --Function-Error-50: #fff3f4;
+  --Function-Error-300: #ff6560;
+  --Function-Error-400: #ee2c23;
 }
