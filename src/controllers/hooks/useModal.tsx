@@ -1,30 +1,43 @@
-import { Dialog } from '@headlessui/react';
-import { useState } from 'react';
+import { ModalView } from '@/components/modal/ModalView';
+import { ModalInfo } from '@/interface/modal';
+import { ReactNode, useState } from 'react';
+import ReactDOM from 'react-dom';
 
-type ModalProps = {
-  key: string;
-  title: string;
-  description?: string;
-  context?: React.ReactNode;
+interface Props {
+  info: Map<string, ModalInfo>;
+}
+
+interface Return {
+  setModalName: (name: string) => void;
+  modal: ReactNode;
+  modalName: string;
+  modalCycle: (name: string) => 'unMount' | 'mount';
+  isModalMount: boolean;
+}
+
+export const ModalPortal = ({ children }: { children: ReactNode }) => {
+  const el = document.getElementById('modal');
+  const component = el as Element;
+  return ReactDOM.createPortal(children, component);
 };
 
-type Props = {
-  entryKey: (key: string) => void;
-  modalList?: ModalProps[];
-};
+const useModal = ({ info }: Props): Return => {
+  const [modalName, setName] = useState<string>('');
 
-const useModal = (props: Props) => {
-  let [isOpen, setIsOpen] = useState(true);
-
-  const modal = (
-    <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
-      <Dialog.Panel>
-        <Dialog.Title>Deactivate account</Dialog.Title>
-        <Dialog.Description>This will permanently deactivate your account</Dialog.Description>
-      </Dialog.Panel>
-    </Dialog>
+  const value = info.get(modalName);
+  const modal = value ? (
+    <ModalPortal>
+      <ModalView {...value} onClose={() => setName('')} />
+    </ModalPortal>
+  ) : (
+    <></>
   );
-  return <div></div>;
+
+  const setModalName = (name: string) => setName(name);
+  const modalCycle = (name: string) => (modalName === name ? 'mount' : 'unMount');
+  const isModalMount = value ? true : false;
+
+  return { modal, setModalName, modalName, modalCycle, isModalMount };
 };
 
 export default useModal;
