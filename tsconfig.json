@@ -5,7 +5,6 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "types": ["node"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -14,18 +13,22 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+
     /* Linting */
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
+      "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
-      "@/*": ["src/*"]
+      "@pages/*": ["src/pages/*"],
+      "@controllers/*": ["src/controllers/*"],
+      "@service/*": ["src/service/*"]
     }
   },
   "plugins": ["require('@tailwindcss/forms')"],
-  "include": ["src", "svg.d.ts"],
+  "include": ["src", "svg.d.ts", "**/*.ts", "**/*.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

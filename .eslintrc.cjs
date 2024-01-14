@@ -4,15 +4,12 @@ module.exports = {
     browser: true,
     es2020: true,
   },
+  settings: { react: { version: 'detect' } },
   extends: [
-    // 'airbnb',
-    // 'airbnb-typescript',
-    // 'airbnb/hooks',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
     'plugin:react/recommended',
-    'plugin:prettier/recommended',
     'prettier',
   ],
   overrides: [
@@ -27,7 +24,7 @@ module.exports = {
     },
   ],
   parser: '@typescript-eslint/parser',
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'generatedBarrels.cjs'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
