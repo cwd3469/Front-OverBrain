@@ -1,6 +1,7 @@
 import { DefaultTextFiled, MessageBox, type DefaultTextFiledProps, type MessageBoxProps } from './DefaultTextFiled';
 import styled from '@emotion/styled';
 import IcRequire from '@/assets/svg/ic_require.svg?react';
+import { forwardRef } from 'react';
 
 type Props = DefaultTextFiledProps &
   MessageBoxProps & {
@@ -9,19 +10,19 @@ type Props = DefaultTextFiledProps &
   };
 
 /**상태 메시지 */
-const LabelTextFiled = ({ label, message, require, ...props }: Props) => {
-  return (
-    <Container>
-      {label && (
-        <LabelName>
-          {label} {require && <IcRequire />}
-        </LabelName>
-      )}
-      <DefaultTextFiled {...props} />
-      <MessageBox message={message} />
-    </Container>
-  );
-};
+const LabelTextFiled = forwardRef<HTMLDivElement, Props>(({ label, message, require, ...props }, ref) => (
+  <Container ref={ref}>
+    {label && (
+      <LabelName>
+        {label} {require && <IcRequire />}
+      </LabelName>
+    )}
+    <DefaultTextFiled {...props} />
+    <MessageBox message={message} />
+  </Container>
+));
+
+LabelTextFiled.displayName = 'LabelTextFiled';
 
 const Container = styled.div`
   display: flex;

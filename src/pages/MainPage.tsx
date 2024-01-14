@@ -8,6 +8,7 @@ import OButton from '@components/common/OButton';
 import OLayout from '@components/common/layout/OLayout';
 import styled from '@emotion/styled';
 import OContainer from '@components/common/layout/OContainer';
+import { useEffect } from 'react';
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -22,33 +23,36 @@ const MainPage = () => {
 
   const handleStartPage = () => navigate('/board');
 
+  useEffect(() => {
+    console.log(target);
+  }, [target]);
+
   return (
     <OLayout>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <MainPageSelect>
-          <LabelTextFiled {...register('title')} placeholder="목표를 작성해 주세요." />
-          <MultiLineTextFiled
-            {...register('contents')}
-            placeholder="구체적으로 작성해 주세요."
-            style={{
-              width: '100%',
-              height: '20.25em',
-              resize: 'none',
-            }}
-          />
-          <LabelTextFiled {...register('startAt')} type="date" label="시작 날짜" />
-          <LabelTextFiled {...register('endAt')} type="date" label="끝 날짜" />
-          <OButton type="submit">저장</OButton>
-        </MainPageSelect>
-      </form>
-      {target.map((item, index) => {
-        return <TargetCard key={index} {...item} onDelete={onDelete} />;
-      })}
+      <MainContainer>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <MainPageSelect>
+            <LabelTextFiled {...register('title')} placeholder="목표를 작성해 주세요." />
+            <MultiLineTextFiled {...register('contents')} placeholder="구체적으로 작성해 주세요." />
+            <LabelTextFiled {...register('startAt')} type="date" label="시작 날짜" />
+            <LabelTextFiled {...register('endAt')} type="date" label="끝 날짜" />
+            <OButton type="submit">저장</OButton>
+          </MainPageSelect>
+        </form>
+        {target.map((item, index) => {
+          return <TargetCard key={index} {...item} onDelete={onDelete} />;
+        })}
+      </MainContainer>
     </OLayout>
   );
 };
 
 export default MainPage;
+
+const MainContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const MainPageSelect = styled.div`
   display: flex;

@@ -4,6 +4,7 @@ import ic_reset_datepicker from '@/assets/svg/ic_reset_datepicker.svg';
 import { DefaultTextFiled, type DefaultTextFiledProps } from './DefaultTextFiled';
 import styled from '@emotion/styled';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { forwardRef } from 'react';
 
 type SearchTextFiledProps = DefaultTextFiledProps & { onSearch?: SubmitHandler<Inputs> };
 
@@ -11,7 +12,7 @@ type Inputs = {
   search: string;
 };
 
-const SearchTextFiled = ({ onSearch, ...props }: SearchTextFiledProps) => {
+const SearchTextFiled = forwardRef<HTMLFormElement, SearchTextFiledProps>(({ onSearch, ...props }, ref) => {
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
@@ -21,7 +22,7 @@ const SearchTextFiled = ({ onSearch, ...props }: SearchTextFiledProps) => {
   };
 
   return (
-    <SearchForm onSubmit={onSearch && handleSubmit(onSubmit)}>
+    <SearchForm onSubmit={onSearch && handleSubmit(onSubmit)} ref={ref}>
       <DefaultTextFiled
         className={style}
         style={{ paddingLeft: '36px' }}
@@ -33,8 +34,8 @@ const SearchTextFiled = ({ onSearch, ...props }: SearchTextFiledProps) => {
       <SearchBtn>검색</SearchBtn>
     </SearchForm>
   );
-};
-
+});
+SearchTextFiled.displayName = 'SearchTextFiled';
 export default SearchTextFiled;
 
 const SearchForm = styled.form`

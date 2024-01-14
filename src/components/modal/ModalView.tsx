@@ -73,7 +73,7 @@ const MaskBodyContent = styled.div<ModalBodyContentType>`
   background-color: white;
   padding: 1rem;
   height: auto;
-  width: ${(props) => (props.width ? props.width : '320px')};
+  width: ${(props: ModalBodyContentType) => (props.width ? props.width : '320px')};
   border-radius: var(--RadiusLG, 8px);
   padding: 24px;
   display: flex;
@@ -88,7 +88,7 @@ const ModalHeader = styled.div<ModalLayoutType>`
   font-weight: 700;
   line-height: 24px; /* 150% */
   display: flex;
-  justify-content: ${(props) => (props.type === 'left-head' ? 'start' : 'center')};
+  justify-content: ${(props: ModalLayoutType) => (props.type === 'left-head' ? 'start' : 'center')};
 `;
 
 const ModalBody = styled.div`
@@ -124,7 +124,8 @@ const ModalFooterBtn = styled.button<ModalFooterBtnType>`
   padding: 8px 16px;
   line-height: 24px;
   border-radius: var(--RadiusSM, 4px);
-  background-color: ${(props) => (props.bgColor ? props.bgColor : 'var(--Function-MintDefault, #1abcb7)')};
+  background-color: ${(props: ModalFooterBtnType) =>
+    props.bgColor ? props.bgColor : 'var(--Function-MintDefault, #1abcb7)'};
   color: #fff;
   width: 120px;
   :disabled {
@@ -140,7 +141,7 @@ const ModalFooterCloseBtn = styled.button<ModalFooterBtnType>`
   line-height: 24px;
   border-radius: var(--RadiusMD, 6px);
   border: 1px solid var(--CoolGray-CoolGray400, #9aa9b7);
-  background-color: ${(props) => (props.bgColor ? props.bgColor : 'var(--TrueGray-White, #fff)')};
+  background-color: ${(props: ModalFooterBtnType) => (props.bgColor ? props.bgColor : 'var(--TrueGray-White, #fff)')};
   width: 120px;
   :disabled {
     background-color: var(--TrueGray-Gray100, #f0f0f0);
