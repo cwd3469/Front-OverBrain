@@ -6,6 +6,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainPage from '@/pages/MainPage';
 import SigninPage from '@/pages/SigninPage';
 import BoardPage from '@/pages/BoardPage';
+import { ThemeProvider } from '@emotion/react';
+import { theme } from './styles/theme';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>,
 );
