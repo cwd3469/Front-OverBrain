@@ -29,6 +29,7 @@ const MainPage = () => {
 
   return (
     <OLayout>
+      <MainTypography>원하는 목표를 입력해 주세요.</MainTypography>
       <MainContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
           <MainPageSelect>
@@ -58,4 +59,8 @@ const MainPageSelect = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--RadiusXL, 16px);
+`;
+
+const MainTypography = styled.div`
+  ${(props) => props.theme.typography.H1_Headline_32_B}
 `;
