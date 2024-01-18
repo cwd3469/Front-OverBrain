@@ -1,4 +1,4 @@
-import useCurrentTarget from '@/controllers/useCurrentTarget';
+import useCurrentTarget from '@/components/stores/useCurrentTarget';
 import OLayout from '@components/common/layout/OLayout';
 import TargetCard from '@components/main/TargetCard';
 

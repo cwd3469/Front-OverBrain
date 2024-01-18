@@ -1,4 +1,4 @@
-import useModal from '@/controllers/hooks/useModal';
+import useModal from '@/hooks/useModal';
 import { useForm } from 'react-hook-form';
 import { DefaultTextFiled, AuthTextFiled } from '@components/common/textFiled';
 import styled from '@emotion/styled';
