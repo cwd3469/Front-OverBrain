@@ -1,4 +1,15 @@
-export const colors = {
+type PaletteKey = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'gray';
+type Palette = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | 'default';
+
+type PaletteValue = {
+  [key in Palette]?: string;
+};
+
+export type PaletteValueKey = {
+  [key in PaletteKey]: PaletteValue;
+};
+
+export const palette: PaletteValueKey = {
   primary: {
     50: '#E0F4FF',
     100: '#B1E4FF',
@@ -45,7 +56,7 @@ export const colors = {
     300: '#FF6560',
     400: '#EE2C23',
   },
-  wGray: {
+  gray: {
     50: '#FAFAFA',
     100: '#F5F5F5',
     200: '#EEEEEE',
