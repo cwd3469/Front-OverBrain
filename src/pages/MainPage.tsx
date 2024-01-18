@@ -4,10 +4,9 @@ import { Target } from '@/types/main';
 import TargetCard from '@components/main/TargetCard';
 import useCurrentTarget from '@/components/stores/useCurrentTarget';
 import { MultiLineTextFiled, LabelTextFiled } from '@components/common/textFiled';
-import OButton from '@components/common/OButton';
+import OButton from '@components/common/button/OButton';
 import OLayout from '@components/common/layout/OLayout';
 import styled from '@emotion/styled';
-import OContainer from '@components/common/layout/OContainer';
 import { useEffect } from 'react';
 
 const MainPage = () => {

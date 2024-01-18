@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { collection, addDoc, getDocs, DocumentData } from 'firebase/firestore';
 import FirebaseConfig from '@/utils/firebase';
-import LPButton from '../common/OButton';
+import LPButton from '../common/button/OButton';
 import { DefaultTextFiled } from '@components/common/textFiled';
 const { db } = FirebaseConfig();
 
