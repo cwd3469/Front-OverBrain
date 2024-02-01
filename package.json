@@ -24,6 +24,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.2",
     "react-is": "^18.2.0",
+    "react-perfect-scrollbar": "^1.5.8",
     "react-router-dom": "^6.21.1",
     "react-timer-hook": "^3.0.7",
     "sort-by": "^1.2.0",
