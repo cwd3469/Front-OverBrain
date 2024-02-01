@@ -1,22 +1,16 @@
-import { ReactNode } from 'react';
-
 import styled from '@emotion/styled';
 
 interface TableBodyProps {
-  children: ReactNode;
+  viewSize?: number;
 }
 
-export default function TableBody({ children }: TableBodyProps) {
-  return <TableBodyWrapper>{children}</TableBodyWrapper>;
-}
-
-const TableBodyWrapper = styled.tbody`
+const TableBody = styled.div<TableBodyProps>`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
   align-self: stretch;
-
+  max-height: ${(props) => (props.viewSize ? `${49 * props.viewSize}px` : 'auto')};
   color: var(--gray-cool-700, #4e5962);
-  ${(props) => props.theme.typography.body2}
+  ${(props) => props.theme.typography.B2_Body_16_B}
 `;
+export default TableBody;

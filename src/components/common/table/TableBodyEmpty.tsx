@@ -1,19 +1,17 @@
+import { ReactNode } from 'react';
+import styled from '@emotion/styled';
 import SeachCircleIcon from '../../assets/svg/ic_search_circle.svg?react';
 
-import styled from '@emotion/styled';
-
 interface TableBodyEmpty {
-  isSearch: boolean;
+  children: ReactNode;
+  isSearch?: boolean;
 }
 
-const EMPTY_ACCOUNT_LIST = '등록된 계정이 없습니다.';
-const EMPTY_SEACTH_RESULT_LIST = '검색 결과가 없습니다.';
-
-export function TableBodyEmpty({ isSearch }: TableBodyEmpty) {
+export function TableBodyEmpty({ isSearch = false, children }: Readonly<TableBodyEmpty>) {
   return (
     <TableBodyEmptyWrapper>
       {isSearch && <SeachCircleIcon width={'80px'} height={'80px'} />}
-      <Label>{isSearch ? EMPTY_SEACTH_RESULT_LIST : EMPTY_ACCOUNT_LIST}</Label>
+      {children}
     </TableBodyEmptyWrapper>
   );
 }
@@ -26,9 +24,7 @@ const TableBodyEmptyWrapper = styled.div`
   align-items: center;
   gap: var(--radius-xl, 16px);
   align-self: stretch;
-`;
 
-const Label = styled.label`
   color: var(--gray-cool-300, #b4bfc8);
-  ${(props) => props.theme.typography.h3}
+  ${(props) => props.theme.typography.B3_Body_16_SB}
 `;

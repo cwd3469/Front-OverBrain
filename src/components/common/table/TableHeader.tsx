@@ -1,30 +1,30 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 
 import styled from '@emotion/styled';
 
 interface TableHeaderProps {
   children: ReactNode;
+  rowStyle?: CSSProperties;
 }
 
-function TableHeader({ children }: TableHeaderProps) {
+function TableHeader({ children, rowStyle }: TableHeaderProps) {
   return (
     <TableHeaderWrapper>
-      <TableHeaderRow>{children}</TableHeaderRow>
+      <TableHeaderRow style={rowStyle}>{children}</TableHeaderRow>
     </TableHeaderWrapper>
   );
 }
 
-const TableHeaderWrapper = styled.thead`
+const TableHeaderWrapper = styled.div`
   display: flex;
   height: 40px;
   align-items: center;
   align-self: stretch;
 
-  border-radius: var(--radius-sm, 4px);
   border-bottom: 1px solid var(--gray-cool-100, #e6eaec);
 `;
 
-const TableHeaderRow = styled.tr`
+const TableHeaderRow = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
@@ -34,7 +34,7 @@ const TableHeaderRow = styled.tr`
   ${(props) => props.theme.typography.label3}
 `;
 
-const HeaderCell = styled.th<{ width: string }>`
+const HeaderCell = styled.div<{ width: string }>`
   display: flex;
   width: ${({ width }) => width};
   justify-content: center;

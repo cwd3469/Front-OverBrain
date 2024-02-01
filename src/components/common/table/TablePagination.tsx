@@ -2,10 +2,14 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 
-import PagePrev from '../../assets/svg/Page_prev.svg?react';
-import PageStart from '../../assets/svg/Page_start.svg?react';
-import PageNext from '../../assets/svg/Page_next.svg?react';
-import PageEnd from '../../assets/svg/Page_end.svg?react';
+import PageStartIcon from '../../assets/svg/ic_paging_bracket_start.svg';
+import PageStartDisIcon from '../../assets/svg/ic_paging_bracket_start_disable.svg';
+import PagePrevIcon from '../../assets/svg/ic_paging_bracket_prev.svg';
+import PagePrevDisIcon from '../../assets/svg/ic_paging_bracket_prev_disable.svg';
+import PageNextIcon from '../../assets/svg/ic_paging_bracket_next.svg';
+import PageNextDisIcon from '../../assets/svg/ic_paging_bracket_next_disable.svg';
+import PageEndIcon from '../../assets/svg/ic_paging_bracket_end.svg';
+import PageEndDisIcon from '../../assets/svg/ic_paging_bracket_end_disable.svg';
 
 interface TablePaginationProps {
   page: number;
@@ -14,11 +18,11 @@ interface TablePaginationProps {
   onChangePage: (page: number) => void;
 }
 
-//TODO (1) icon button disabled 조건
 export function TablePagination(props: TablePaginationProps) {
   const [buttons, setButtons] = useState<Array<number>>([]);
   const index = getIndex(props.page, props.limit);
   const group = getGroup(props.page, props.limit);
+  const lastGroup = getGroup(props.total - 1, props.limit);
 
   useEffect(() => {
     const newButtons = makeButtons({ group: group, total: props.total, limit: props.limit });
@@ -61,38 +65,37 @@ export function TablePagination(props: TablePaginationProps) {
     }
   };
 
+  //TODO Page가 1인 경우 버튼 선택 or default 인지 확인 필요
   return (
-    <Center>
-      <TablePaginationWrapper>
-        <PageButton onClick={handlePageStartClick} disabled={group === 0}>
-          <PageStart width={'8px'} height={'8px'} />
-        </PageButton>
-        <PageButton onClick={handlePagePrevClick}>
-          <PagePrev width={'8px'} height={'8px'} />
-        </PageButton>
-        {buttons.length !== 0 ? (
-          buttons.map((page) => {
-            return (
-              <PageButton
-                key={page}
-                isSelected={getIndex(page, props.limit) === index}
-                onClick={() => handlePageClick(page)}
-              >
-                {page + 1}
-              </PageButton>
-            );
-          })
-        ) : (
-          <PageButton disabled>{1}</PageButton>
-        )}
-        <PageButton onClick={handlePageNextClick}>
-          <PageNext width={'8px'} height={'8px'} />
-        </PageButton>
-        <PageButton onClick={handlePageEndClick}>
-          <PageEnd width={'8px'} height={'8px'} />
-        </PageButton>
-      </TablePaginationWrapper>
-    </Center>
+    <TablePaginationWrapper>
+      <PageButton onClick={handlePageStartClick} disabled={group === 0}>
+        <Icon src={group !== 0 ? PageStartIcon : PageStartDisIcon} alt="처음페이지로 가기" />
+      </PageButton>
+      <PageButton onClick={handlePagePrevClick}>
+        <Icon src={group !== 0 ? PagePrevIcon : PagePrevDisIcon} alt="이전페이지그룹 가기" />
+      </PageButton>
+      {buttons.length !== 0 ? (
+        buttons.map((page) => {
+          return (
+            <PageButton
+              key={page}
+              isSelected={getIndex(page, props.limit) === index}
+              onClick={() => handlePageClick(page)}
+            >
+              {page + 1}
+            </PageButton>
+          );
+        })
+      ) : (
+        <PageButton disabled>{1}</PageButton>
+      )}
+      <PageButton onClick={handlePageNextClick}>
+        <Icon src={group !== lastGroup ? PageNextIcon : PageNextDisIcon} alt="다음페이지그룹 가기" />
+      </PageButton>
+      <PageButton onClick={handlePageEndClick}>
+        <Icon src={group !== lastGroup ? PageEndIcon : PageEndDisIcon} alt="마지막페이지로 가기" />
+      </PageButton>
+    </TablePaginationWrapper>
   );
 }
 
@@ -104,12 +107,10 @@ const getGroup = (page: number, limit: number) => {
   return Math.floor(page / limit);
 };
 
-const Center = styled.div`
-  display: flex;
-  width: 100%;
-  // 가운데 정렬 후 드롭박스's width(80px) 적용
-  padding-right: 80px;
-  justify-content: center;
+const Icon = styled.img`
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
 `;
 
 const TablePaginationWrapper = styled.ul`
