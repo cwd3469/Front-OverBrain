@@ -2,7 +2,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Target } from '@/types/main';
 import TargetCard from '@components/main/TargetCard';
-import useCurrentTarget from '@/components/stores/useCurrentTarget';
+import useCurrentTarget from '@/stores/useCurrentTarget';
 import { MultiLineTextFiled, LabelTextFiled } from '@components/common/textFiled';
 import OButton from '@components/common/button/OButton';
 import OLayout from '@components/common/layout/OLayout';
