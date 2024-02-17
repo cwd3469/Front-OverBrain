@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import MainLayout from './pages/layout/MainLayout';
+import ButtonDesign from './pages/design/ButtonDesign';
 
 const App = () => {
   return (
@@ -9,7 +10,9 @@ const App = () => {
         <Route element={<MainLayout />}>
           <Route path="/" element={<MainPage />} />
         </Route>
-        <Route></Route>
+        <Route path="/design">
+          <Route path="button" element={<ButtonDesign />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

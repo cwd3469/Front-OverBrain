@@ -167,5 +167,5 @@ const TableBody = styled.div<{ viewSize?: number }>`
   align-self: stretch;
   max-height: ${(props) => (props.viewSize ? `${49 * props.viewSize}px` : 'auto')};
   color: var(--gray-cool-700, #4e5962);
-  ${(props) => props.theme.typography.body2}
+  ${(props) => props.theme.typography.B2_Body_16_B}
 `;
