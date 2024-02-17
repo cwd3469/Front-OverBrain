@@ -5,7 +5,6 @@ import TargetCard from '@components/main/TargetCard';
 import useCurrentTarget from '@/stores/useCurrentTarget';
 import { MultiLineTextFiled, LabelTextFiled } from '@components/common/textFiled';
 import OButton from '@components/common/button/OButton';
-import OLayout from '@components/common/layout/OLayout';
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
 
@@ -27,7 +26,7 @@ const MainPage = () => {
   }, [target]);
 
   return (
-    <OLayout>
+    <>
       <MainTypography>원하는 목표를 입력해 주세요.</MainTypography>
       <MainContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -43,7 +42,7 @@ const MainPage = () => {
           return <TargetCard key={index} {...item} onDelete={onDelete} />;
         })}
       </MainContainer>
-    </OLayout>
+    </>
   );
 };
 

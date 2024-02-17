@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import OContainer from './OContainer';
 import { css } from '@emotion/css';
+import { Outlet } from 'react-router-dom';
 
 export type MenuInfo = {
   name: string;
@@ -8,14 +8,12 @@ export type MenuInfo = {
   icons: React.ReactNode;
 };
 
-type Props = {
-  children?: React.ReactNode;
-};
-
-const OLayout = ({ children }: Props) => {
+const MainLayout = () => {
   return (
     <Container>
-      <OContainer className={style}>{children}</OContainer>
+      <ContentsBox className={style}>
+        <Outlet />
+      </ContentsBox>
     </Container>
   );
 };
@@ -35,4 +33,15 @@ const style = css`
   padding: var(--RadiusXL, 16px) 24px;
 `;
 
-export default OLayout;
+const ContentsBox = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1180px;
+  @media screen and (max-width: 1180px) {
+    width: 100%;
+  }
+`;
+
+export default MainLayout;
