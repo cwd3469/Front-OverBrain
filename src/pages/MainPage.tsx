@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Target } from '@/types/main';
 import TargetCard from '@components/main/TargetCard';
 import useCurrentTarget from '@/stores/useCurrentTarget';
-import { MultiLineTextFiled, LabelTextFiled } from '@components/common/textFiled';
+import { MultiLineTextField, LabelTextField } from '@components/common/textFiled';
 import OButton from '@components/common/button/OButton';
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
@@ -31,10 +31,10 @@ const MainPage = () => {
       <MainContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
           <MainPageSelect>
-            <LabelTextFiled {...register('title')} placeholder="목표를 작성해 주세요." />
-            <MultiLineTextFiled {...register('contents')} placeholder="구체적으로 작성해 주세요." />
-            <LabelTextFiled {...register('startAt')} type="date" label="시작 날짜" />
-            <LabelTextFiled {...register('endAt')} type="date" label="끝 날짜" />
+            <LabelTextField {...register('title')} placeholder="목표를 작성해 주세요." />
+            <MultiLineTextField {...register('contents')} placeholder="구체적으로 작성해 주세요." />
+            <LabelTextField {...register('startAt')} type="date" label="시작 날짜" />
+            <LabelTextField {...register('endAt')} type="date" label="끝 날짜" />
             <OButton type="submit">저장</OButton>
           </MainPageSelect>
         </form>

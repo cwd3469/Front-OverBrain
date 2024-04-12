@@ -1,6 +1,6 @@
 import { Target } from '@/types/main';
 import OCard from '@components/common/OCard';
-import { MultiLineTextFiled } from '@components/common/textFiled';
+import { MultiLineTextField } from '@components/common/textFiled';
 import dayjs from 'dayjs';
 type Props = Target & {
   onDelete: (id: string) => void;
@@ -19,7 +19,7 @@ const TargetCard = ({ title, contents, createdAt, endAt, startAt, modifyAt, onDe
   return (
     <OCard>
       <button onClick={onDeleteBtn}>X</button>
-      <MultiLineTextFiled
+      <MultiLineTextField
         value={contents}
         disabled
         style={{

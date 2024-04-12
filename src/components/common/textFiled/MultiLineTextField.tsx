@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const MultiLineTextFiled = styled.textarea`
+const MultiLineTextField = styled.textarea`
   //layout
   display: flex;
   padding: 12px 16px;
@@ -31,4 +31,4 @@ const MultiLineTextFiled = styled.textarea`
   }
 `;
 
-export default MultiLineTextFiled;
+export default MultiLineTextField;
