@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import OContainer from './OContainer';
 import { css } from '@emotion/css';
 
 export type MenuInfo = {
@@ -10,12 +9,15 @@ export type MenuInfo = {
 
 type Props = {
   children?: React.ReactNode;
+  width?: string;
 };
 
-const OLayout = ({ children }: Props) => {
+const OLayout = ({ children, width }: Props) => {
   return (
     <Container>
-      <OContainer className={style}>{children}</OContainer>
+      <Card className={style} width={width}>
+        {children}
+      </Card>
     </Container>
   );
 };
@@ -33,6 +35,17 @@ const style = css`
   border-radius: var(--RadiusXL, 16px);
   background: var(--TrueGray-White, #fff);
   padding: var(--RadiusXL, 16px) 24px;
+`;
+
+const Card = styled.div<{ width?: string }>`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: ${(props) => props.width ?? '768px'};
+  @media screen and (max-width: 1180px) {
+    width: 100%;
+  }
 `;
 
 export default OLayout;
