@@ -391,6 +391,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emotion/eslint-plugin@npm:^11.11.0":
+  version: 11.11.0
+  resolution: "@emotion/eslint-plugin@npm:11.11.0"
+  peerDependencies:
+    eslint: 6 || 7 || 8
+  checksum: 291c47054c6c24e34ce70d1d6d5e28bcc2b8e5d47cd3da72a4ad0401a28a24fa0720d8b9a02ca7d0ce0069f2f7a200966ea4eb3403649868f13c18fe08300648
+  languageName: node
+  linkType: hard
+
 "@emotion/hash@npm:^0.9.1":
   version: 0.9.1
   resolution: "@emotion/hash@npm:0.9.1"
@@ -4757,6 +4766,7 @@ __metadata:
   resolution: "over-brain@workspace:."
   dependencies:
     "@emotion/css": "npm:^11.11.2"
+    "@emotion/eslint-plugin": "npm:^11.11.0"
     "@emotion/react": "npm:^11.11.3"
     "@emotion/styled": "npm:^11.11.0"
     "@headlessui/react": "npm:^1.7.17"

@@ -30,8 +30,9 @@ module.exports = {
     sourceType: 'module',
     project: ['./tsconfig.json'],
   },
-  plugins: ['@typescript-eslint', 'react', 'prettier'],
+  plugins: ['@typescript-eslint', 'react', 'prettier', '@emotion'],
   rules: {
+    '@emotion/jsx-import': 'error',
     'react/react-in-jsx-scope': 'off', // React 17 버전 이후 Import React from 'react' 없이도 코드 작성 가능
     'no-use-before-define': 'off', // emotion css를 컴포넌트 파일 하단에서 관리하므로 off
     '@typescript-eslint/no-use-before-define': 'off', // emotion css를 컴포넌트 파일 하단에서 관리하므로 off

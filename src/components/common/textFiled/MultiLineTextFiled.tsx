@@ -1,6 +1,11 @@
 import styled from '@emotion/styled';
 
-const MultiLineTextFiled = styled.textarea`
+type Props = {
+  height?: string;
+  width?: string;
+};
+
+const MultiLineTextFiled = styled.textarea<Props>`
   //layout
   display: flex;
   padding: 12px 16px;
@@ -8,8 +13,8 @@ const MultiLineTextFiled = styled.textarea`
   font-size: 14px;
   line-height: 20px;
   // resize 고정
-  width: 100%;
-  height: 128px;
+  width: ${(props) => props.width ?? '100%'};
+  height: ${(props) => props.height ?? '128px'};
   border: none;
   resize: none;
   //style

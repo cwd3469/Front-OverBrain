@@ -27,6 +27,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["@emotion/css", "npm:11.11.2"],\
+          ["@emotion/eslint-plugin", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:11.11.0"],\
           ["@emotion/react", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:11.11.3"],\
           ["@emotion/styled", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:11.11.0"],\
           ["@headlessui/react", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:1.7.17"],\
@@ -536,6 +537,28 @@ const RAW_RUNTIME_STATE =
           ["@emotion/serialize", "npm:1.1.3"],\
           ["@emotion/sheet", "npm:1.2.2"],\
           ["@emotion/utils", "npm:1.2.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@emotion/eslint-plugin", [\
+      ["npm:11.11.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/@emotion-eslint-plugin-npm-11.11.0-27e29c96e4-10c0.zip/node_modules/@emotion/eslint-plugin/",\
+        "packageDependencies": [\
+          ["@emotion/eslint-plugin", "npm:11.11.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:11.11.0", {\
+        "packageLocation": "./.yarn/__virtual__/@emotion-eslint-plugin-virtual-d978979bc8/4/.yarn/berry/cache/@emotion-eslint-plugin-npm-11.11.0-27e29c96e4-10c0.zip/node_modules/@emotion/eslint-plugin/",\
+        "packageDependencies": [\
+          ["@emotion/eslint-plugin", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:11.11.0"],\
+          ["@types/eslint", null],\
+          ["eslint", "npm:8.55.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/eslint",\
+          "eslint"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -6394,6 +6417,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["over-brain", "workspace:."],\
           ["@emotion/css", "npm:11.11.2"],\
+          ["@emotion/eslint-plugin", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:11.11.0"],\
           ["@emotion/react", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:11.11.3"],\
           ["@emotion/styled", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:11.11.0"],\
           ["@headlessui/react", "virtual:8a1108f98001cd4e7757a22a75c1e2d8e0368767ea3fa03af8e3a282bc6e94e70faee74cd3b8a4098c52740ac9103ef2cb0ede5a49b5d7200713346e96a2fbad#npm:1.7.17"],\
