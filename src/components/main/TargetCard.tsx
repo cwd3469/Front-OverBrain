@@ -4,39 +4,37 @@ import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 type Props = Target & {
   onDelete?: (id: string) => void;
+  id?: string;
 };
 
-const TargetCard = ({ title, contents, createdAt, endAt, startAt, modifyAt, onDelete, id }: Props) => {
-  const dayFormat = (date: Date) => {
-    const formatting = 'YYYY-MM-DD';
-    return dayjs(date).format(formatting);
-  };
-  const createdDate = createdAt && dayFormat(createdAt);
-  const endDate = dayFormat(endAt);
-  const startDate = dayFormat(startAt);
-  const modifyDate = modifyAt && dayFormat(modifyAt);
-  const onDeleteBtn = onDelete && (() => onDelete(id));
+const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, id }: Props) => {
+  const dayFormat = (date: Date) => dayjs(date).format('YYYY-MM-DD');
+  const onDeleteBtn = onDelete && id ? () => onDelete(id) : undefined;
 
   return (
     <Card>
       <h3 className="title">{title}</h3>
       {onDeleteBtn ? <button onClick={onDeleteBtn}>X</button> : ''}
       <MultiLineTextFiled value={contents} disabled height="100px" />
-      {createdDate && (
+      {createdAt && (
         <Item>
           <div className="th">생성 날짜 :</div>
-          <p className="td">{createdDate}</p>
+          <p className="td">{dayFormat(createdAt)}</p>
         </Item>
       )}
-      <Item>
-        <div className="th">시작 날짜 :</div>
-        <p className="td">{startDate}</p>
-      </Item>
-      <Item>
-        <div className="th">끝 날짜 :</div>
-        <p className="td">{endDate}</p>
-      </Item>
-      {modifyDate && <p>{modifyDate}</p>}
+      {endAt && (
+        <Item>
+          <div className="th">시작 날짜 :</div>
+          <p className="td">{dayFormat(endAt)}</p>
+        </Item>
+      )}
+
+      {startAt && (
+        <Item>
+          <div className="th">끝 날짜 :</div>
+          <p className="td">{dayFormat(startAt)}</p>
+        </Item>
+      )}
     </Card>
   );
 };

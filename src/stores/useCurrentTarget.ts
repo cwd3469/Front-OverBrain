@@ -1,4 +1,4 @@
-import { Target } from '@/types/main';
+import { CoreTarget } from '@/types/main';
 import { create } from 'zustand';
 
 export type CreateTargetType = {
@@ -9,7 +9,7 @@ export type CreateTargetType = {
 };
 
 type State = {
-  target: Target[];
+  target: CoreTarget[];
 };
 
 type Action = {
@@ -30,7 +30,7 @@ const useCurrentTarget = create<State & Action>()((set) => ({
       if (!contents || !title || !endAt || !startAt) return state;
       const createdAt = new Date();
       const id = newID();
-      const newTarget: Target = { id, title, contents, createdAt, startAt, endAt };
+      const newTarget: CoreTarget = { id, title, contents, createdAt, startAt, endAt };
       const newTargetList = [...oldTargetList, newTarget];
       const newState = { ...state, target: newTargetList };
       return newState;
