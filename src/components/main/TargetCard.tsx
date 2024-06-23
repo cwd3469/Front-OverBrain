@@ -15,7 +15,7 @@ const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, id }
     <Card>
       <h3 className="title">{title}</h3>
       {onDeleteBtn ? <button onClick={onDeleteBtn}>X</button> : ''}
-      <MultiLineTextFiled value={contents} disabled height="100px" />
+      <MultiLineTextFiled value={contents} disabled height="70px" />
       {createdAt && (
         <Item>
           <div className="th">생성 날짜 :</div>

@@ -25,7 +25,14 @@ const MainPage = () => {
 
   const handleSetDetailTarget: SubmitHandler<Target> = (detail: Target) => {
     setDetailTarget((prev) => {
-      return [...prev, { ...detail, todoList: [], coreId: '' }];
+      return prev.length >= 10 ? prev : [{ ...detail, todoList: [], coreId: '' }, ...prev];
+    });
+    secondTarget.reset({
+      title: '',
+      contents: '',
+      startAt: new Date(),
+      endAt: new Date(),
+      createdAt: new Date(),
     });
   };
 
@@ -43,16 +50,19 @@ const MainPage = () => {
         target ? (
           <DetailSection>
             <DetailSectionColumn>
-              <TargetCard
-                title={target.title}
-                contents={target.contents}
-                startAt={target.startAt}
-                endAt={target.endAt}
-              />
+              <MainTypography>세부 목표를 입력해 주세요.</MainTypography>
               <TargetInputs register={secondTarget.register} />
               <OButton onClick={secondTarget.handleSubmit(handleSetDetailTarget)}>추가</OButton>
             </DetailSectionColumn>
             <DetailSectionColumn>
+              <MainTargetStyle>
+                <TargetCard
+                  title={target.title}
+                  contents={target.contents}
+                  startAt={target.startAt}
+                  endAt={target.endAt}
+                />
+              </MainTargetStyle>
               {detailTarget.map((el, index) => {
                 return (
                   <TargetCard
@@ -92,7 +102,6 @@ const DetailSection = styled.div`
   display: flex;
   flex-direction: row;
   align-items: start;
-  height: 800px;
 `;
 
 const DetailSectionColumn = styled.div`
@@ -101,8 +110,16 @@ const DetailSectionColumn = styled.div`
   gap: ${(props) => props.theme.gap.xl};
   width: 50%;
   border-right: 1px solid ${(props) => props.theme.palette.gray[200]};
-  padding: ${(props) => props.theme.gap.lg};
+  height: 700px;
+  overflow-y: scroll;
+  padding: 0 ${(props) => props.theme.gap.xl} 0 0;
   :last-child {
     border-right: 0px;
+    padding: 0 ${(props) => props.theme.gap.xl};
   }
+`;
+
+const MainTargetStyle = styled.div`
+  padding-bottom: ${(props) => props.theme.gap.xl};
+  border-bottom: 1px solid ${(props) => props.theme.palette.gray[200]};
 `;

@@ -1,4 +1,4 @@
-type PaletteKey = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'gray';
+type PaletteKey = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'gray' | 'white' | 'black';
 type Palette = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | 'default';
 
 type PaletteValue = {
@@ -6,7 +6,7 @@ type PaletteValue = {
 };
 
 export type PaletteValueKey = {
-  [key in PaletteKey]: PaletteValue;
+  [key in PaletteKey]: PaletteValue | string;
 };
 
 export const palette: PaletteValueKey = {
@@ -66,4 +66,6 @@ export const palette: PaletteValueKey = {
     600: '#757575',
     700: '#616161',
   },
+  white: '#fff',
+  black: '#000000',
 };
