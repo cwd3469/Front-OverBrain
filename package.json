@@ -15,6 +15,7 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.17",
+    "@hookform/resolvers": "^3.6.0",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.6.2",
     "dayjs": "^1.11.10",
@@ -28,6 +29,7 @@
     "react-router-dom": "^6.21.1",
     "react-timer-hook": "^3.0.7",
     "sort-by": "^1.2.0",
+    "yup": "^1.4.0",
     "zustand": "^4.4.7"
   },
   "devDependencies": {
