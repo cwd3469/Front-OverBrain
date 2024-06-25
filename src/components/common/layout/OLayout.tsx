@@ -34,9 +34,9 @@ const Card = styled.div<{ width?: string }>`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  border-radius: ${(props) => props.theme.gap.xl};
+  border-radius: ${(props) => props.theme.gap.lg};
   background: ${(props) => props.theme.palette.white};
-  padding: ${(props) => props.theme.gap.xl} 24px;
+  padding: ${(props) => props.theme.gap.lg} 24px;
 
   width: ${(props) => props.width ?? '768px'};
   @media screen and (max-width: 1180px) {

@@ -1,4 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
 import { CoreTarget, DetailTarget, Target } from '@/types/main';
 import OButton from '@components/common/button/OButton';
 import OLayout from '@components/common/layout/OLayout';
@@ -8,6 +11,13 @@ import TargetCard from '@/components/main/TargetCard';
 
 import TargetInputs from '@/components/main/TargetInputs';
 import { useTheme } from '@emotion/react';
+
+const schema = yup
+  .object({
+    groupName: yup.string().required('그룹 이름을 입력해주세요.'),
+    groupExplanation: yup.string(),
+  })
+  .required();
 
 const MainPage = () => {
   const theme = useTheme();
