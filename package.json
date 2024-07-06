@@ -28,6 +28,7 @@
     "react-is": "^18.2.0",
     "react-router-dom": "^6.21.1",
     "react-timer-hook": "^3.0.7",
+    "react-uuid": "^2.0.0",
     "sort-by": "^1.2.0",
     "yup": "^1.4.0",
     "zustand": "^4.4.7"

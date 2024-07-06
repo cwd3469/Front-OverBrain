@@ -4811,6 +4811,7 @@ __metadata:
     react-is: "npm:^18.2.0"
     react-router-dom: "npm:^6.21.1"
     react-timer-hook: "npm:^3.0.7"
+    react-uuid: "npm:^2.0.0"
     sort-by: "npm:^1.2.0"
     typescript: "npm:^5.3.3"
     vite: "npm:^5.0.0"
@@ -5100,6 +5101,13 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
   checksum: 76a6419e8471be18023b907cb65c894566501305002186e9fa5ec42614ef21f0310f8ea0bed88b61efb75fc9bdc0430dcb92dc8f9a0a3c3a1956b6c27f6c8e2d
+  languageName: node
+  linkType: hard
+
+"react-uuid@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "react-uuid@npm:2.0.0"
+  checksum: 91f35c83911a2072f181eee0092b45f9ea3590d22268cf8418721756d53205dd9029a873b36a00913807651a0ea5548cc0fc60bad8c4f09bcd7cb03e6ae39ecf
   languageName: node
   linkType: hard
 
