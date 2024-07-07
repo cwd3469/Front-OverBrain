@@ -3,19 +3,20 @@ import { MultiLineTextFiled } from '@components/common/textFiled';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 type Props = Target & {
-  onDelete?: (id: string) => void;
+  onDelete?: () => void;
   id?: string;
 };
 
 const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, id }: Props) => {
   const dayFormat = (date: Date) => dayjs(date).format('YYYY-MM-DD');
-  const onDeleteBtn = onDelete && id ? () => onDelete(id) : undefined;
 
   return (
     <Card>
-      <h3 className="title">{title}</h3>
-      {onDeleteBtn ? <button onClick={onDeleteBtn}>X</button> : ''}
-      <MultiLineTextFiled value={contents} disabled height="70px" />
+      <CardHead>
+        <h3 className="title">{title}</h3>
+        {onDelete && <button onClick={onDelete}>X</button>}
+      </CardHead>
+      {contents && <MultiLineTextFiled value={contents} disabled height="80px" padding="8px" />}
       {createdAt && (
         <Item>
           <div className="th">생성 날짜 :</div>
@@ -52,6 +53,13 @@ const Card = styled.div`
     ${(props) => props.theme.typography.B2_Body_16_B}
   }
 `;
+
+const CardHead = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const Item = styled.div`
   display: flex;
   align-items: center;
