@@ -4,6 +4,7 @@ export interface Target {
   startAt?: Date;
   endAt?: Date;
   createdAt?: Date;
+  id?: string;
 }
 
 export interface CoreTarget extends Target {
@@ -12,7 +13,7 @@ export interface CoreTarget extends Target {
 
 export interface DetailTarget extends Target {
   modifyAt?: Date;
-  coreId: string;
+  coreId?: string;
   todoList: TodoTarget[];
 }
 
