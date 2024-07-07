@@ -3,12 +3,13 @@ import styled from '@emotion/styled';
 type Props = {
   height?: string;
   width?: string;
+  padding?: string;
 };
 
 const MultiLineTextFiled = styled.textarea<Props>`
   //layout
   display: flex;
-  padding: 12px 16px;
+  padding: ${(props) => props.padding ?? '12px 16px'};
   //font
   font-size: 14px;
   line-height: 20px;

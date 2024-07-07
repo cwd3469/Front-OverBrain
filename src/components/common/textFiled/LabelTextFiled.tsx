@@ -3,11 +3,11 @@ import styled from '@emotion/styled';
 import IcRequire from '@/assets/svg/ic_require.svg?react';
 import { forwardRef } from 'react';
 
-type Props = DefaultTextFiledProps &
-  MessageBoxProps & {
-    label?: string;
-    require?: boolean;
-  };
+type Props = DefaultTextFiledProps & {
+  label?: string;
+  require?: boolean;
+  message?: MessageBoxProps;
+};
 
 /**상태 메시지 */
 const LabelTextFiled = forwardRef<HTMLDivElement, Props>(({ label, message, require, ...props }, ref) => (

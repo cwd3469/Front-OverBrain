@@ -42,13 +42,11 @@ const DefaultTextFiled = styled.input<Props>`
 
 type MessageBoxProps = {
   /**상태 메시지 */
-  message?: {
-    state: 'error' | 'success';
-    context: string;
-  };
+  state: 'error' | 'success';
+  context: string;
 };
 
-const MessageBox = ({ message }: MessageBoxProps) => {
+const MessageBox = ({ message }: { message?: MessageBoxProps; style?: React.CSSProperties }) => {
   return message ? (
     <LabelMessageBox>
       {message.state === 'error' && <IcBulletError className="icon_box" />}
