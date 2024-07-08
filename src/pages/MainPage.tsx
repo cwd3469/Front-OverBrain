@@ -17,6 +17,7 @@ const CORE_TARGET_TITLE = '코어 목표를 입력해주세요.';
 const CORE_INPUT_TITLE = '코어 목표를 입력해 주세요.';
 const DETAIL_TARGET_TITLE = '상세 목표를 입력해주세요.';
 const DETAIL_INPUT_TITLE = '상세 목표를 입력해주세요.';
+const DETAIL_MAX_LENGTH = '상세 목표는 9개까지 추가 가능합니다.';
 
 const resetTarget = {
   title: '',
@@ -38,6 +39,7 @@ const MainPage = () => {
   const [step, setStep] = useState<number>(1);
   const [target, setTarget] = useState<CoreTarget>();
   const [detailTarget, setDetailTarget] = useState<DetailTarget[]>([]);
+  const [activeTarget, setActiveTarget] = useState<string>();
 
   const firstTarget = useForm<Target>({
     mode: 'onChange',
@@ -50,12 +52,10 @@ const MainPage = () => {
     defaultValues: resetTarget,
   });
 
-  const handleDeleteDetailTarget = useCallback((id?: string) => {
-    setDetailTarget((prev) => {
-      const next = prev.filter((el) => el.id !== id);
-      return next;
-    });
-  }, []);
+  const handleDeleteDetailTarget = useCallback(
+    (id?: string) => setDetailTarget((prev) => prev.filter((el) => el.id !== id)),
+    [],
+  );
 
   const handleSetCoreTarget: SubmitHandler<Target> = (core: Target) => {
     const id = uuid();
@@ -64,13 +64,19 @@ const MainPage = () => {
   };
 
   const handleSetDetailTarget: SubmitHandler<Target> = (param: Target) => {
-    const id = uuid();
     setDetailTarget((prev) => {
-      const detail: DetailTarget = { ...param, todoList: [], coreId: target?.id, id };
-      return prev.length >= 10 ? prev : [detail, ...prev];
+      if (prev.length > 8) {
+        secondTarget.setError('title', { message: DETAIL_MAX_LENGTH });
+        return prev;
+      } else {
+        const id = uuid();
+        secondTarget.reset(resetTarget);
+        return [{ ...param, todoList: [], coreId: target?.id, id }, ...prev];
+      }
     });
-    secondTarget.reset(resetTarget);
   };
+
+  const handleStepThree = () => setStep(3);
 
   return (
     <OLayout width={step === 1 ? theme.screens.xsm : theme.screens.lg}>
@@ -96,6 +102,7 @@ const MainPage = () => {
               errors={secondTarget.formState.errors}
             />
             <OButton onClick={secondTarget.handleSubmit(handleSetDetailTarget)}>추가</OButton>
+            <OButton onClick={handleStepThree}>다음으로</OButton>
           </DetailSectionColumn>
           <DetailSectionColumn>
             <MainTargetStyle>
@@ -123,7 +130,24 @@ const MainPage = () => {
           </DetailSectionColumn>
         </DetailSection>
       ) : (
-        <></>
+        <DetailSection>
+          <DetailSectionColumn>
+            {detailTarget.map((el, index) => {
+              return (
+                <TargetCard
+                  title={el.title}
+                  contents={el.contents}
+                  startAt={el.startAt}
+                  endAt={el.endAt}
+                  key={el.id}
+                  checked={activeTarget === el.id}
+                  onDelete={() => handleDeleteDetailTarget(el.id)}
+                  onSelect={() => setActiveTarget(el.id)}
+                />
+              );
+            })}
+          </DetailSectionColumn>
+        </DetailSection>
       )}
     </OLayout>
   );
@@ -150,7 +174,7 @@ const DetailSection = styled.div`
 const DetailSectionColumn = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${(props) => props.theme.gap.xl};
+  gap: ${(props) => props.theme.gap.lg};
   width: 50%;
   border-right: 1px solid ${(props) => props.theme.palette.gray[200]};
   height: 700px;
@@ -163,6 +187,6 @@ const DetailSectionColumn = styled.div`
 `;
 
 const MainTargetStyle = styled.div`
-  padding-bottom: ${(props) => props.theme.gap.xl};
+  padding-bottom: ${(props) => props.theme.gap.lg};
   border-bottom: 1px solid ${(props) => props.theme.palette.gray[200]};
 `;
