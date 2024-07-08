@@ -12,6 +12,9 @@ export default defineConfig({
       },
     }),
   ],
+  optimizeDeps: {
+    include: ['react-icons/ai'],
+  },
   cacheDir: './.vite',
   resolve: {
     alias: [
