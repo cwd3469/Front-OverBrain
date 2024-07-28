@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { AiOutlineClose } from 'react-icons/ai';
 
 import { Target } from '@/types/main';
-import { MultiLineTextFiled } from '@components/common/textFiled';
 import { css } from '@emotion/react';
 
 type Props = Target & {
@@ -26,7 +25,7 @@ const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, onSe
           </button>
         )}
       </CardHead>
-      {contents && <MultiLineTextFiled value={contents} disabled height="80px" padding="8px" />}
+      {contents && <CordContents value={contents} disabled />}
       {createdAt && (
         <Item>
           <div className="th">생성 날짜 :</div>
@@ -53,7 +52,17 @@ const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, onSe
 export default TargetCard;
 
 const checkedColor = css`
-  background-color: red;
+  box-shadow: #00b3ff2a 0px 6px 24px 0px, #00b3ff9f 0px 0px 0px 1px;
+`;
+
+const CordContents = styled.textarea`
+  border: none;
+  resize: none;
+  padding: 0px;
+  &:disabled {
+    background-color: ${(props) => props.theme.palette.white};
+    ${(props) => props.theme.typography.B7_Body_14_M}
+  }
 `;
 
 const Card = styled.div<{ checked?: boolean; pointer: boolean }>`

@@ -3,7 +3,7 @@ import uuid from 'react-uuid';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { CoreTarget, DetailTarget, Target } from '@/types/main';
+import { CoreTarget, DetailTarget, Target, TodoTarget } from '@/types/main';
 import OButton from '@components/common/button/OButton';
 import OLayout from '@components/common/layout/OLayout';
 import styled from '@emotion/styled';
@@ -12,6 +12,8 @@ import TargetCard from '@/components/main/TargetCard';
 
 import TargetInputs from '@/components/main/TargetInputs';
 import { useTheme } from '@emotion/react';
+import dayjs from 'dayjs';
+import { DefaultTextFiled } from '@/components/common/textFiled';
 
 const CORE_TARGET_TITLE = '코어 목표를 입력해주세요.';
 const CORE_INPUT_TITLE = '코어 목표를 입력해 주세요.';
@@ -33,13 +35,16 @@ const coresSchema = yup.object({
 const detailSchema = yup.object({
   title: yup.string().required(DETAIL_TARGET_TITLE),
 });
+const todoSchema = yup.object({
+  title: yup.string().required(DETAIL_TARGET_TITLE),
+});
 
 const MainPage = () => {
   const theme = useTheme();
   const [step, setStep] = useState<number>(1);
-  const [target, setTarget] = useState<CoreTarget>();
+  const [coreTarget, setCoreTarget] = useState<CoreTarget>();
   const [detailTarget, setDetailTarget] = useState<DetailTarget[]>([]);
-  const [activeTarget, setActiveTarget] = useState<string>();
+  const [todoTarget, setTodoTarget] = useState<DetailTarget>();
 
   const firstTarget = useForm<Target>({
     mode: 'onChange',
@@ -51,47 +56,68 @@ const MainPage = () => {
     resolver: yupResolver(detailSchema),
     defaultValues: resetTarget,
   });
+  const thirdTarget = useForm<Target>({
+    mode: 'onChange',
+    resolver: yupResolver(todoSchema),
+    defaultValues: resetTarget,
+  });
 
-  const handleDeleteDetailTarget = useCallback(
-    (id?: string) => setDetailTarget((prev) => prev.filter((el) => el.id !== id)),
-    [],
-  );
-
+  /** 코어 등록 */
   const handleSetCoreTarget: SubmitHandler<Target> = (core: Target) => {
     const id = uuid();
-    setTarget({ ...core, detailList: [], id });
+    setCoreTarget({ ...core, detailList: [], id });
     setStep(2);
   };
-
+  /** 디테일 등록 */
   const handleSetDetailTarget: SubmitHandler<Target> = (param: Target) => {
+    if (!coreTarget) return;
     setDetailTarget((prev) => {
       if (prev.length > 8) {
         secondTarget.setError('title', { message: DETAIL_MAX_LENGTH });
         return prev;
       } else {
         const id = uuid();
-        secondTarget.reset(resetTarget);
-        return [{ ...param, todoList: [], coreId: target?.id, id }, ...prev];
+        const next: DetailTarget[] = [{ ...param, todoList: [], coreId: coreTarget.id, id }, ...prev];
+        return next;
       }
     });
+    secondTarget.reset();
   };
 
+  /** 디테일 삭제 */
+  const handleDeleteDetailTarget = useCallback(
+    (id?: string) => setDetailTarget((prev) => prev.filter((el) => el.id !== id)),
+    [],
+  );
+
+  /** todo 이동 */
   const handleStepThree = () => setStep(3);
 
+  /** todo 등록 */
+  const handleSetTodoTarget: SubmitHandler<Target> = (param: Target) => {
+    setTodoTarget((prev) => {
+      if (!prev) return;
+      const id = uuid();
+      const todo: TodoTarget = { ...param, coreId: prev.coreId, detailId: prev.id, id };
+      const next: DetailTarget = { ...prev, todoList: [...prev.todoList, todo] };
+      return next;
+    });
+
+    thirdTarget.reset();
+  };
+
   return (
-    <OLayout width={step === 1 ? theme.screens.xsm : theme.screens.lg}>
+    <OLayout width={theme.screens.lg}>
       {step === 1 ? (
-        <>
+        <MainPageSelect>
           <MainTypography>{CORE_INPUT_TITLE}</MainTypography>
-          <MainPageSelect>
-            <TargetInputs
-              register={firstTarget.register}
-              onKeyPress={firstTarget.handleSubmit(handleSetCoreTarget)}
-              errors={firstTarget.formState.errors}
-            />
-            <OButton onClick={firstTarget.handleSubmit(handleSetCoreTarget)}>저장</OButton>
-          </MainPageSelect>
-        </>
+          <TargetInputs
+            register={firstTarget.register}
+            onKeyPress={firstTarget.handleSubmit(handleSetCoreTarget)}
+            errors={firstTarget.formState.errors}
+          />
+          <OButton onClick={firstTarget.handleSubmit(handleSetCoreTarget)}>저장</OButton>
+        </MainPageSelect>
       ) : step === 2 ? (
         <DetailSection>
           <DetailSectionColumn>
@@ -106,16 +132,16 @@ const MainPage = () => {
           </DetailSectionColumn>
           <DetailSectionColumn>
             <MainTargetStyle>
-              {target && (
+              {coreTarget && (
                 <TargetCard
-                  title={target.title}
-                  contents={target.contents}
-                  startAt={target.startAt}
-                  endAt={target.endAt}
+                  title={coreTarget.title}
+                  contents={coreTarget.contents}
+                  startAt={coreTarget.startAt}
+                  endAt={coreTarget.endAt}
                 />
               )}
             </MainTargetStyle>
-            {detailTarget.map((el, index) => {
+            {detailTarget.map((el) => {
               return (
                 <TargetCard
                   title={el.title}
@@ -132,7 +158,7 @@ const MainPage = () => {
       ) : (
         <DetailSection>
           <DetailSectionColumn>
-            {detailTarget.map((el, index) => {
+            {detailTarget.map((el) => {
               return (
                 <TargetCard
                   title={el.title}
@@ -140,12 +166,26 @@ const MainPage = () => {
                   startAt={el.startAt}
                   endAt={el.endAt}
                   key={el.id}
-                  checked={activeTarget === el.id}
+                  checked={todoTarget?.id === el.id}
                   onDelete={() => handleDeleteDetailTarget(el.id)}
-                  onSelect={() => setActiveTarget(el.id)}
+                  onSelect={() => setTodoTarget(el)}
                 />
               );
             })}
+          </DetailSectionColumn>
+          <DetailSectionColumn>
+            {todoTarget && (
+              <TodoCard>
+                <TargetCard {...todoTarget} />
+                {todoTarget.todoList &&
+                  todoTarget.todoList.map((el) => {
+                    return <TodoListItem key={el.id}>{el.title}</TodoListItem>;
+                  })}
+
+                <DefaultTextFiled {...thirdTarget.register('title')} style={{ marginTop: 'auto' }} />
+                <OButton onClick={thirdTarget.handleSubmit(handleSetTodoTarget)}>등록</OButton>
+              </TodoCard>
+            )}
           </DetailSectionColumn>
         </DetailSection>
       )}
@@ -158,11 +198,12 @@ export default MainPage;
 const MainPageSelect = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--RadiusXL, 16px);
+  gap: ${(props) => props.theme.gap.xl};
 `;
 
 const MainTypography = styled.div`
   ${(props) => props.theme.typography.H1_Headline_32_B}
+  text-align: center;
 `;
 
 const DetailSection = styled.div`
@@ -178,7 +219,7 @@ const DetailSectionColumn = styled.div`
   width: 50%;
   border-right: 1px solid ${(props) => props.theme.palette.gray[200]};
   height: 700px;
-  overflow-y: scroll;
+
   padding: 0 ${(props) => props.theme.gap.xl} 0 0;
   :last-child {
     border-right: 0px;
@@ -189,4 +230,37 @@ const DetailSectionColumn = styled.div`
 const MainTargetStyle = styled.div`
   padding-bottom: ${(props) => props.theme.gap.lg};
   border-bottom: 1px solid ${(props) => props.theme.palette.gray[200]};
+`;
+
+const TodoCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+const TodoCardHead = styled.div`
+  ${(props) => props.theme.typography.B4_Body_16_M}
+  padding: ${(props) => props.theme.gap.md};
+  border-radius: ${(props) => props.theme.gap.sm};
+`;
+
+const TodoCardDate = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .th {
+    ${(props) => props.theme.typography.B7_Body_14_M}
+    color:${(props) => props.theme.palette.gray[900]}
+  }
+  .tb {
+    ${(props) => props.theme.typography.B8_Body_14_R}
+    color:${(props) => props.theme.palette.gray[300]}
+  }
+`;
+
+const TodoListItem = styled.div`
+  ${(props) => props.theme.typography.T6_Title_16_B}
+  padding: 4px 8px;
+  border: 1px solid ${(props) => props.theme.palette.gray[300]};
+  border-radius: ${(props) => props.theme.gap.md};
 `;

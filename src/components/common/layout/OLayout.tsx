@@ -24,7 +24,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   height: 100vh;
-  background: var(--CoolGray-CoolGray025, #f9fafb);
+  background-color: ${(props) => props.theme.palette.gray[100]};
   position: relative;
 `;
 
@@ -39,7 +39,7 @@ const Card = styled.div<{ width?: string }>`
   padding: ${(props) => props.theme.gap.lg} 24px;
 
   width: ${(props) => props.width ?? '768px'};
-  @media screen and (max-width: 1180px) {
+  @media screen and (max-width: ${(props) => props.theme.screens.lg}) {
     width: 100%;
   }
 `;
