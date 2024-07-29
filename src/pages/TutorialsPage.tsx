@@ -2,6 +2,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import uuid from 'react-uuid';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import Slider from 'react-slick';
 
 import { CoreTarget, DetailTarget, Target, TodoTarget } from '@/types/main';
 import OButton from '@components/common/button/OButton';
@@ -21,14 +22,6 @@ const CORE_INPUT_TITLE = '코어 목표를 입력해 주세요.';
 const DETAIL_TARGET_TITLE = '상세 목표를 입력해주세요.';
 const DETAIL_INPUT_TITLE = '상세 목표를 입력해주세요.';
 const DETAIL_MAX_LENGTH = '상세 목표는 9개까지 추가 가능합니다.';
-
-const resetTarget = {
-  title: '',
-  contents: undefined,
-  startAt: undefined,
-  endAt: undefined,
-  createdAt: undefined,
-};
 
 const coresSchema = yup.object({
   title: yup.string().required(CORE_TARGET_TITLE),
@@ -51,20 +44,25 @@ const TutorialsPage = () => {
   const firstTarget = useForm<Target>({
     mode: 'onChange',
     resolver: yupResolver(coresSchema),
-    defaultValues: resetTarget,
   });
   const secondTarget = useForm<Target>({
     mode: 'onChange',
     resolver: yupResolver(detailSchema),
-    defaultValues: resetTarget,
   });
   const thirdTarget = useForm<Target>({
     mode: 'onChange',
     resolver: yupResolver(todoSchema),
-    defaultValues: resetTarget,
   });
 
   const step = searchParams.get('step');
+
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 100,
+    slidesToScroll: 1,
+    slidesToShow: 3.5,
+  };
 
   /** 코어 등록 */
   const handleSetCoreTarget: SubmitHandler<Target> = (core: Target) => {
@@ -96,6 +94,7 @@ const TutorialsPage = () => {
   );
 
   /** todo 이동 */
+  const handleStepOne = () => navigate('/tutorials?step=1');
   const handleStepThree = () => navigate('/tutorials?step=3');
 
   /** todo 등록 */
@@ -126,35 +125,36 @@ const TutorialsPage = () => {
         </TutorialsPageSelect>
       ) : step === '2' ? (
         <DetailSection>
+          <MainTypography>{DETAIL_INPUT_TITLE}</MainTypography>
           <DetailSectionColumn>
-            <MainTypography>{DETAIL_INPUT_TITLE}</MainTypography>
-            <TargetInputs register={secondTarget.register} errors={secondTarget.formState.errors} />
-            <OButton onClick={secondTarget.handleSubmit(handleSetDetailTarget)}>추가</OButton>
-            <OButton onClick={handleStepThree}>다음으로</OButton>
+            <MainTargetStyle>{coreTarget && <TargetCard {...coreTarget} />}</MainTargetStyle>
+            <DetailCardContainer>
+              {detailTarget.length > 3 ? (
+                <Slider {...settings}>
+                  {detailTarget.map((el) => {
+                    return (
+                      <TargetCard {...el} key={el.id} onDelete={() => handleDeleteDetailTarget(el.id)} width="90%" />
+                    );
+                  })}
+                </Slider>
+              ) : (
+                <CordBox>
+                  {detailTarget.map((el) => {
+                    return (
+                      <TargetCard {...el} key={el.id} onDelete={() => handleDeleteDetailTarget(el.id)} width="30%" />
+                    );
+                  })}
+                </CordBox>
+              )}
+            </DetailCardContainer>
           </DetailSectionColumn>
           <DetailSectionColumn>
-            <MainTargetStyle>
-              {coreTarget && (
-                <TargetCard
-                  title={coreTarget.title}
-                  contents={coreTarget.contents}
-                  startAt={coreTarget.startAt}
-                  endAt={coreTarget.endAt}
-                />
-              )}
-            </MainTargetStyle>
-            {detailTarget.map((el) => {
-              return (
-                <TargetCard
-                  title={el.title}
-                  contents={el.contents}
-                  startAt={el.startAt}
-                  endAt={el.endAt}
-                  key={el.id}
-                  onDelete={() => handleDeleteDetailTarget(el.id)}
-                />
-              );
-            })}
+            <TargetInputs register={secondTarget.register} errors={secondTarget.formState.errors} />
+            <OButton onClick={secondTarget.handleSubmit(handleSetDetailTarget)}>추가</OButton>
+            <PageAction>
+              <OPageButton onClick={handleStepOne}>이전으로</OPageButton>
+              <OPageButton onClick={handleStepThree}>다음으로</OPageButton>
+            </PageAction>
           </DetailSectionColumn>
         </DetailSection>
       ) : (
@@ -221,9 +221,20 @@ const MainOButton = styled(OButton)`
   ${(props) => props.theme.typography.B4_Body_16_M}
 `;
 
-const DetailSection = styled.div`
+const CordBox = styled.div`
   display: flex;
   flex-direction: row;
+  gap: 16px;
+  align-items: start;
+`;
+
+const DetailCardContainer = styled.div`
+  padding: 30px 0;
+`;
+
+const DetailSection = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: start;
 `;
 
@@ -231,15 +242,7 @@ const DetailSectionColumn = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${(props) => props.theme.gap.lg};
-  width: 50%;
-  border-right: 1px solid ${(props) => props.theme.palette.gray[200]};
-  height: 700px;
-
-  padding: 0 ${(props) => props.theme.gap.xl} 0 0;
-  :last-child {
-    border-right: 0px;
-    padding: 0 ${(props) => props.theme.gap.xl};
-  }
+  width: 100%;
 `;
 
 const MainTargetStyle = styled.div`
@@ -278,4 +281,20 @@ const TodoListItem = styled.div`
   padding: 4px 8px;
   border: 1px solid ${(props) => props.theme.palette.gray[300]};
   border-radius: ${(props) => props.theme.gap.md};
+`;
+
+const OPageButton = styled.div`
+  padding: 12px 16px;
+  border: 1px solid #999;
+  text-align: center;
+  border-radius: 6px;
+  width: 49%;
+`;
+
+const PageAction = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  ${(props) => props.theme.typography.B9_Body_12_M}
+  cursor: pointer;
 `;

@@ -2,7 +2,12 @@ import styled from '@emotion/styled';
 
 //bg , text , border
 
-const OButton = styled.button`
+type Props = {
+  Style?: 'Line' | 'Fill' | 'Text';
+  Size?: 'lg' | 'md' | 'sm';
+};
+
+const OButton = styled.button<Props>`
   background: transparent;
   border: 0;
   cursor: pointer;

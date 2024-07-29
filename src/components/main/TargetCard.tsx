@@ -10,13 +10,14 @@ type Props = Target & {
   onDelete?: () => void;
   onSelect?: () => void;
   id?: string;
+  width?: string;
 };
 
-const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, onSelect, checked }: Props) => {
-  const dayFormat = (date: Date) => dayjs(date).format('YYYY-MM-DD');
+const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, onSelect, width, checked }: Props) => {
+  const dayFormat = (date?: Date) => (date ? dayjs(date).format('YYYY-MM-DD') : '-');
 
   return (
-    <Card onClick={onSelect} checked={checked} pointer={Boolean(onSelect)}>
+    <Card onClick={onSelect} checked={checked} pointer={Boolean(onSelect)} width={width}>
       <CardHead>
         <h3 className="title">{title}</h3>
         {onDelete && (
@@ -26,25 +27,18 @@ const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, onSe
         )}
       </CardHead>
       {contents && <CordContents value={contents} disabled />}
-      {createdAt && (
-        <Item>
-          <div className="th">생성 날짜 :</div>
-          <p className="td">{dayFormat(createdAt)}</p>
-        </Item>
-      )}
-      {endAt && (
-        <Item>
-          <div className="th">시작 날짜 :</div>
-          <p className="td">{dayFormat(endAt)}</p>
-        </Item>
-      )}
-
-      {startAt && (
-        <Item>
-          <div className="th">끝 날짜 :</div>
-          <p className="td">{dayFormat(startAt)}</p>
-        </Item>
-      )}
+      <Item>
+        <div className="th">생성 날짜 :</div>
+        <p className="td">{dayFormat(createdAt)}</p>
+      </Item>
+      <Item>
+        <div className="th">시작 날짜 :</div>
+        <p className="td">{dayFormat(endAt)}</p>
+      </Item>
+      <Item>
+        <div className="th">끝 날짜 :</div>
+        <p className="td">{dayFormat(startAt)}</p>
+      </Item>
     </Card>
   );
 };
@@ -65,15 +59,15 @@ const CordContents = styled.textarea`
   }
 `;
 
-const Card = styled.div<{ checked?: boolean; pointer: boolean }>`
+const Card = styled.div<{ checked?: boolean; pointer: boolean; width?: string }>`
   display: flex;
   flex-direction: column;
   gap: 8px;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 14px;
-  ${(props) => (props.pointer ? 'cursor: pointer;' : '')}
-  .title {
+  width: ${(props) => props.width};
+  ${(props) => (props.pointer ? 'cursor: pointer;' : '')} .title {
     ${(props) => props.theme.typography.B2_Body_16_B}
   }
   ${(props) => (props.checked ? checkedColor : '')}
