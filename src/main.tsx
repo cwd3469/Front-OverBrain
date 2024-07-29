@@ -7,11 +7,16 @@ import SigninPage from '@/pages/SigninPage';
 import BoardPage from '@/pages/BoardPage';
 import { ThemeProvider } from '@emotion/react';
 import { theme } from './styles/theme';
+import TutorialsPage from './pages/TutorialsPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <MainPage />,
+  },
+  {
+    path: '/tutorials',
+    element: <TutorialsPage />,
   },
   {
     path: '/signin',

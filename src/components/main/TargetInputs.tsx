@@ -2,26 +2,12 @@ import { Target } from '@/types/main';
 import { LabelTextFiled, MultiLineTextFiled } from '../common/textFiled';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import styled from '@emotion/styled';
-import { useCallback, useEffect } from 'react';
+
 import { inputMessage } from '@/utils/contextMsg';
 
-type Props = { register: UseFormRegister<Target>; onKeyPress: () => void; errors: FieldErrors<Target> };
+type Props = { register: UseFormRegister<Target>; errors: FieldErrors<Target> };
 
-const TargetInputs = ({ register, onKeyPress, errors }: Props) => {
-  const handleUserKeyPress = useCallback((event: KeyboardEvent) => {
-    const { key } = event;
-    if (key === 'Enter') {
-      onKeyPress();
-    }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleUserKeyPress);
-    return () => {
-      window.removeEventListener('keydown', handleUserKeyPress);
-    };
-  }, [handleUserKeyPress]);
-
+const TargetInputs = ({ register, errors }: Props) => {
   return (
     <InputSection>
       <LabelTextFiled
