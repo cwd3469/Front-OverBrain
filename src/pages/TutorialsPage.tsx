@@ -19,6 +19,7 @@ import { DefaultTextFiled } from '@/components/common/textFiled';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { css } from '@emotion/css';
+import { hasLocalStorageCoreTargetValue, setLocalStorageCoreTargetValue } from '@/utils/function/localStorageUtils';
 
 const CORE_TARGET_TITLE = '코어 목표를 입력해주세요.';
 const CORE_INPUT_TITLE = '코어 목표를 입력해 주세요.';
@@ -62,7 +63,7 @@ const TutorialsPage = () => {
   const [todoTarget, setTodoTarget] = useState<DetailTarget>();
 
   const firstTarget = useForm<Target>({
-    mode: 'onChange',
+    mode: 'all',
     resolver: yupResolver(coresSchema),
     defaultValues: resetTarget,
   });
@@ -100,8 +101,12 @@ const TutorialsPage = () => {
   /** 코어 등록 */
   const handleSetCoreTarget: SubmitHandler<Target> = (core: Target) => {
     const id = uuid();
-    setCoreTarget({ ...core, detailList: [], id });
-    navigate('/tutorials?step=2');
+    const target = { ...core, detailList: [], id };
+    setCoreTarget((prev) => {
+      const next = prev ? { ...prev, core } : target;
+      return next;
+    });
+    handleStepTwo();
   };
 
   /** 디테일 등록 */
@@ -174,7 +179,15 @@ const TutorialsPage = () => {
     });
 
   useEffect(() => {
-    if (!coreTarget) {
+    if (coreTarget) setLocalStorageCoreTargetValue(coreTarget);
+  }, [coreTarget]);
+
+  useEffect(() => {
+    const value = hasLocalStorageCoreTargetValue();
+    if (value) {
+      setCoreTarget(value);
+      firstTarget.setValue('title', value.title);
+    } else {
       searchParams.set('step', '1');
       setSearchParams(searchParams);
     }
@@ -194,7 +207,7 @@ const TutorialsPage = () => {
         <DetailSection>
           <MainTypography>{DETAIL_INPUT_TITLE}</MainTypography>
           <DetailSectionColumn>
-            <MainTargetStyle>{coreTarget && <TargetCard {...coreTarget} />}</MainTargetStyle>
+            {coreTarget && <TargetCard {...coreTarget} />}
             <DetailCardContainer>
               {coreTarget ? (
                 coreTarget.detailList.length > 3 ? (
@@ -354,34 +367,35 @@ const CordBox = styled.div`
 `;
 
 const DetailCardContainer = styled.div`
-  padding: 30px 0;
+  padding: 16px 0 30px;
+  min-height: 140px;
+  border-top: 1px solid ${(props) => props.theme.palette.gray[200]};
+  border-bottom: 1px solid ${(props) => props.theme.palette.gray[200]};
 `;
 
 const DetailSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  gap: 16px;
 `;
 
 const DetailSectionColumn = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${(props) => props.theme.gap.lg};
   width: 100%;
-`;
-
-const MainTargetStyle = styled.div`
-  padding-bottom: ${(props) => props.theme.gap.lg};
-  border-bottom: 1px solid ${(props) => props.theme.palette.gray[200]};
+  gap: 16px;
 `;
 
 const TodoListContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 12px 0;
+  padding: 12px 8px;
   height: 190px;
   overflow-y: scroll;
+  border: 1px solid ${(props) => props.theme.palette.gray[300]};
+  border-radius: 4px;
 `;
 
 const TodoListItem = styled.div`
