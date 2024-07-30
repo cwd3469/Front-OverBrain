@@ -9,7 +9,7 @@ import { CoreTarget, DetailTarget, Target, TodoTarget } from '@/types/main';
 import OButton from '@components/common/button/OButton';
 import OLayout from '@components/common/layout/OLayout';
 import styled from '@emotion/styled';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import TargetCard from '@/components/main/TargetCard';
 
 import TargetInputs from '@/components/main/TargetInputs';
@@ -18,12 +18,15 @@ import { useTheme } from '@emotion/react';
 import { DefaultTextFiled } from '@/components/common/textFiled';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { css } from '@emotion/css';
 
 const CORE_TARGET_TITLE = '코어 목표를 입력해주세요.';
 const CORE_INPUT_TITLE = '코어 목표를 입력해 주세요.';
 const DETAIL_TARGET_TITLE = '상세 목표를 입력해주세요.';
 const DETAIL_INPUT_TITLE = '상세 목표를 입력해주세요.';
 const DETAIL_MAX_LENGTH = '상세 목표는 9개까지 추가 가능합니다.';
+const TODO_STEP_TITLE = '상세 목표를 이루기 위한 활동 혹은 태도를 입력해주세요.';
+const TODO_MAX_LENGTH = '활동 갯수는 8개까지 추가 할수 있습니다.';
 
 const resetTarget = {
   title: '',
@@ -54,9 +57,8 @@ const todoSchema = yup.object({
 const TutorialsPage = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [coreTarget, setCoreTarget] = useState<CoreTarget>();
-  const [detailTarget, setDetailTarget] = useState<DetailTarget[]>([]);
   const [todoTarget, setTodoTarget] = useState<DetailTarget>();
 
   const firstTarget = useForm<Target>({
@@ -77,6 +79,24 @@ const TutorialsPage = () => {
 
   const step = searchParams.get('step');
 
+  const isFirstClear = !firstTarget.formState.isValid;
+
+  const isClear = coreTarget && coreTarget.detailList.length > 3 ? true : false;
+
+  /** step 이동 */
+  const handleStepOne = () => {
+    searchParams.set('step', '1');
+    setSearchParams(searchParams);
+  };
+  const handleStepTwo = () => {
+    searchParams.set('step', '2');
+    setSearchParams(searchParams);
+  };
+  const handleStepThree = () => {
+    searchParams.set('step', '3');
+    setSearchParams(searchParams);
+  };
+
   /** 코어 등록 */
   const handleSetCoreTarget: SubmitHandler<Target> = (core: Target) => {
     const id = uuid();
@@ -86,50 +106,65 @@ const TutorialsPage = () => {
 
   /** 디테일 등록 */
   const handleSetDetailTarget: SubmitHandler<Target> = (param: Target) => {
-    if (!coreTarget) return;
-    setDetailTarget((prev) => {
-      if (prev.length > 8) {
+    setCoreTarget((prev) => {
+      if (!prev) return;
+      if (prev.detailList.length <= 8) {
+        const id = uuid();
+        const detailList: DetailTarget[] = [{ ...param, todoList: [], coreId: prev.id, id }, ...prev.detailList];
+        const next: CoreTarget = { ...prev, detailList };
+        secondTarget.reset();
+        return next;
+      } else {
         secondTarget.setError('title', { message: DETAIL_MAX_LENGTH });
         return prev;
-      } else {
-        const id = uuid();
-        const next: DetailTarget[] = [{ ...param, todoList: [], coreId: coreTarget.id, id }, ...prev];
-        return next;
       }
     });
-    secondTarget.reset();
   };
 
   /** 디테일 삭제 */
   const handleDeleteDetailTarget = useCallback(
-    (id?: string) => setDetailTarget((prev) => prev.filter((el) => el.id !== id)),
+    (id?: string) =>
+      setCoreTarget((prev) => {
+        if (!prev) return;
+        const detailList = prev?.detailList.filter((el) => el.id !== id);
+        const next: CoreTarget = { ...prev, detailList };
+        return next;
+      }),
     [],
   );
 
-  /** todo 이동 */
-  const handleStepOne = () => navigate('/tutorials?step=1');
-  const handleStepTwo = () => navigate('/tutorials?step=2');
-  const handleStepThree = () => navigate('/tutorials?step=3');
+  /** todo 디테일 선택 */
+  const handleDetailSelect = (params: DetailTarget) =>
+    setTodoTarget((prev) => {
+      if (prev) {
+        setCoreTarget((item) => {
+          if (!item) return;
+          const detailList = item?.detailList.map((el) => (el.id === prev.id ? prev : el));
+          const next: CoreTarget = { ...item, detailList };
+          return next;
+        });
+      }
+
+      return params;
+    });
 
   /** todo 등록 */
   const handleSetTodoTarget: SubmitHandler<Target> = (param: Target) => {
     setTodoTarget((prev) => {
       if (!prev) return;
+      if (prev.todoList.length >= 8) {
+        thirdTarget.setError('title', { message: TODO_MAX_LENGTH });
+        return prev;
+      }
       const id = uuid();
       const todo: TodoTarget = { ...param, coreId: prev.coreId, detailId: prev.id, id };
-      const next: DetailTarget = { ...prev, todoList: [...prev.todoList, todo] };
+      const next: DetailTarget = { ...prev, todoList: [todo, ...prev.todoList] };
+      thirdTarget.reset();
       return next;
     });
-
-    thirdTarget.reset();
   };
 
-  const handleDetailSelect = (params: DetailTarget) =>
-    setTodoTarget((prev) => {
-      if (prev) setDetailTarget((item) => item.map((el) => (el.id === prev.id ? prev : el)));
-      return params;
-    });
-
+  /** todo 삭제 */
   const handleDeleteTodo = (params: string) =>
     setTodoTarget((prev) => {
       if (!prev) return;
@@ -138,16 +173,20 @@ const TutorialsPage = () => {
       return next;
     });
 
+  useEffect(() => {
+    if (!coreTarget) {
+      searchParams.set('step', '1');
+      setSearchParams(searchParams);
+    }
+  }, []);
+
   return (
     <OLayout width={theme.screens.lg}>
       {!step || step === '1' ? (
         <TutorialsPageSelect>
           <MainTypography>{CORE_INPUT_TITLE}</MainTypography>
           <MainTextFiled {...firstTarget.register('title')} />
-          <MainOButton
-            onClick={firstTarget.handleSubmit(handleSetCoreTarget)}
-            disabled={!firstTarget.formState.isValid}
-          >
+          <MainOButton onClick={firstTarget.handleSubmit(handleSetCoreTarget)} disabled={isFirstClear}>
             시작
           </MainOButton>
         </TutorialsPageSelect>
@@ -157,22 +196,26 @@ const TutorialsPage = () => {
           <DetailSectionColumn>
             <MainTargetStyle>{coreTarget && <TargetCard {...coreTarget} />}</MainTargetStyle>
             <DetailCardContainer>
-              {detailTarget.length > 3 ? (
-                <Slider {...settings}>
-                  {detailTarget.map((el) => {
-                    return (
-                      <TargetCard {...el} key={el.id} onDelete={() => handleDeleteDetailTarget(el.id)} width="90%" />
-                    );
-                  })}
-                </Slider>
+              {coreTarget ? (
+                coreTarget.detailList.length > 3 ? (
+                  <Slider {...settings}>
+                    {coreTarget.detailList.map((el) => {
+                      return (
+                        <TargetCard {...el} key={el.id} onDelete={() => handleDeleteDetailTarget(el.id)} width="90%" />
+                      );
+                    })}
+                  </Slider>
+                ) : (
+                  <CordBox>
+                    {coreTarget.detailList.map((el) => {
+                      return (
+                        <TargetCard {...el} key={el.id} onDelete={() => handleDeleteDetailTarget(el.id)} width="30%" />
+                      );
+                    })}
+                  </CordBox>
+                )
               ) : (
-                <CordBox>
-                  {detailTarget.map((el) => {
-                    return (
-                      <TargetCard {...el} key={el.id} onDelete={() => handleDeleteDetailTarget(el.id)} width="30%" />
-                    );
-                  })}
-                </CordBox>
+                ''
               )}
             </DetailCardContainer>
           </DetailSectionColumn>
@@ -181,45 +224,51 @@ const TutorialsPage = () => {
             <OButton onClick={secondTarget.handleSubmit(handleSetDetailTarget)}>추가</OButton>
             <PageAction>
               <OPageButton onClick={handleStepOne}>이전으로</OPageButton>
-              <OPageButton onClick={handleStepThree}>다음으로</OPageButton>
+              <OButton onClick={handleStepThree} disabled={!isClear} className={clearBtnStyle}>
+                다음으로
+              </OButton>
             </PageAction>
           </DetailSectionColumn>
         </DetailSection>
       ) : (
         <DetailSection>
-          <MainTypography>{DETAIL_INPUT_TITLE}</MainTypography>
+          <MainTypography>{TODO_STEP_TITLE}</MainTypography>
           <DetailSectionColumn>
             <DetailCardContainer>
-              {detailTarget.length > 3 ? (
-                <Slider {...settings}>
-                  {detailTarget.map((el) => {
-                    return (
-                      <TargetCard
-                        {...el}
-                        key={el.id}
-                        width="90%"
-                        onDelete={() => handleDeleteDetailTarget(el.id)}
-                        onSelect={() => handleDetailSelect(el)}
-                        checked={todoTarget?.id === el.id}
-                      />
-                    );
-                  })}
-                </Slider>
+              {coreTarget ? (
+                coreTarget.detailList.length > 3 ? (
+                  <Slider {...settings}>
+                    {coreTarget.detailList.map((el) => {
+                      return (
+                        <TargetCard
+                          {...el}
+                          key={el.id}
+                          width="90%"
+                          onDelete={() => handleDeleteDetailTarget(el.id)}
+                          onSelect={() => handleDetailSelect(el)}
+                          checked={todoTarget?.id === el.id}
+                        />
+                      );
+                    })}
+                  </Slider>
+                ) : (
+                  <CordBox>
+                    {coreTarget.detailList.map((el) => {
+                      return (
+                        <TargetCard
+                          {...el}
+                          key={el.id}
+                          width="30%"
+                          onDelete={() => handleDeleteDetailTarget(el.id)}
+                          onSelect={() => handleDetailSelect(el)}
+                          checked={todoTarget?.id === el.id}
+                        />
+                      );
+                    })}
+                  </CordBox>
+                )
               ) : (
-                <CordBox>
-                  {detailTarget.map((el) => {
-                    return (
-                      <TargetCard
-                        {...el}
-                        key={el.id}
-                        width="30%"
-                        onDelete={() => handleDeleteDetailTarget(el.id)}
-                        onSelect={() => handleDetailSelect(el)}
-                        checked={todoTarget?.id === el.id}
-                      />
-                    );
-                  })}
-                </CordBox>
+                ''
               )}
             </DetailCardContainer>
           </DetailSectionColumn>
@@ -256,6 +305,9 @@ const TutorialsPage = () => {
           <DetailSectionColumn>
             <PageAction>
               <OPageButton onClick={handleStepTwo}>이전으로</OPageButton>
+              <OButton disabled={!isClear} className={clearBtnStyle}>
+                튜토리얼 클리어
+              </OButton>
             </PageAction>
           </DetailSectionColumn>
         </DetailSection>
@@ -265,6 +317,10 @@ const TutorialsPage = () => {
 };
 
 export default TutorialsPage;
+
+const clearBtnStyle = css`
+  width: 50%;
+`;
 
 const TutorialsPageSelect = styled.div`
   display: flex;
@@ -324,7 +380,7 @@ const TodoListContainer = styled.div`
   flex-direction: column;
   gap: 8px;
   padding: 12px 0;
-  height: 180px;
+  height: 190px;
   overflow-y: scroll;
 `;
 
@@ -354,11 +410,12 @@ const TodoCardDate = styled.p`
   }
 `;
 
-const OPageButton = styled.div`
+const OPageButton = styled.button`
   padding: 12px 16px;
   border: 1px solid #999;
   text-align: center;
   border-radius: 6px;
+  cursor: pointer;
   width: 49%;
 `;
 
@@ -367,7 +424,6 @@ const PageAction = styled.div`
   justify-content: space-between;
   gap: 10px;
   ${(props) => props.theme.typography.B9_Body_12_M}
-  cursor: pointer;
 `;
 
 const TodoInputBox = styled.div`
