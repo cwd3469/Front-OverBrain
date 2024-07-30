@@ -74,11 +74,20 @@ const OButton = ({ size, palette, variant, ...props }: Props) => {
       main: '400',
       hover: '700',
     },
+    white: {
+      main: '100',
+      hover: '100',
+    },
+    black: {
+      main: '900',
+      hover: '900',
+    },
   };
 
   const selectColor = paletteStyle[palette || 'primary'];
   const mainColor = theme.palette[palette || 'primary'][selectColor.main];
   const hoverColor = theme.palette[palette || 'primary'][selectColor.hover];
+
   const rgba = mainColor ? hexToRgbaColor(mainColor, 0.04) : '#fff';
 
   const variantStyle: { [key in Variant]: string } = {

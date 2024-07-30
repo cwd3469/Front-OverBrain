@@ -1,5 +1,5 @@
 import { Target } from '@/types/main';
-import { LabelTextFiled, MultiLineTextFiled } from '../common/textFiled';
+import { LabelTextField, MultiLineTextField } from '../common/textFiled';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import styled from '@emotion/styled';
 
@@ -10,7 +10,7 @@ type Props = { register: UseFormRegister<Target>; errors: FieldErrors<Target> };
 const TargetInputs = ({ register, errors }: Props) => {
   return (
     <InputSection>
-      <LabelTextFiled
+      <LabelTextField
         {...register('title')}
         placeholder="목표를 작성해 주세요."
         message={inputMessage(errors, 'title')}
@@ -20,7 +20,7 @@ const TargetInputs = ({ register, errors }: Props) => {
       />
       <MultiLineTextFiledBox>
         <MultiLineTextFiledLabel>설명</MultiLineTextFiledLabel>
-        <MultiLineTextFiled
+        <MultiLineTextField
           {...register('contents')}
           placeholder="구체적으로 작성해 주세요."
           maxLength={50}
@@ -29,10 +29,10 @@ const TargetInputs = ({ register, errors }: Props) => {
       </MultiLineTextFiledBox>
       <SubContentsBox>
         <InputBox>
-          <LabelTextFiled {...register('startAt')} type="date" label="시작 날짜" />
+          <LabelTextField {...register('startAt')} type="date" label="시작 날짜" />
         </InputBox>
         <InputBox>
-          <LabelTextFiled {...register('endAt')} type="date" label="끝 날짜" />
+          <LabelTextField {...register('endAt')} type="date" label="끝 날짜" />
         </InputBox>
       </SubContentsBox>
     </InputSection>

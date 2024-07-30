@@ -1,12 +1,9 @@
 import { Target } from '@/types/main';
-import OCard from '@components/common/OCard';
-import { MultiLineTextField } from '@components/common/textFiled';
 import dayjs from 'dayjs';
 import styled from '@emotion/styled';
 import { AiOutlineClose } from 'react-icons/ai';
-
-import { Target } from '@/types/main';
 import { css } from '@emotion/react';
+import { MultiLineTextField } from '../common/textFiled';
 
 type Props = Target & {
   checked?: boolean;
@@ -29,7 +26,7 @@ const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, onSe
           </button>
         )}
       </CardHead>
-      {contents && <CordContents value={contents} disabled />}
+      {contents && <MultiLineTextField value={contents} disabled height="70px" />}
       <Item>
         <div className="th">시작 날짜 :</div>
         <p className="td">{dayFormat(endAt)}</p>
@@ -46,16 +43,6 @@ export default TargetCard;
 
 const checkedColor = css`
   border: 2px solid var(--Function-MintDefault, #1abcb7);
-`;
-
-const CordContents = styled.textarea`
-  border: none;
-  resize: none;
-  padding: 0px;
-  &:disabled {
-    background-color: ${(props) => props.theme.palette.white};
-    ${(props) => props.theme.typography.B7_Body_14_M}
-  }
 `;
 
 const Card = styled.div<{ checked?: boolean; pointer: boolean; width?: string }>`

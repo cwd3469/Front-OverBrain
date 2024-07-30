@@ -6,7 +6,7 @@ type Props = {
   padding?: string;
 };
 
-const MultiLineTextFiled = styled.textarea<Props>`
+const MultiLineTextField = styled.textarea<Props>`
   //layout
   display: flex;
   padding: ${(props) => props.padding ?? '12px 16px'};

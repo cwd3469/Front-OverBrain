@@ -10,7 +10,7 @@ type Props = DefaultTextFiledProps & {
 };
 
 /**상태 메시지 */
-const LabelTextFiled = forwardRef<HTMLDivElement, Props>(({ label, message, require, ...props }, ref) => (
+const LabelTextField = forwardRef<HTMLDivElement, Props>(({ label, message, require, ...props }, ref) => (
   <Container ref={ref}>
     {label && (
       <LabelName>
@@ -22,7 +22,7 @@ const LabelTextFiled = forwardRef<HTMLDivElement, Props>(({ label, message, requ
   </Container>
 ));
 
-LabelTextFiled.displayName = 'LabelTextFiled';
+LabelTextField.displayName = 'LabelTextField';
 
 const Container = styled.div`
   display: flex;
@@ -38,4 +38,4 @@ const LabelName = styled.label`
   color: var(--CoolGray-CoolGray700, #4e5962);
 `;
 
-export default LabelTextFiled;
+export default LabelTextField;

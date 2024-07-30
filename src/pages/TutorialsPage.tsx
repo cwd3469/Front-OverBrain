@@ -7,7 +7,6 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 import { CoreTarget, DetailTarget, Target, TodoTarget } from '@/types/main';
 import OButton from '@components/common/button/OButton';
-import OLayout from '@components/common/layout/OLayout';
 import styled from '@emotion/styled';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import TargetCard from '@/components/main/TargetCard';
@@ -194,14 +193,14 @@ const TutorialsPage = () => {
   }, []);
 
   return (
-    <OLayout width={theme.screens.lg}>
+    <>
       {!step || step === '1' ? (
         <TutorialsPageSelect>
           <MainTypography>{CORE_INPUT_TITLE}</MainTypography>
           <MainTextFiled {...firstTarget.register('title')} />
-          <MainOButton onClick={firstTarget.handleSubmit(handleSetCoreTarget)} disabled={isFirstClear}>
+          <OButton size="sm" onClick={firstTarget.handleSubmit(handleSetCoreTarget)} disabled={isFirstClear}>
             시작
-          </MainOButton>
+          </OButton>
         </TutorialsPageSelect>
       ) : step === '2' ? (
         <DetailSection>
@@ -234,10 +233,14 @@ const TutorialsPage = () => {
           </DetailSectionColumn>
           <DetailSectionColumn>
             <TargetInputs register={secondTarget.register} errors={secondTarget.formState.errors} />
-            <OButton onClick={secondTarget.handleSubmit(handleSetDetailTarget)}>추가</OButton>
+            <OButton onClick={secondTarget.handleSubmit(handleSetDetailTarget)} size="sm">
+              추가
+            </OButton>
             <PageAction>
-              <OPageButton onClick={handleStepOne}>이전으로</OPageButton>
-              <OButton onClick={handleStepThree} disabled={!isClear} className={clearBtnStyle}>
+              <OButton onClick={handleStepOne} variant="outlined" palette="black" size="sm">
+                이전으로
+              </OButton>
+              <OButton onClick={handleStepThree} disabled={!isClear} className={clearBtnStyle} size="sm">
                 다음으로
               </OButton>
             </PageAction>
@@ -310,22 +313,26 @@ const TutorialsPage = () => {
               </TodoListContainer>
               <TodoInputBox>
                 <DefaultTextFiled {...thirdTarget.register('title')} />
-                <OButton onClick={thirdTarget.handleSubmit(handleSetTodoTarget)}>등록</OButton>
+                <OButton onClick={thirdTarget.handleSubmit(handleSetTodoTarget)} size="sm">
+                  등록
+                </OButton>
               </TodoInputBox>
             </>
           )}
 
           <DetailSectionColumn>
             <PageAction>
-              <OPageButton onClick={handleStepTwo}>이전으로</OPageButton>
-              <OButton disabled={!isClear} className={clearBtnStyle}>
+              <OButton onClick={handleStepTwo} palette="black" size="sm" variant="outlined">
+                이전으로
+              </OButton>
+              <OButton disabled={!isClear} className={clearBtnStyle} size="sm">
                 튜토리얼 클리어
               </OButton>
             </PageAction>
           </DetailSectionColumn>
         </DetailSection>
       )}
-    </OLayout>
+    </>
   );
 };
 
@@ -353,10 +360,6 @@ const MainTextFiled = styled(DefaultTextFiled)`
   width: calc(100% - 120px);
   height: 60px;
   ${(props) => props.theme.typography.B1_Body_18_R}
-`;
-
-const MainOButton = styled(OButton)`
-  ${(props) => props.theme.typography.B4_Body_16_M}
 `;
 
 const CordBox = styled.div`
