@@ -1,3 +1,6 @@
+import { Target } from '@/types/main';
+import OCard from '@components/common/OCard';
+import { MultiLineTextField } from '@components/common/textFiled';
 import dayjs from 'dayjs';
 import styled from '@emotion/styled';
 import { AiOutlineClose } from 'react-icons/ai';

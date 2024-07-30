@@ -6,11 +6,11 @@ const BoardPage = () => {
   const { target, createTarget, deleteTarget } = useCurrentTarget();
 
   return (
-    <OLayout>
+    <>
       {target.map((item, index) => {
         return <TargetCard key={index} {...item} onDelete={deleteTarget} />;
       })}
-    </OLayout>
+    </>
   );
 };
 

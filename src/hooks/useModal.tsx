@@ -1,17 +1,19 @@
-import { ModalView } from '@/components/modal/ModalView';
-import { ModalInfo } from '@/interface/modal';
 import { ReactNode, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-interface Props {
-  info: Map<string, ModalInfo>;
+import { ModalView } from '@/components/modal/ModalView';
+import { ModalInfo } from '@/interface/modal';
+
+interface Props<T> {
+  info: {
+    [K in keyof T]: ModalInfo;
+  };
 }
 
-interface Return {
-  setModalName: (name: string) => void;
+interface Return<T, K extends keyof T> {
+  setModalName: (name: K | 'close') => void;
   modal: ReactNode;
-  modalName: string;
-  modalCycle: (name: string) => 'unMount' | 'mount';
+  modalName: K | 'close';
   isModalMount: boolean;
 }
 
@@ -21,23 +23,23 @@ export const ModalPortal = ({ children }: { children: ReactNode }) => {
   return ReactDOM.createPortal(children, component);
 };
 
-const useModal = ({ info }: Props): Return => {
-  const [modalName, setName] = useState<string>('');
+const useModal = <T, K extends keyof T>({ info }: Props<T>): Return<T, K> => {
+  const [modalName, setName] = useState<K | 'close'>('close');
 
-  const value = info.get(modalName);
+  const value = modalName !== 'close' ? info[modalName] : undefined;
   const modal = value ? (
     <ModalPortal>
-      <ModalView {...value} onClose={() => setName('')} />
+      <ModalView {...value} onClose={() => setName('close')} />
     </ModalPortal>
   ) : (
     <></>
   );
 
-  const setModalName = (name: string) => setName(name);
-  const modalCycle = (name: string) => (modalName === name ? 'mount' : 'unMount');
+  const setModalName = (name: K | 'close') => setName(name);
+
   const isModalMount = value ? true : false;
 
-  return { modal, setModalName, modalName, modalCycle, isModalMount };
+  return { modal, setModalName, modalName, isModalMount };
 };
 
 export default useModal;

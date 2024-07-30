@@ -37,4 +37,4 @@ const MultiLineTextFiled = styled.textarea<Props>`
   }
 `;
 
-export default MultiLineTextFiled;
+export default MultiLineTextField;

@@ -1,8 +1,8 @@
-type PaletteKey = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'gray' | 'white' | 'black';
-type Palette = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | 'default';
+export type PaletteKey = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'gray';
+export type PaletteListKey = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | 'default';
 
 type PaletteValue = {
-  [key in Palette]?: string;
+  [key in PaletteListKey]?: string;
 };
 
 export type PaletteValueKey = {
@@ -40,6 +40,7 @@ export const palette: PaletteValueKey = {
     50: '#E0F4FF',
     500: '#00B1FF',
     700: '#0084D9',
+    900: '#0152A2',
   },
   success: {
     50: '#E5F5ED',
@@ -54,7 +55,7 @@ export const palette: PaletteValueKey = {
   error: {
     50: '#FFF3F4',
     300: '#FF6560',
-    400: '#EE2C23',
+    500: '#EE2C23',
   },
   gray: {
     50: '#FAFAFA',

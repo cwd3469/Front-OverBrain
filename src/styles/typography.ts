@@ -140,13 +140,13 @@ const typography: TypographyValueKey = {
     fontWeight: 700,
   },
   L3_Label_16_B: {
-    fontSize: '1.25rem',
+    fontSize: '1rem',
     lineHeight: '1.25rem',
     letterSpacing: '0.1px',
     fontWeight: 700,
   },
   L4_Label_16_M: {
-    fontSize: '1.25rem',
+    fontSize: '1rem',
     lineHeight: '1.25rem',
     letterSpacing: '0.1px',
     fontWeight: 500,

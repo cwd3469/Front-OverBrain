@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-
+import { css } from '@emotion/css';
+import { Outlet } from 'react-router-dom';
 export type MenuInfo = {
   name: string;
   link: string;
@@ -14,7 +15,9 @@ type Props = {
 const OLayout = ({ children, width }: Props) => {
   return (
     <Container>
-      <Card width={width}>{children}</Card>
+      <Card width={width}>
+        <Outlet />
+      </Card>
     </Container>
   );
 };
@@ -44,4 +47,15 @@ const Card = styled.div<{ width?: string }>`
   }
 `;
 
-export default OLayout;
+const ContentsBox = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1180px;
+  @media screen and (max-width: 1180px) {
+    width: 100%;
+  }
+`;
+
+export default MainLayout;

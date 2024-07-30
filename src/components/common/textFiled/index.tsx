@@ -1,5 +1,5 @@
 export * from './DefaultTextFiled';
 export { default as AuthTextFiled } from './AuthTextFiled';
-export { default as LabelTextFiled } from './LabelTextFiled';
-export { default as MultiLineTextFiled } from './MultiLineTextFiled';
-export { default as SearchTextFiled } from './SearchTextFiled';
+export { default as LabelTextField } from './LabelTextField';
+export { default as MultiLineTextField } from './MultiLineTextField';
+export { default as SearchTextField } from './SearchTextField';
