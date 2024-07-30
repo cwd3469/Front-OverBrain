@@ -81,7 +81,7 @@ const TutorialsPage = () => {
 
   const isFirstClear = !firstTarget.formState.isValid;
 
-  const isClear = coreTarget && coreTarget.detailList.length > 3 ? true : false;
+  const isClear = coreTarget && coreTarget.detailList.length >= 3 ? true : false;
 
   /** step 이동 */
   const handleStepOne = () => {

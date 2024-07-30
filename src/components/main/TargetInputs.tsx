@@ -20,12 +20,21 @@ const TargetInputs = ({ register, errors }: Props) => {
         />
         <MultiLineTextFiledBox>
           <MultiLineTextFiledLabel>설명</MultiLineTextFiledLabel>
-          <MultiLineTextFiled {...register('contents')} placeholder="구체적으로 작성해 주세요." maxLength={500} />
+          <MultiLineTextFiled
+            {...register('contents')}
+            placeholder="구체적으로 작성해 주세요."
+            maxLength={500}
+            height="70px"
+          />
         </MultiLineTextFiledBox>
       </ContentsBox>
       <SubContentsBox>
-        <LabelTextFiled {...register('startAt')} type="date" label="시작 날짜" />
-        <LabelTextFiled {...register('endAt')} type="date" label="끝 날짜" />
+        <InputBox>
+          <LabelTextFiled {...register('startAt')} type="date" label="시작 날짜" />
+        </InputBox>
+        <InputBox>
+          <LabelTextFiled {...register('endAt')} type="date" label="끝 날짜" />
+        </InputBox>
       </SubContentsBox>
     </InputSection>
   );
@@ -33,10 +42,13 @@ const TargetInputs = ({ register, errors }: Props) => {
 
 export default TargetInputs;
 
+const InputBox = styled.div`
+  width: 50%;
+`;
+
 const InputSection = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: start;
+  flex-direction: column;
   gap: var(--RadiusXL, 16px);
 `;
 
@@ -44,14 +56,13 @@ const ContentsBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 70%;
 `;
 
 const SubContentsBox = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: stretch;
   gap: 16px;
-  width: 25%;
 `;
 
 const MultiLineTextFiledLabel = styled.label`

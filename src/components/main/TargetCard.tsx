@@ -28,10 +28,6 @@ const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, onSe
       </CardHead>
       {contents && <CordContents value={contents} disabled />}
       <Item>
-        <div className="th">생성 날짜 :</div>
-        <p className="td">{dayFormat(createdAt)}</p>
-      </Item>
-      <Item>
         <div className="th">시작 날짜 :</div>
         <p className="td">{dayFormat(endAt)}</p>
       </Item>
