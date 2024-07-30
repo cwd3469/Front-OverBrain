@@ -14,7 +14,7 @@ type Props = Target & {
 };
 
 const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, onSelect, width, checked }: Props) => {
-  const dayFormat = (date?: Date) => (date ? dayjs(date).format('YYYY-MM-DD') : '-');
+  const dayFormat = (date?: Date) => (date ? dayjs(date).format('YYYY/MM/DD') : '----/--/--');
 
   return (
     <Card onClick={onSelect} checked={checked} pointer={Boolean(onSelect)} width={width}>
@@ -46,7 +46,7 @@ const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, onSe
 export default TargetCard;
 
 const checkedColor = css`
-  box-shadow: #00b3ff2a 0px 6px 24px 0px, #00b3ff9f 0px 0px 0px 1px;
+  border: 2px solid var(--Function-MintDefault, #1abcb7);
 `;
 
 const CordContents = styled.textarea`

@@ -3,6 +3,7 @@ import uuid from 'react-uuid';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Slider from 'react-slick';
+import { AiOutlineClose } from 'react-icons/ai';
 
 import { CoreTarget, DetailTarget, Target, TodoTarget } from '@/types/main';
 import OButton from '@components/common/button/OButton';
@@ -16,12 +17,29 @@ import { useTheme } from '@emotion/react';
 
 import { DefaultTextFiled } from '@/components/common/textFiled';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 const CORE_TARGET_TITLE = '코어 목표를 입력해주세요.';
 const CORE_INPUT_TITLE = '코어 목표를 입력해 주세요.';
 const DETAIL_TARGET_TITLE = '상세 목표를 입력해주세요.';
 const DETAIL_INPUT_TITLE = '상세 목표를 입력해주세요.';
 const DETAIL_MAX_LENGTH = '상세 목표는 9개까지 추가 가능합니다.';
+
+const resetTarget = {
+  title: '',
+  contents: undefined,
+  startAt: undefined,
+  endAt: undefined,
+  createdAt: undefined,
+};
+
+const settings = {
+  dots: true,
+  infinite: false,
+  speed: 100,
+  slidesToScroll: 1,
+  slidesToShow: 3.5,
+};
 
 const coresSchema = yup.object({
   title: yup.string().required(CORE_TARGET_TITLE),
@@ -44,25 +62,20 @@ const TutorialsPage = () => {
   const firstTarget = useForm<Target>({
     mode: 'onChange',
     resolver: yupResolver(coresSchema),
+    defaultValues: resetTarget,
   });
   const secondTarget = useForm<Target>({
     mode: 'onChange',
     resolver: yupResolver(detailSchema),
+    defaultValues: resetTarget,
   });
   const thirdTarget = useForm<Target>({
     mode: 'onChange',
     resolver: yupResolver(todoSchema),
+    defaultValues: resetTarget,
   });
 
   const step = searchParams.get('step');
-
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 100,
-    slidesToScroll: 1,
-    slidesToShow: 3.5,
-  };
 
   /** 코어 등록 */
   const handleSetCoreTarget: SubmitHandler<Target> = (core: Target) => {
@@ -95,6 +108,7 @@ const TutorialsPage = () => {
 
   /** todo 이동 */
   const handleStepOne = () => navigate('/tutorials?step=1');
+  const handleStepTwo = () => navigate('/tutorials?step=2');
   const handleStepThree = () => navigate('/tutorials?step=3');
 
   /** todo 등록 */
@@ -109,6 +123,20 @@ const TutorialsPage = () => {
 
     thirdTarget.reset();
   };
+
+  const handleDetailSelect = (params: DetailTarget) =>
+    setTodoTarget((prev) => {
+      if (prev) setDetailTarget((item) => item.map((el) => (el.id === prev.id ? prev : el)));
+      return params;
+    });
+
+  const handleDeleteTodo = (params: string) =>
+    setTodoTarget((prev) => {
+      if (!prev) return;
+      const filter = prev?.todoList.filter((el) => el.id !== params);
+      const next: DetailTarget = { ...prev, todoList: filter };
+      return next;
+    });
 
   return (
     <OLayout width={theme.screens.lg}>
@@ -159,35 +187,76 @@ const TutorialsPage = () => {
         </DetailSection>
       ) : (
         <DetailSection>
+          <MainTypography>{DETAIL_INPUT_TITLE}</MainTypography>
           <DetailSectionColumn>
-            {detailTarget.map((el) => {
-              return (
-                <TargetCard
-                  title={el.title}
-                  contents={el.contents}
-                  startAt={el.startAt}
-                  endAt={el.endAt}
-                  key={el.id}
-                  checked={todoTarget?.id === el.id}
-                  onDelete={() => handleDeleteDetailTarget(el.id)}
-                  onSelect={() => setTodoTarget(el)}
-                />
-              );
-            })}
-          </DetailSectionColumn>
-          <DetailSectionColumn>
-            {todoTarget && (
-              <TodoCard>
-                <TargetCard {...todoTarget} />
-                {todoTarget.todoList &&
-                  todoTarget.todoList.map((el) => {
-                    return <TodoListItem key={el.id}>{el.title}</TodoListItem>;
+            <DetailCardContainer>
+              {detailTarget.length > 3 ? (
+                <Slider {...settings}>
+                  {detailTarget.map((el) => {
+                    return (
+                      <TargetCard
+                        {...el}
+                        key={el.id}
+                        width="90%"
+                        onDelete={() => handleDeleteDetailTarget(el.id)}
+                        onSelect={() => handleDetailSelect(el)}
+                        checked={todoTarget?.id === el.id}
+                      />
+                    );
                   })}
-
-                <DefaultTextFiled {...thirdTarget.register('title')} style={{ marginTop: 'auto' }} />
+                </Slider>
+              ) : (
+                <CordBox>
+                  {detailTarget.map((el) => {
+                    return (
+                      <TargetCard
+                        {...el}
+                        key={el.id}
+                        width="30%"
+                        onDelete={() => handleDeleteDetailTarget(el.id)}
+                        onSelect={() => handleDetailSelect(el)}
+                        checked={todoTarget?.id === el.id}
+                      />
+                    );
+                  })}
+                </CordBox>
+              )}
+            </DetailCardContainer>
+          </DetailSectionColumn>
+          {todoTarget && (
+            <>
+              <TargetCard {...todoTarget} />
+              <TodoListContainer>
+                {todoTarget.todoList.map((el) => {
+                  return (
+                    <TodoListItem key={el.id}>
+                      <TodoListItemTitle>{el.title}</TodoListItemTitle>
+                      <TodoCardDate>
+                        <span className="th">시작 : </span>
+                        <span className="tb">{el.startAt ? dayjs(el.startAt).format('YYYY/MM/DD') : '----/--/--'}</span>
+                      </TodoCardDate>
+                      <TodoCardDate>
+                        <span className="th">끝 : </span>
+                        <span className="tb">{el.endAt ? dayjs(el.endAt).format('YYYY/MM/DD') : '----/--/--'}</span>
+                      </TodoCardDate>
+                      <button onClick={() => handleDeleteTodo(el.id)}>
+                        <AiOutlineClose />
+                      </button>
+                    </TodoListItem>
+                  );
+                })}
+              </TodoListContainer>
+              <TodoInputBox>
+                <DefaultTextFiled {...thirdTarget.register('title')} />
                 <OButton onClick={thirdTarget.handleSubmit(handleSetTodoTarget)}>등록</OButton>
-              </TodoCard>
-            )}
+              </TodoInputBox>
+            </>
+          )}
+
+          <DetailSectionColumn>
+            <PageAction>
+              <OPageButton onClick={handleStepTwo}>이전으로</OPageButton>
+            </PageAction>
           </DetailSectionColumn>
         </DetailSection>
       )}
@@ -235,7 +304,7 @@ const DetailCardContainer = styled.div`
 const DetailSection = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: stretch;
 `;
 
 const DetailSectionColumn = styled.div`
@@ -250,37 +319,39 @@ const MainTargetStyle = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.palette.gray[200]};
 `;
 
-const TodoCard = styled.div`
+const TodoListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  gap: 8px;
+  padding: 12px 0;
+  height: 180px;
+  overflow-y: scroll;
 `;
 
-const TodoCardHead = styled.div`
-  ${(props) => props.theme.typography.B4_Body_16_M}
-  padding: ${(props) => props.theme.gap.md};
-  border-radius: ${(props) => props.theme.gap.sm};
-`;
-
-const TodoCardDate = styled.div`
+const TodoListItem = styled.div`
+  padding: 12px 8px;
+  border: 1px solid ${(props) => props.theme.palette.gray[300]};
+  border-radius: ${(props) => props.theme.gap.md};
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: row;
+  justify-content: end;
+  gap: 10px;
+`;
+
+const TodoListItemTitle = styled.p`
+  ${(props) => props.theme.typography.B7_Body_14_M}
+  margin-right: auto;
+`;
+
+const TodoCardDate = styled.p`
   .th {
     ${(props) => props.theme.typography.B7_Body_14_M}
     color:${(props) => props.theme.palette.gray[900]}
   }
   .tb {
     ${(props) => props.theme.typography.B8_Body_14_R}
-    color:${(props) => props.theme.palette.gray[300]}
+    color:${(props) => props.theme.palette.gray[600]}
   }
-`;
-
-const TodoListItem = styled.div`
-  ${(props) => props.theme.typography.T6_Title_16_B}
-  padding: 4px 8px;
-  border: 1px solid ${(props) => props.theme.palette.gray[300]};
-  border-radius: ${(props) => props.theme.gap.md};
 `;
 
 const OPageButton = styled.div`
@@ -297,4 +368,13 @@ const PageAction = styled.div`
   gap: 10px;
   ${(props) => props.theme.typography.B9_Body_12_M}
   cursor: pointer;
+`;
+
+const TodoInputBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 20px 0;
+  width: 100%;
+  gap: 10px;
+  /* align-items: ; */
 `;
