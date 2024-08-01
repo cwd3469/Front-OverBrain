@@ -1,21 +1,19 @@
-import { ReactNode } from 'react';
+import { ButtonProps } from '@/components/common/button/OButton';
 
 type BtnType = {
   onClick?: () => void;
   title?: string;
-  bgColor?: string;
+  btnInfo?: ButtonProps;
   disabled?: boolean;
 };
 
-export type ModalViewType = 'alarm' | 'alert' | 'confirm' | 'titleText' | 'left-head';
+export type ModalViewType = 'alarm' | 'alert' | 'confirm';
 
 export interface ModalInfo {
   width?: string;
-  type?: ModalViewType;
-  header: ReactNode;
-  body: ReactNode;
-  footer?: {
-    confirm: BtnType;
-    close?: BtnType;
-  };
+  type: ModalViewType;
+  header: JSX.Element | string;
+  body: JSX.Element | string;
+  leftBtn?: BtnType;
+  rightBtn?: BtnType;
 }

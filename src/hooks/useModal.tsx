@@ -1,45 +1,41 @@
-import { ReactNode, useState } from 'react';
-import ReactDOM from 'react-dom';
-
 import { ModalView } from '@/components/modal/ModalView';
 import { ModalInfo } from '@/interface/modal';
+import { useState } from 'react';
 
-interface Props<T> {
-  info: {
-    [K in keyof T]: ModalInfo;
+type Modals<T extends string> = {
+  [K in T]: boolean;
+};
+
+interface ModalProps<T extends string> {
+  info?: ModalInfo;
+  nameKey: T;
+  isOpen: (key: T) => boolean;
+  closeModal: (key: T) => void;
+}
+
+const Modal = <T extends string>({ nameKey, info, isOpen, closeModal }: ModalProps<T>) => {
+  return isOpen(nameKey) && info ? <ModalView {...info} onClose={() => closeModal(nameKey)} /> : <></>;
+};
+
+function useModal<T extends string>() {
+  const [modals, setModals] = useState<Modals<T>>({} as Modals<T>);
+
+  const openModal = (key: T) => {
+    setModals((prev) => ({ ...prev, [key]: true }));
+  };
+
+  const closeModal = (key: T) => {
+    setModals((prev) => ({ ...prev, [key]: false }));
+  };
+
+  const isOpen = (key: T) => modals[key];
+
+  return {
+    Modal,
+    isOpen,
+    openModal,
+    closeModal,
   };
 }
-
-interface Return<T, K extends keyof T> {
-  setModalName: (name: K | 'close') => void;
-  modal: ReactNode;
-  modalName: K | 'close';
-  isModalMount: boolean;
-}
-
-export const ModalPortal = ({ children }: { children: ReactNode }) => {
-  const el = document.getElementById('modal');
-  const component = el as Element;
-  return ReactDOM.createPortal(children, component);
-};
-
-const useModal = <T, K extends keyof T>({ info }: Props<T>): Return<T, K> => {
-  const [modalName, setName] = useState<K | 'close'>('close');
-
-  const value = modalName !== 'close' ? info[modalName] : undefined;
-  const modal = value ? (
-    <ModalPortal>
-      <ModalView {...value} onClose={() => setName('close')} />
-    </ModalPortal>
-  ) : (
-    <></>
-  );
-
-  const setModalName = (name: K | 'close') => setName(name);
-
-  const isModalMount = value ? true : false;
-
-  return { modal, setModalName, modalName, isModalMount };
-};
 
 export default useModal;

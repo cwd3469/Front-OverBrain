@@ -16,7 +16,7 @@ type Breakpoint = 'lg' | 'md' | 'sm';
 
 type Variant = 'contained' | 'outlined' | 'text';
 
-type ButtonProps = {
+export type ButtonProps = {
   size?: Breakpoint;
   palette?: PaletteKey;
   variant?: Variant;
