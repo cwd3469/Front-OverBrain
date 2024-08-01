@@ -2,8 +2,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import TutorialsPage from './pages/TutorialsPage';
 import MainLayout from './pages/layout/MainLayout';
+import useToast from './hooks/useToast';
 
 const App = () => {
+  const { toastInfo } = useToast();
   return (
     <BrowserRouter basename="/">
       <Routes>
