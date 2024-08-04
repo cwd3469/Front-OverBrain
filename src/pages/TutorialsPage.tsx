@@ -19,6 +19,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { css } from '@emotion/css';
 import { hasLocalStorageCoreTargetValue, setLocalStorageCoreTargetValue } from '@/utils/function/localStorageUtils';
+import useToast from '@/hooks/useToast';
 
 const CORE_TARGET_TITLE = '코어 목표를 입력해주세요.';
 const CORE_INPUT_TITLE = '코어 목표를 입력해 주세요.';
@@ -55,8 +56,7 @@ const todoSchema = yup.object({
 });
 
 const TutorialsPage = () => {
-  const theme = useTheme();
-  const navigate = useNavigate();
+  const { openToast } = useToast();
   const [searchParams, setSearchParams] = useSearchParams();
   const [coreTarget, setCoreTarget] = useState<CoreTarget>();
   const [todoTarget, setTodoTarget] = useState<DetailTarget>();
@@ -194,6 +194,13 @@ const TutorialsPage = () => {
 
   return (
     <>
+      <OButton
+        onClick={() => {
+          openToast('안녕', 2000);
+        }}
+      >
+        버튼
+      </OButton>
       {!step || step === '1' ? (
         <TutorialsPageSelect>
           <MainTypography>{CORE_INPUT_TITLE}</MainTypography>

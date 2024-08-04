@@ -6,15 +6,14 @@ type Modals<T extends string> = {
   [K in T]: boolean;
 };
 
-interface ModalProps<T extends string> {
-  info?: ModalInfo;
+interface ModalProps<T extends string> extends ModalInfo {
   nameKey: T;
   isOpen: (key: T) => boolean;
   closeModal: (key: T) => void;
 }
 
-const Modal = <T extends string>({ nameKey, info, isOpen, closeModal }: ModalProps<T>) => {
-  return isOpen(nameKey) && info ? <ModalView {...info} onClose={() => closeModal(nameKey)} /> : <></>;
+const Modal = <T extends string>({ nameKey, isOpen, closeModal, ...props }: ModalProps<T>) => {
+  return isOpen(nameKey) && props ? <ModalView {...props} onClose={() => closeModal(nameKey)} /> : <></>;
 };
 
 function useModal<T extends string>() {

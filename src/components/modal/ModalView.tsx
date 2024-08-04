@@ -8,10 +8,9 @@ type ModalBodyContentType = {
   width?: string;
 };
 
-type Props = ModalInfo &
-  ModalBodyContentType & {
-    onClose: () => void;
-  };
+type Props = ModalInfo & {
+  onClose: () => void;
+};
 
 const ModalPortal = ({ children }: { children: ReactNode }) => {
   const el = document.getElementById('modal');
