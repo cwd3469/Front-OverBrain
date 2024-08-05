@@ -1,6 +1,5 @@
 import uuid from 'react-uuid';
 import { StateCreator, create } from 'zustand';
-import { devtools } from 'zustand/middleware';
 
 export type ToastInfoType = { isOpen: boolean; type: 'error' | 'success' | 'info'; contents: string };
 
@@ -33,7 +32,7 @@ const store: StateCreator<Store> = (set) => ({
     }),
 });
 
-const toastStore = import.meta.env.MODE === 'development' ? create<Store>()(devtools(store)) : create<Store>(store);
+const toastStore = create<Store>(store);
 
 const useToast = toastStore;
 export default useToast;
