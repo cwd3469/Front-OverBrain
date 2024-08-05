@@ -8,18 +8,26 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { CoreTarget, DetailTarget, Target, TodoTarget } from '@/types/main';
 import OButton from '@components/common/button/OButton';
 import styled from '@emotion/styled';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import TargetCard from '@/components/main/TargetCard';
 
 import TargetInputs from '@/components/main/TargetInputs';
-import { useTheme } from '@emotion/react';
 
 import { DefaultTextFiled } from '@/components/common/textFiled';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { css } from '@emotion/css';
-import { hasLocalStorageCoreTargetValue, setLocalStorageCoreTargetValue } from '@/utils/function/localStorageUtils';
+import { setLocalStorageCoreTargetValue } from '@/utils/function/localStorageUtils';
 import useToast from '@/hooks/useToast';
+
+const START_BTN_TITLE = '시작';
+const ADD_BTN_TITLE = '추가';
+const PREV_BTN_TITLE = '이전으로';
+const NEXT_BTN_TITLE = '다음으로';
+const START_FROM = '시작 :';
+const END_TO = '끝 :';
+const REGISTRATION_BTN = '등록';
+const TUTORIALS_CLEAR_BTN = '튜토리얼 클리어';
 
 const CORE_TARGET_TITLE = '코어 목표를 입력해주세요.';
 const CORE_INPUT_TITLE = '코어 목표를 입력해 주세요.';
@@ -117,6 +125,9 @@ const TutorialsPage = () => {
         const detailList: DetailTarget[] = [{ ...param, todoList: [], coreId: prev.id, id }, ...prev.detailList];
         const next: CoreTarget = { ...prev, detailList };
         secondTarget.reset();
+        secondTarget.setValue('contents', '');
+        secondTarget.setValue('startAt', new Date());
+        secondTarget.setValue('endAt', new Date());
         return next;
       } else {
         secondTarget.setError('title', { message: DETAIL_MAX_LENGTH });
@@ -177,36 +188,21 @@ const TutorialsPage = () => {
       return next;
     });
 
-  useEffect(() => {
-    if (coreTarget) setLocalStorageCoreTargetValue(coreTarget);
-  }, [coreTarget]);
+  const handleEndTutorials = () => coreTarget && setLocalStorageCoreTargetValue(coreTarget);
 
   useEffect(() => {
-    const value = hasLocalStorageCoreTargetValue();
-    if (value) {
-      setCoreTarget(value);
-      firstTarget.setValue('title', value.title);
-    } else {
-      searchParams.set('step', '1');
-      setSearchParams(searchParams);
-    }
+    searchParams.delete('step');
+    setSearchParams(searchParams);
   }, []);
 
   return (
     <>
-      <OButton
-        onClick={() => {
-          openToast('안녕', 2000);
-        }}
-      >
-        버튼
-      </OButton>
       {!step || step === '1' ? (
         <TutorialsPageSelect>
           <MainTypography>{CORE_INPUT_TITLE}</MainTypography>
           <MainTextFiled {...firstTarget.register('title')} />
           <OButton size="sm" onClick={firstTarget.handleSubmit(handleSetCoreTarget)} disabled={isFirstClear}>
-            시작
+            {START_BTN_TITLE}
           </OButton>
         </TutorialsPageSelect>
       ) : step === '2' ? (
@@ -241,14 +237,14 @@ const TutorialsPage = () => {
           <DetailSectionColumn>
             <TargetInputs register={secondTarget.register} errors={secondTarget.formState.errors} />
             <OButton onClick={secondTarget.handleSubmit(handleSetDetailTarget)} size="sm">
-              추가
+              {ADD_BTN_TITLE}
             </OButton>
             <PageAction>
               <OButton onClick={handleStepOne} variant="outlined" palette="black" size="sm">
-                이전으로
+                {PREV_BTN_TITLE}
               </OButton>
               <OButton onClick={handleStepThree} disabled={!isClear} className={clearBtnStyle} size="sm">
-                다음으로
+                {NEXT_BTN_TITLE}
               </OButton>
             </PageAction>
           </DetailSectionColumn>
@@ -304,11 +300,11 @@ const TutorialsPage = () => {
                     <TodoListItem key={el.id}>
                       <TodoListItemTitle>{el.title}</TodoListItemTitle>
                       <TodoCardDate>
-                        <span className="th">시작 : </span>
+                        <span className="th">{START_FROM}</span>
                         <span className="tb">{el.startAt ? dayjs(el.startAt).format('YYYY/MM/DD') : '----/--/--'}</span>
                       </TodoCardDate>
                       <TodoCardDate>
-                        <span className="th">끝 : </span>
+                        <span className="th">{END_TO}</span>
                         <span className="tb">{el.endAt ? dayjs(el.endAt).format('YYYY/MM/DD') : '----/--/--'}</span>
                       </TodoCardDate>
                       <button onClick={() => handleDeleteTodo(el.id)}>
@@ -321,7 +317,7 @@ const TutorialsPage = () => {
               <TodoInputBox>
                 <DefaultTextFiled {...thirdTarget.register('title')} />
                 <OButton onClick={thirdTarget.handleSubmit(handleSetTodoTarget)} size="sm">
-                  등록
+                  {REGISTRATION_BTN}
                 </OButton>
               </TodoInputBox>
             </>
@@ -330,10 +326,10 @@ const TutorialsPage = () => {
           <DetailSectionColumn>
             <PageAction>
               <OButton onClick={handleStepTwo} palette="black" size="sm" variant="outlined">
-                이전으로
+                {PREV_BTN_TITLE}
               </OButton>
-              <OButton disabled={!isClear} className={clearBtnStyle} size="sm">
-                튜토리얼 클리어
+              <OButton disabled={!isClear} className={clearBtnStyle} size="sm" onClick={handleEndTutorials}>
+                {TUTORIALS_CLEAR_BTN}
               </OButton>
             </PageAction>
           </DetailSectionColumn>
