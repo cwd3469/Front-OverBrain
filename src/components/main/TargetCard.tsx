@@ -2,8 +2,10 @@ import { Target } from '@/types/main';
 import dayjs from 'dayjs';
 import styled from '@emotion/styled';
 import { AiOutlineClose } from 'react-icons/ai';
-import { css } from '@emotion/react';
-import { MultiLineTextField } from '../common/textFiled';
+import { MdDescription } from 'react-icons/md';
+import { css } from '@emotion/css';
+
+import OPopper from '../common/button/OPopper';
 
 type Props = Target & {
   checked?: boolean;
@@ -26,7 +28,11 @@ const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, onSe
           </button>
         )}
       </CardHead>
-      {contents && <MultiLineTextField value={contents} disabled height="70px" />}
+      {contents && (
+        <OPopper contents={contents}>
+          <MdDescription />
+        </OPopper>
+      )}
       <Item>
         <div className="th">시작 날짜 :</div>
         <p className="td">{dayFormat(endAt)}</p>
