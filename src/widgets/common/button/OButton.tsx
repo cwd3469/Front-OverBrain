@@ -3,7 +3,7 @@ import { useTheme } from '@emotion/react';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
 import { ButtonHTMLAttributes } from 'react';
-import { hexToRgbaColor } from '@/utils/rgba';
+import { hexToRgbaColor } from '@/shared/rgba';
 
 /**
  * 

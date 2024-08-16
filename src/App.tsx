@@ -3,7 +3,7 @@ import MainPage from './pages/MainPage';
 import TutorialsPage from './pages/TutorialsPage';
 import MainLayout from './pages/layout/MainLayout';
 import ToastContainer from './widgets/toast/ToastContainer';
-import { Path } from './utils/constants/path';
+import { Path } from './shared/constants/path';
 
 const App = () => {
   return (

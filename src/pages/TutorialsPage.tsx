@@ -16,7 +16,7 @@ import TargetInputs from '@/widgets/main/TargetInputs';
 import { DefaultTextFiled } from '@/widgets/common/textFiled';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { setLocalStorageCoreTargetValue } from '@/utils/function/localStorageUtils';
+import { setLocalStorageCoreTargetValue } from '@/shared/function/localStorageUtils';
 import useModal, { OModal } from '@/hooks/useModal';
 
 type MODAL_NAME = 'TUTORIALS_PAGE';

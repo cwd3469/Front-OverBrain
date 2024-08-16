@@ -3,7 +3,7 @@ import { LabelTextField, MultiLineTextField } from '../common/textFiled';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import styled from '@emotion/styled';
 
-import { inputMessage } from '@/utils/contextMsg';
+import { inputMessage } from '@/shared/contextMsg';
 
 type Props = { register: UseFormRegister<Target>; errors: FieldErrors<Target> };
 
