@@ -1,5 +1,5 @@
-import OButton from '@/components/common/button/OButton';
-import { DesignComponent, ODesignCard, OVDesignPageWrapper } from '@/components/common/layout/ODesignCard';
+import OButton from '@/widgets/common/button/OButton';
+import { DesignComponent, ODesignCard, OVDesignPageWrapper } from '@/widgets/common/layout/ODesignCard';
 import { PaletteKey } from '@/styles/palette';
 
 const palettes: PaletteKey[] = ['primary', 'secondary', 'error', 'warning', 'info', 'success', 'gray'];

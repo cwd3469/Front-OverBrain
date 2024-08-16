@@ -1,9 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { collection, addDoc, getDocs, DocumentData } from 'firebase/firestore';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
 import FirebaseConfig from '@/utils/firebase';
 import LPButton from '../common/button/OButton';
-import { DefaultTextFiled } from '@components/common/textFiled';
+import { DefaultTextFiled } from '@/widgets/common/textFiled';
 const { db } = FirebaseConfig();
 
 type KeyValue = { [key: string]: string };

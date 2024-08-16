@@ -9,11 +9,11 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { CoreTarget, DetailTarget, Target, TodoTarget } from '@/interface/target';
-import OButton from '@components/common/button/OButton';
-import TargetCard from '@/components/main/TargetCard';
-import TargetInputs from '@/components/main/TargetInputs';
+import OButton from '@/widgets/common/button/OButton';
+import TargetCard from '@/widgets/main/TargetCard';
+import TargetInputs from '@/widgets/main/TargetInputs';
 
-import { DefaultTextFiled } from '@/components/common/textFiled';
+import { DefaultTextFiled } from '@/widgets/common/textFiled';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { setLocalStorageCoreTargetValue } from '@/utils/function/localStorageUtils';

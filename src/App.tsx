@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import TutorialsPage from './pages/TutorialsPage';
 import MainLayout from './pages/layout/MainLayout';
-import ToastContainer from './components/toast/ToastContainer';
+import ToastContainer from './widgets/toast/ToastContainer';
 import { Path } from './utils/constants/path';
 
 const App = () => {

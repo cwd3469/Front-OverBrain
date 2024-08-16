@@ -1,4 +1,4 @@
-import { ButtonProps } from '@/components/common/button/OButton';
+import { ButtonProps } from '@/widgets/common/button/OButton';
 
 type BtnType = {
   onClick?: () => void;

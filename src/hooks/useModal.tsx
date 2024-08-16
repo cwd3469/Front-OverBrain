@@ -1,4 +1,4 @@
-import { ModalView } from '@/components/modal/ModalView';
+import { ModalView } from '@/widgets/modal/ModalView';
 import { ModalInfo } from '@/interface/modal';
 import { useState } from 'react';
 
