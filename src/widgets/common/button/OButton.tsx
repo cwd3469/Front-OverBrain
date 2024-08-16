@@ -1,4 +1,4 @@
-import { PaletteKey, PaletteListKey } from '@/styles/palette';
+import { PaletteKey, PaletteListKey } from '@/app/styles/palette';
 import { useTheme } from '@emotion/react';
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
