@@ -1,5 +1,5 @@
 import { UserInfoDataInterface } from '@/app/interface/auth';
-import { clearAuthToken, setAuthToken } from '@/service/instance';
+import { clearAuthToken, setAuthToken } from '@/shared/service/instance';
 import { jwtDecode } from 'jwt-decode';
 import { StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';

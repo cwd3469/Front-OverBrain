@@ -7,11 +7,10 @@ export type MenuInfo = {
 };
 
 type Props = {
-  children?: React.ReactNode;
   width?: string;
 };
 
-const MainLayout = ({ children, width }: Props) => {
+const MainLayout = ({ width }: Props) => {
   return (
     <Layout>
       <Container width={width}>
