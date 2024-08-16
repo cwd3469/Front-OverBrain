@@ -1,6 +1,6 @@
 import { DefaultTextFiled, MessageBox, type DefaultTextFiledProps, type MessageBoxProps } from './DefaultTextFiled';
 import styled from '@emotion/styled';
-import IcRequire from '@/assets/svg/ic_require.svg?react';
+import IcRequire from '@/shared/assets/svg/ic_require.svg?react';
 import { forwardRef } from 'react';
 
 type Props = DefaultTextFiledProps & {

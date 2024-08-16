@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import IcBullet from '@/assets/svg/ic_bullet.svg?react';
-import IcBulletError from '@/assets/svg/ic_bullet_error.svg?react';
+import IcBullet from '@/shared/assets/svg/ic_bullet.svg?react';
+import IcBulletError from '@/shared/assets/svg/ic_bullet_error.svg?react';
 
 type Props = {
   fieldSize?: 'lg' | 'mb' | 'sm';
