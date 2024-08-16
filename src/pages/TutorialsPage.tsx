@@ -82,7 +82,7 @@ const TutorialsPage = () => {
 
   const isFirstClear = !firstTarget.formState.isValid;
 
-  const isClear = coreTarget && coreTarget.detailList.length >= 3 ? true : false;
+  const isClear = coreTarget && coreTarget.detailList.length >= 1 ? true : false;
 
   /** step 이동 */
   const handleStepOne = () => {
@@ -170,10 +170,14 @@ const TutorialsPage = () => {
     setCoreTarget((prev) => {
       if (!prev) return;
       const detailList = prev?.detailList.filter((el) => el.id !== id);
+      if (todoTarget?.id === id) {
+        setTodoTarget(detailList[0]);
+      }
       const next: CoreTarget = { ...prev, detailList };
       if (next.detailList.length === 0) {
         handleStepTwo();
       }
+
       return next;
     });
   };
@@ -233,7 +237,6 @@ const TutorialsPage = () => {
                       {...el}
                       key={el.id}
                       onDelete={() => handleDeleteDetailTarget(el.id)}
-                      width="30%"
                       isContentsOpen={(open) => setScrollOff(open)}
                     />
                   );
@@ -261,49 +264,35 @@ const TutorialsPage = () => {
       ) : step === '3' ? (
         <DetailSection>
           <MainTypography>{TODO_STEP_TITLE}</MainTypography>
-          <ContainerTop>
-            <DetailCardContainer>
-              {coreTarget ? (
-                <TargetCardContainer>
-                  {coreTarget.detailList.map((el) => {
-                    return (
-                      <TargetCard
-                        {...el}
-                        key={el.id}
-                        width="30%"
-                        onDelete={() => handleDeleteDetailTargetStep3(el.id)}
-                        onSelect={() => handleDetailSelect(el)}
-                        checked={todoTarget?.id === el.id}
-                      />
-                    );
-                  })}
-                </TargetCardContainer>
-              ) : (
-                ''
-              )}
-            </DetailCardContainer>
-          </ContainerTop>
+          <ContainerMiddle scrollOff={scrollOff}>
+            {coreTarget ? (
+              <TargetCardContainer>
+                {coreTarget.detailList.map((el) => {
+                  return (
+                    <TargetCard
+                      {...el}
+                      key={el.id}
+                      onDelete={() => handleDeleteDetailTargetStep3(el.id)}
+                      onSelect={() => handleDetailSelect(el)}
+                      checked={todoTarget?.id === el.id}
+                      isContentsOpen={(open) => setScrollOff(open)}
+                    />
+                  );
+                })}
+              </TargetCardContainer>
+            ) : (
+              ''
+            )}
+          </ContainerMiddle>
           {todoTarget && (
             <>
-              <ContainerMiddle scrollOff={scrollOff}>
-                <TargetCard {...todoTarget} checked />
-              </ContainerMiddle>
+              <TargetCard {...todoTarget} checked />
               <ContainerBottom>
                 <TodoListContainer>
                   {todoTarget.todoList.map((el) => {
                     return (
                       <TodoListItem key={el.id}>
                         <TodoListItemTitle>{el.title}</TodoListItemTitle>
-                        <TodoCardDate>
-                          <span className="th">{START_FROM}</span>
-                          <span className="tb">
-                            {el.startAt ? dayjs(el.startAt).format('YYYY/MM/DD') : '----/--/--'}
-                          </span>
-                        </TodoCardDate>
-                        <TodoCardDate>
-                          <span className="th">{END_TO}</span>
-                          <span className="tb">{el.endAt ? dayjs(el.endAt).format('YYYY/MM/DD') : '----/--/--'}</span>
-                        </TodoCardDate>
                         <button onClick={() => handleDeleteTodo(el.id)}>
                           <AiOutlineClose />
                         </button>
@@ -371,18 +360,12 @@ const TargetCardContainer = styled.div`
   }
 `;
 
-const ContainerTop = styled.div`
-  padding-top: 16px;
-  padding-bottom: 16px;
-  height: 158px;
-`;
-
 const ContainerMiddle = styled.div<{ scrollOff: boolean }>`
-  padding: 16px 16px 0;
+  padding: 8px 8px 0;
   border: 1px solid ${(props) => props.theme.palette.gray[200]};
   overflow-x: ${(props) => (!props.scrollOff ? 'auto' : 'clip')};
   ${(props) => (!props.scrollOff ? '' : 'padding-bottom: 5px')};
-  min-height: 168px;
+  min-height: 122px;
   /* custom scrollbar */
   ::-webkit-scrollbar {
     width: 5px;
@@ -407,10 +390,8 @@ const ContainerBottom = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 16px;
+  gap: 8px;
 `;
-
-const DetailCardContainer = styled.div``;
 
 const DetailSection = styled.div`
   display: flex;
@@ -424,7 +405,7 @@ const TodoListContainer = styled.div`
   flex-direction: column;
   gap: 8px;
   padding: 12px 8px;
-  height: 190px;
+  height: 150px;
   overflow-y: scroll;
   border: 1px solid ${(props) => props.theme.palette.gray[300]};
   border-radius: 4px;
@@ -475,7 +456,7 @@ const PageAction = styled.div`
 const TodoInputBox = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 20px 0;
+  padding: 10px 0;
   width: 100%;
   gap: 10px;
   /* align-items: ; */

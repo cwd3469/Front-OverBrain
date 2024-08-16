@@ -34,8 +34,7 @@ const Layout = styled.div`
 const Container = styled.div<{ width?: string }>`
   border-radius: ${(props) => props.theme.gap.lg};
   background: #fff;
-  padding: ${(props) => props.theme.gap.lg} 24px;
-
+  padding: 24px;
   width: ${(props) => props.width ?? '768px'};
   @media screen and (max-width: ${(props) => props.theme.screens.lg}) {
     width: 100%;

@@ -29,24 +29,25 @@ const TargetCard: React.FC<Props> = ({
 
   return (
     <Card onClick={onSelect} checked={checked} pointer={Boolean(onSelect)} width={width} className="item">
-      <DateSection>
-        <DateTag>
-          <label className="th">시작: </label>
-          <span className="td">{dayFormat(startAt)}</span>
-        </DateTag>
-        <DateTag>
-          <label className="th">끝: </label>
-          <span className="td">{dayFormat(endAt)}</span>
-        </DateTag>
-      </DateSection>
       <CardHead>
-        <TypographyH4Tile>{title}</TypographyH4Tile>
+        <DateSection>
+          <DateTag>
+            <label className="th">시작: </label>
+            <span className="td">{dayFormat(startAt)}</span>
+          </DateTag>
+          <DateTag>
+            <label className="th">끝: </label>
+            <span className="td">{dayFormat(endAt)}</span>
+          </DateTag>
+        </DateSection>
         {onDelete && (
           <button onClick={onDelete}>
             <AiOutlineClose />
           </button>
         )}
       </CardHead>
+      <TypographyH4Tile>{title}</TypographyH4Tile>
+
       {contents && (
         <OPopper contents={contents} isOpen={isContentsOpen}>
           <>{'........'}</>
