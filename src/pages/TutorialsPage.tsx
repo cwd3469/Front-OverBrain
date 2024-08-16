@@ -1,31 +1,30 @@
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { KeyboardEventHandler, useCallback, useEffect, useState } from 'react';
+
 import uuid from 'react-uuid';
 import * as yup from 'yup';
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
+import { AiOutlineClose } from 'react-icons/ai';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { AiOutlineClose } from 'react-icons/ai';
-
-import { CoreTarget, DetailTarget, Target, TodoTarget } from '@/types/main';
+import { CoreTarget, DetailTarget, Target, TodoTarget } from '@/interface/target';
 import OButton from '@components/common/button/OButton';
-import styled from '@emotion/styled';
-import { KeyboardEventHandler, useCallback, useEffect, useState } from 'react';
 import TargetCard from '@/components/main/TargetCard';
-
 import TargetInputs from '@/components/main/TargetInputs';
 
 import { DefaultTextFiled } from '@/components/common/textFiled';
 import { useSearchParams } from 'react-router-dom';
-import dayjs from 'dayjs';
-import { css } from '@emotion/css';
+
 import { setLocalStorageCoreTargetValue } from '@/utils/function/localStorageUtils';
-import useToast from '@/hooks/useToast';
+import useModal, { OModal } from '@/hooks/useModal';
+
+type MODAL_NAME = 'TUTORIALS_PAGE';
 
 const START_BTN_TITLE = '시작';
 const ADD_BTN_TITLE = '추가';
 const PREV_BTN_TITLE = '이전으로';
 const NEXT_BTN_TITLE = '다음으로';
-const START_FROM = '시작 :';
-const END_TO = '끝 :';
 const REGISTRATION_BTN = '등록';
 const TUTORIALS_CLEAR_BTN = '튜토리얼 클리어';
 
@@ -56,7 +55,7 @@ const todoSchema = yup.object({
 });
 
 const TutorialsPage = () => {
-  const { openToast } = useToast();
+  const { isOpen, openModal, closeModal } = useModal<MODAL_NAME>();
   const [scrollOff, setScrollOff] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [coreTarget, setCoreTarget] = useState<CoreTarget>();
@@ -207,7 +206,13 @@ const TutorialsPage = () => {
       return next;
     });
 
-  const handleEndTutorials = () => coreTarget && setLocalStorageCoreTargetValue(coreTarget);
+  const handleEndTutorials = () => {
+    coreTarget && setLocalStorageCoreTargetValue(coreTarget);
+  };
+
+  const handleEndTutorialsModalOpen = () => {
+    openModal('TUTORIALS_PAGE');
+  };
 
   useEffect(() => {
     searchParams.delete('step');
@@ -313,7 +318,7 @@ const TutorialsPage = () => {
             <OButton onClick={handleStepTwo} palette="black" size="sm" variant="outlined">
               {PREV_BTN_TITLE}
             </OButton>
-            <OButton disabled={!isClear} className={clearBtnStyle} size="sm" onClick={handleEndTutorials}>
+            <OButton disabled={!isClear} className={clearBtnStyle} size="sm" onClick={handleEndTutorialsModalOpen}>
               {TUTORIALS_CLEAR_BTN}
             </OButton>
           </PageAction>
@@ -321,6 +326,15 @@ const TutorialsPage = () => {
       ) : (
         <></>
       )}
+      <OModal
+        nameKey={'TUTORIALS_PAGE'}
+        isOpen={isOpen}
+        closeModal={closeModal}
+        type={'alert'}
+        header={'튜터리얼 완료'}
+        body={'튜터리얼을 종료하고\n계획을 저장 하시겠습니까?'}
+        leftBtn={{ onClick: handleEndTutorials }}
+      />
     </>
   );
 };
@@ -412,7 +426,7 @@ const TodoListContainer = styled.div`
 `;
 
 const TodoListItem = styled.div`
-  padding: 12px 8px;
+  padding: 8px;
   border: 1px solid ${(props) => props.theme.palette.gray[300]};
   border-radius: ${(props) => props.theme.gap.md};
   display: flex;
@@ -424,26 +438,6 @@ const TodoListItem = styled.div`
 const TodoListItemTitle = styled.p`
   ${(props) => props.theme.typography.B7_Body_14_M}
   margin-right: auto;
-`;
-
-const TodoCardDate = styled.p`
-  .th {
-    ${(props) => props.theme.typography.B7_Body_14_M}
-    color:${(props) => props.theme.palette.gray[900]}
-  }
-  .tb {
-    ${(props) => props.theme.typography.B8_Body_14_R}
-    color:${(props) => props.theme.palette.gray[600]}
-  }
-`;
-
-const OPageButton = styled.button`
-  padding: 12px 16px;
-  border: 1px solid #999;
-  text-align: center;
-  border-radius: 6px;
-  cursor: pointer;
-  width: 49%;
 `;
 
 const PageAction = styled.div`

@@ -1,4 +1,4 @@
-import { Target } from '@/types/main';
+import { Target } from '@/interface/target';
 import dayjs from 'dayjs';
 import styled from '@emotion/styled';
 import { AiOutlineClose } from 'react-icons/ai';

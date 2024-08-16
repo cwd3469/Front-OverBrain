@@ -1,7 +1,7 @@
 import { type ModalInfo } from '@/interface/modal';
 import styled from '@emotion/styled';
 import OButton from '../common/button/OButton';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 type ModalBodyContentType = {
@@ -19,6 +19,22 @@ const ModalPortal = ({ children }: { children: ReactNode }) => {
 };
 
 export const ModalView = ({ header, body, width, leftBtn, rightBtn, type, onClose }: Props) => {
+  useEffect(() => {
+    if (type === 'alarm') {
+      if (leftBtn || rightBtn) {
+        throw new Error('Modal Type "alarm"에서는 leftBtn , rightBtn data를 사용할 수 없습니다.');
+      }
+    } else if (type === 'alert') {
+      if (rightBtn) {
+        throw new Error('Modal Type "alert"에서는 rightBtn data를 사용할 수 없습니다.');
+      }
+    } else if (type === 'confirm') {
+      if (!leftBtn) {
+        throw new Error('Modal Type "confirm"에서는 leftBtn data가 필수 값입니다.');
+      }
+    }
+  }, []);
+
   return (
     <ModalPortal>
       <Mask onClick={onClose} />
@@ -31,7 +47,9 @@ export const ModalView = ({ header, body, width, leftBtn, rightBtn, type, onClos
               <OButton
                 onClick={leftBtn?.onClick ? leftBtn?.onClick : onClose}
                 disabled={leftBtn?.disabled}
-                {...leftBtn?.btnInfo}
+                size={leftBtn?.btnInfo?.size ?? 'sm'}
+                palette={leftBtn?.btnInfo?.palette ?? 'primary'}
+                variant={leftBtn?.btnInfo?.variant ?? 'contained'}
               >
                 {leftBtn?.title ? leftBtn.title : '확인'}
               </OButton>
@@ -41,14 +59,18 @@ export const ModalView = ({ header, body, width, leftBtn, rightBtn, type, onClos
                 <OButton
                   onClick={leftBtn?.onClick ? leftBtn?.onClick : onClose}
                   disabled={leftBtn?.disabled}
-                  {...leftBtn?.btnInfo}
+                  size={leftBtn?.btnInfo?.size ?? 'sm'}
+                  palette={leftBtn?.btnInfo?.palette ?? 'primary'}
+                  variant={leftBtn?.btnInfo?.variant ?? 'contained'}
                 >
                   {leftBtn?.title ? leftBtn.title : '확인'}
                 </OButton>
                 <OButton
                   onClick={rightBtn?.onClick ? rightBtn.onClick : onClose}
                   disabled={rightBtn?.disabled}
-                  {...rightBtn?.btnInfo}
+                  size={rightBtn?.btnInfo?.size ?? 'sm'}
+                  palette={rightBtn?.btnInfo?.palette ?? 'primary'}
+                  variant={rightBtn?.btnInfo?.variant ?? 'outlined'}
                 >
                   {rightBtn?.title ? rightBtn?.title : '취소'}
                 </OButton>
@@ -102,16 +124,11 @@ const ModalBody = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  white-space: pre-wrap;
   color: var(--TrueGray-Gray900, #242424);
   text-align: center;
   /* Body1 */
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  ${(props) => props.theme.typography.B5_Body_16_R}
 `;
 
 const ModalFooter = styled.div`
