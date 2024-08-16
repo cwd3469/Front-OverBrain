@@ -3,6 +3,7 @@ import MainPage from './pages/MainPage';
 import TutorialsPage from './pages/TutorialsPage';
 import MainLayout from './pages/layout/MainLayout';
 import ToastContainer from './components/toast/ToastContainer';
+import { Path } from './utils/constants/path';
 
 const App = () => {
   return (
@@ -10,8 +11,8 @@ const App = () => {
       <BrowserRouter basename="/">
         <Routes>
           <Route element={<MainLayout width="1028px" />}>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/tutorials" element={<TutorialsPage />} />
+            <Route path={Path.ROOT} element={<MainPage />} />
+            <Route path={Path.TUTORIALS} element={<TutorialsPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
