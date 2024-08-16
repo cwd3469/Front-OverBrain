@@ -14,7 +14,7 @@ import TargetCard from '@/components/main/TargetCard';
 import TargetInputs from '@/components/main/TargetInputs';
 
 import { DefaultTextFiled } from '@/components/common/textFiled';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { setLocalStorageCoreTargetValue } from '@/utils/function/localStorageUtils';
 import useModal, { OModal } from '@/hooks/useModal';
@@ -25,6 +25,7 @@ const START_BTN_TITLE = '시작';
 const ADD_BTN_TITLE = '추가';
 const PREV_BTN_TITLE = '이전으로';
 const NEXT_BTN_TITLE = '다음으로';
+
 const REGISTRATION_BTN = '등록';
 const TUTORIALS_CLEAR_BTN = '튜토리얼 클리어';
 
@@ -55,6 +56,7 @@ const todoSchema = yup.object({
 });
 
 const TutorialsPage = () => {
+  const navigate = useNavigate();
   const { isOpen, openModal, closeModal } = useModal<MODAL_NAME>();
   const [scrollOff, setScrollOff] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -206,10 +208,13 @@ const TutorialsPage = () => {
       return next;
     });
 
+  /** step-3 core target 저장 */
   const handleEndTutorials = () => {
     coreTarget && setLocalStorageCoreTargetValue(coreTarget);
+    navigate('/');
   };
 
+  /** step-3 end modal open */
   const handleEndTutorialsModalOpen = () => {
     openModal('TUTORIALS_PAGE');
   };
@@ -322,19 +327,19 @@ const TutorialsPage = () => {
               {TUTORIALS_CLEAR_BTN}
             </OButton>
           </PageAction>
+          <OModal
+            nameKey={'TUTORIALS_PAGE'}
+            isOpen={isOpen}
+            closeModal={closeModal}
+            type={'alert'}
+            header={'튜터리얼 완료'}
+            body={'튜터리얼을 종료하고\n계획을 저장 하시겠습니까?'}
+            leftBtn={{ onClick: handleEndTutorials }}
+          />
         </DetailSection>
       ) : (
         <></>
       )}
-      <OModal
-        nameKey={'TUTORIALS_PAGE'}
-        isOpen={isOpen}
-        closeModal={closeModal}
-        type={'alert'}
-        header={'튜터리얼 완료'}
-        body={'튜터리얼을 종료하고\n계획을 저장 하시겠습니까?'}
-        leftBtn={{ onClick: handleEndTutorials }}
-      />
     </>
   );
 };

@@ -6,13 +6,15 @@ type Modals<T extends string> = {
   [K in T]: boolean;
 };
 
-export interface OModalProps<T extends string> extends ModalInfo {
+export interface OModalProps<T extends string> {
   nameKey: T;
   isOpen: (key: T) => boolean;
   closeModal: (key: T) => void;
 }
 
-export const OModal = <T extends string>({ nameKey, isOpen, closeModal, ...props }: OModalProps<T>) => {
+type ModalProps<T extends string> = OModalProps<T> & ModalInfo;
+
+export const OModal = <T extends string>({ nameKey, isOpen, closeModal, ...props }: ModalProps<T>) => {
   return isOpen(nameKey) && props ? <ModalView {...props} onClose={() => closeModal(nameKey)} /> : <></>;
 };
 
