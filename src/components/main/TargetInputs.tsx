@@ -16,7 +16,7 @@ const TargetInputs = ({ register, errors }: Props) => {
         message={inputMessage(errors, 'title')}
         label="목표"
         style={{ padding: '13px 16px' }}
-        maxLength={20}
+        maxLength={35}
       />
       <MultiLineTextFiledBox>
         <MultiLineTextFiledLabel>설명</MultiLineTextFiledLabel>
@@ -24,15 +24,15 @@ const TargetInputs = ({ register, errors }: Props) => {
           {...register('contents')}
           placeholder="구체적으로 작성해 주세요."
           maxLength={50}
-          height="70px"
+          height="60px"
         />
       </MultiLineTextFiledBox>
       <SubContentsBox>
         <InputBox>
-          <LabelTextField {...register('startAt')} type="date" label="시작 날짜" />
+          <LabelTextField {...register('startAt')} type="date" label="시작 날짜" fieldSize="sm" />
         </InputBox>
         <InputBox>
-          <LabelTextField {...register('endAt')} type="date" label="끝 날짜" />
+          <LabelTextField {...register('endAt')} type="date" label="끝 날짜" fieldSize="sm" />
         </InputBox>
       </SubContentsBox>
     </InputSection>
@@ -48,7 +48,7 @@ const InputBox = styled.div`
 const InputSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--RadiusXL, 16px);
+  gap: 8px;
 `;
 
 const SubContentsBox = styled.div`

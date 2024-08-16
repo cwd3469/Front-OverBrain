@@ -2,8 +2,6 @@ import { Target } from '@/types/main';
 import dayjs from 'dayjs';
 import styled from '@emotion/styled';
 import { AiOutlineClose } from 'react-icons/ai';
-import { MdDescription } from 'react-icons/md';
-import { css } from '@emotion/css';
 
 import OPopper from '../common/button/OPopper';
 
@@ -13,15 +11,36 @@ type Props = Target & {
   onSelect?: () => void;
   id?: string;
   width?: string;
+  isContentsOpen?: (open: boolean) => void;
 };
 
-const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, onSelect, width, checked }: Props) => {
-  const dayFormat = (date?: Date) => (date ? dayjs(date).format('YYYY/MM/DD') : '----/--/--');
+const TargetCard: React.FC<Props> = ({
+  title,
+  contents,
+  endAt,
+  startAt,
+  onDelete,
+  onSelect,
+  isContentsOpen,
+  width,
+  checked,
+}) => {
+  const dayFormat = (date?: Date) => (date ? dayjs(date).format('YYYY/MM/DD') : 'YYYY/MM/DD');
 
   return (
-    <Card onClick={onSelect} checked={checked} pointer={Boolean(onSelect)} width={width}>
+    <Card onClick={onSelect} checked={checked} pointer={Boolean(onSelect)} width={width} className="item">
+      <DateSection>
+        <DateTag>
+          <label className="th">시작: </label>
+          <span className="td">{dayFormat(startAt)}</span>
+        </DateTag>
+        <DateTag>
+          <label className="th">끝: </label>
+          <span className="td">{dayFormat(endAt)}</span>
+        </DateTag>
+      </DateSection>
       <CardHead>
-        <h3 className="title">{title}</h3>
+        <TypographyH4Tile>{title}</TypographyH4Tile>
         {onDelete && (
           <button onClick={onDelete}>
             <AiOutlineClose />
@@ -29,40 +48,28 @@ const TargetCard = ({ title, contents, createdAt, endAt, startAt, onDelete, onSe
         )}
       </CardHead>
       {contents && (
-        <OPopper contents={contents}>
-          <MdDescription />
+        <OPopper contents={contents} isOpen={isContentsOpen}>
+          <>{'........'}</>
         </OPopper>
       )}
-      <Item>
-        <div className="th">시작 날짜 :</div>
-        <p className="td">{dayFormat(endAt)}</p>
-      </Item>
-      <Item>
-        <div className="th">끝 날짜 :</div>
-        <p className="td">{dayFormat(startAt)}</p>
-      </Item>
     </Card>
   );
 };
 
 export default TargetCard;
 
-const checkedColor = css`
-  border: 2px solid var(--Function-MintDefault, #1abcb7);
-`;
-
 const Card = styled.div<{ checked?: boolean; pointer: boolean; width?: string }>`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 14px;
+  padding: 12px;
   width: ${(props) => props.width};
   ${(props) => (props.pointer ? 'cursor: pointer;' : '')} .title {
     ${(props) => props.theme.typography.B2_Body_16_B}
   }
-  ${(props) => (props.checked ? checkedColor : '')}
+  ${(props) => (props.checked ? 'border: 1px solid var(--Function-MintDefault, #1abcb7);' : '')}
 `;
 
 const CardHead = styled.div`
@@ -71,14 +78,23 @@ const CardHead = styled.div`
   align-items: center;
 `;
 
-const Item = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+const DateTag = styled.p`
+  color: #2a2a2a;
   .th {
-    ${(props) => props.theme.typography.L5_Label_14_M}
+    ${(props) => props.theme.typography.L6_Label_12_M}
   }
   .td {
-    ${(props) => props.theme.typography.B8_Body_14_R}
+    ${(props) => props.theme.typography.B10_Body_12_R}
   }
+`;
+
+const DateSection = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+`;
+
+const TypographyH4Tile = styled.h4`
+  ${(props) => props.theme.typography.B6_Body_14_SB}
+  word-break: keep-all;
 `;

@@ -13,29 +13,25 @@ type Props = {
 
 const MainLayout = ({ children, width }: Props) => {
   return (
-    <Container>
-      <Card width={width}>
+    <Layout>
+      <Container width={width}>
         <Outlet />
-      </Card>
-    </Container>
+      </Container>
+    </Layout>
   );
 };
 
-const Container = styled.div`
+const Layout = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 100vh;
   background-color: ${(props) => props.theme.palette.gray[100]};
   position: relative;
 `;
 
-const Card = styled.div<{ width?: string }>`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
+const Container = styled.div<{ width?: string }>`
   border-radius: ${(props) => props.theme.gap.lg};
   background: #fff;
   padding: ${(props) => props.theme.gap.lg} 24px;

@@ -2,13 +2,13 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import uuid from 'react-uuid';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Slider from 'react-slick';
+
 import { AiOutlineClose } from 'react-icons/ai';
 
 import { CoreTarget, DetailTarget, Target, TodoTarget } from '@/types/main';
 import OButton from '@components/common/button/OButton';
 import styled from '@emotion/styled';
-import { useCallback, useEffect, useState } from 'react';
+import { KeyboardEventHandler, useCallback, useEffect, useState } from 'react';
 import TargetCard from '@/components/main/TargetCard';
 
 import TargetInputs from '@/components/main/TargetInputs';
@@ -45,14 +45,6 @@ const resetTarget = {
   createdAt: undefined,
 };
 
-const settings = {
-  dots: true,
-  infinite: false,
-  speed: 100,
-  slidesToScroll: 1,
-  slidesToShow: 3.5,
-};
-
 const coresSchema = yup.object({
   title: yup.string().required(CORE_TARGET_TITLE),
 });
@@ -65,6 +57,7 @@ const todoSchema = yup.object({
 
 const TutorialsPage = () => {
   const { openToast } = useToast();
+  const [scrollOff, setScrollOff] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [coreTarget, setCoreTarget] = useState<CoreTarget>();
   const [todoTarget, setTodoTarget] = useState<DetailTarget>();
@@ -103,20 +96,32 @@ const TutorialsPage = () => {
   const handleStepThree = () => {
     searchParams.set('step', '3');
     setSearchParams(searchParams);
+    const firstDetail = coreTarget?.detailList[0];
+    setTodoTarget(firstDetail);
   };
 
-  /** 코어 등록 */
-  const handleSetCoreTarget: SubmitHandler<Target> = (core: Target) => {
+  /** step-1 코어 등록 */
+  const handleSetCoreTarget = (core: Target) => {
     const id = uuid();
-    const target = { ...core, detailList: [], id };
-    setCoreTarget((prev) => {
-      const next = prev ? { ...prev, core } : target;
-      return next;
-    });
+    const target: CoreTarget = { ...core, detailList: [], id };
+    setCoreTarget(target);
     handleStepTwo();
   };
 
-  /** 디테일 등록 */
+  /** step-1 코어 등록 Button Click*/
+  const handleSetCoreTargetButtonClick: SubmitHandler<Target> = (core: Target) => {
+    handleSetCoreTarget(core);
+  };
+
+  /** step-1 코어 등록 Key Enter */
+  const handleSetCoreTargetKeyEnter: KeyboardEventHandler<HTMLInputElement> = async (e) => {
+    if (e.key === 'Enter') {
+      const core = await firstTarget.getValues();
+      handleSetCoreTarget(core);
+    }
+  };
+
+  /** step-2 디테일 등록 */
   const handleSetDetailTarget: SubmitHandler<Target> = (param: Target) => {
     setCoreTarget((prev) => {
       if (!prev) return;
@@ -126,8 +131,6 @@ const TutorialsPage = () => {
         const next: CoreTarget = { ...prev, detailList };
         secondTarget.reset();
         secondTarget.setValue('contents', '');
-        secondTarget.setValue('startAt', new Date());
-        secondTarget.setValue('endAt', new Date());
         return next;
       } else {
         secondTarget.setError('title', { message: DETAIL_MAX_LENGTH });
@@ -136,7 +139,7 @@ const TutorialsPage = () => {
     });
   };
 
-  /** 디테일 삭제 */
+  /** step-2 디테일 삭제 */
   const handleDeleteDetailTarget = useCallback(
     (id?: string) =>
       setCoreTarget((prev) => {
@@ -148,7 +151,7 @@ const TutorialsPage = () => {
     [],
   );
 
-  /** todo 디테일 선택 */
+  /** step-3 todo 디테일 선택 */
   const handleDetailSelect = (params: DetailTarget) =>
     setTodoTarget((prev) => {
       if (prev) {
@@ -162,8 +165,20 @@ const TutorialsPage = () => {
 
       return params;
     });
+  /** step-3 todo 디테일 삭제 */
+  const handleDeleteDetailTargetStep3 = (id?: string) => {
+    setCoreTarget((prev) => {
+      if (!prev) return;
+      const detailList = prev?.detailList.filter((el) => el.id !== id);
+      const next: CoreTarget = { ...prev, detailList };
+      if (next.detailList.length === 0) {
+        handleStepTwo();
+      }
+      return next;
+    });
+  };
 
-  /** todo 등록 */
+  /** step-3 todo 등록 */
   const handleSetTodoTarget: SubmitHandler<Target> = (param: Target) => {
     setTodoTarget((prev) => {
       if (!prev) return;
@@ -179,7 +194,7 @@ const TutorialsPage = () => {
     });
   };
 
-  /** todo 삭제 */
+  /** step-3 todo 삭제 */
   const handleDeleteTodo = (params: string) =>
     setTodoTarget((prev) => {
       if (!prev) return;
@@ -200,41 +215,35 @@ const TutorialsPage = () => {
       {!step || step === '1' ? (
         <TutorialsPageSelect>
           <MainTypography>{CORE_INPUT_TITLE}</MainTypography>
-          <MainTextFiled {...firstTarget.register('title')} />
-          <OButton size="sm" onClick={firstTarget.handleSubmit(handleSetCoreTarget)} disabled={isFirstClear}>
+          <MainTextFiled {...firstTarget.register('title')} onKeyDown={handleSetCoreTargetKeyEnter} />
+          <OButton size="sm" onClick={firstTarget.handleSubmit(handleSetCoreTargetButtonClick)} disabled={isFirstClear}>
             {START_BTN_TITLE}
           </OButton>
         </TutorialsPageSelect>
       ) : step === '2' ? (
         <DetailSection>
           <MainTypography>{DETAIL_INPUT_TITLE}</MainTypography>
-          <DetailSectionColumn>
-            {coreTarget && <TargetCard {...coreTarget} />}
-            <DetailCardContainer>
-              {coreTarget ? (
-                coreTarget.detailList.length > 3 ? (
-                  <Slider {...settings}>
-                    {coreTarget.detailList.map((el) => {
-                      return (
-                        <TargetCard {...el} key={el.id} onDelete={() => handleDeleteDetailTarget(el.id)} width="90%" />
-                      );
-                    })}
-                  </Slider>
-                ) : (
-                  <CordBox>
-                    {coreTarget.detailList.map((el) => {
-                      return (
-                        <TargetCard {...el} key={el.id} onDelete={() => handleDeleteDetailTarget(el.id)} width="30%" />
-                      );
-                    })}
-                  </CordBox>
-                )
-              ) : (
-                ''
-              )}
-            </DetailCardContainer>
-          </DetailSectionColumn>
-          <DetailSectionColumn>
+          {coreTarget && <TargetCard {...coreTarget} checked />}
+          <ContainerMiddle scrollOff={scrollOff}>
+            {coreTarget ? (
+              <TargetCardContainer>
+                {coreTarget.detailList.map((el) => {
+                  return (
+                    <TargetCard
+                      {...el}
+                      key={el.id}
+                      onDelete={() => handleDeleteDetailTarget(el.id)}
+                      width="30%"
+                      isContentsOpen={(open) => setScrollOff(open)}
+                    />
+                  );
+                })}
+              </TargetCardContainer>
+            ) : (
+              ''
+            )}
+          </ContainerMiddle>
+          <ContainerBottom>
             <TargetInputs register={secondTarget.register} errors={secondTarget.formState.errors} />
             <OButton onClick={secondTarget.handleSubmit(handleSetDetailTarget)} size="sm">
               {ADD_BTN_TITLE}
@@ -247,93 +256,81 @@ const TutorialsPage = () => {
                 {NEXT_BTN_TITLE}
               </OButton>
             </PageAction>
-          </DetailSectionColumn>
+          </ContainerBottom>
         </DetailSection>
-      ) : (
+      ) : step === '3' ? (
         <DetailSection>
           <MainTypography>{TODO_STEP_TITLE}</MainTypography>
-          <DetailSectionColumn>
+          <ContainerTop>
             <DetailCardContainer>
               {coreTarget ? (
-                coreTarget.detailList.length > 3 ? (
-                  <Slider {...settings}>
-                    {coreTarget.detailList.map((el) => {
-                      return (
-                        <TargetCard
-                          {...el}
-                          key={el.id}
-                          width="90%"
-                          onDelete={() => handleDeleteDetailTarget(el.id)}
-                          onSelect={() => handleDetailSelect(el)}
-                          checked={todoTarget?.id === el.id}
-                        />
-                      );
-                    })}
-                  </Slider>
-                ) : (
-                  <CordBox>
-                    {coreTarget.detailList.map((el) => {
-                      return (
-                        <TargetCard
-                          {...el}
-                          key={el.id}
-                          width="30%"
-                          onDelete={() => handleDeleteDetailTarget(el.id)}
-                          onSelect={() => handleDetailSelect(el)}
-                          checked={todoTarget?.id === el.id}
-                        />
-                      );
-                    })}
-                  </CordBox>
-                )
+                <TargetCardContainer>
+                  {coreTarget.detailList.map((el) => {
+                    return (
+                      <TargetCard
+                        {...el}
+                        key={el.id}
+                        width="30%"
+                        onDelete={() => handleDeleteDetailTargetStep3(el.id)}
+                        onSelect={() => handleDetailSelect(el)}
+                        checked={todoTarget?.id === el.id}
+                      />
+                    );
+                  })}
+                </TargetCardContainer>
               ) : (
                 ''
               )}
             </DetailCardContainer>
-          </DetailSectionColumn>
+          </ContainerTop>
           {todoTarget && (
             <>
-              <TargetCard {...todoTarget} />
-              <TodoListContainer>
-                {todoTarget.todoList.map((el) => {
-                  return (
-                    <TodoListItem key={el.id}>
-                      <TodoListItemTitle>{el.title}</TodoListItemTitle>
-                      <TodoCardDate>
-                        <span className="th">{START_FROM}</span>
-                        <span className="tb">{el.startAt ? dayjs(el.startAt).format('YYYY/MM/DD') : '----/--/--'}</span>
-                      </TodoCardDate>
-                      <TodoCardDate>
-                        <span className="th">{END_TO}</span>
-                        <span className="tb">{el.endAt ? dayjs(el.endAt).format('YYYY/MM/DD') : '----/--/--'}</span>
-                      </TodoCardDate>
-                      <button onClick={() => handleDeleteTodo(el.id)}>
-                        <AiOutlineClose />
-                      </button>
-                    </TodoListItem>
-                  );
-                })}
-              </TodoListContainer>
-              <TodoInputBox>
-                <DefaultTextFiled {...thirdTarget.register('title')} />
-                <OButton onClick={thirdTarget.handleSubmit(handleSetTodoTarget)} size="sm">
-                  {REGISTRATION_BTN}
-                </OButton>
-              </TodoInputBox>
+              <ContainerMiddle scrollOff={scrollOff}>
+                <TargetCard {...todoTarget} checked />
+              </ContainerMiddle>
+              <ContainerBottom>
+                <TodoListContainer>
+                  {todoTarget.todoList.map((el) => {
+                    return (
+                      <TodoListItem key={el.id}>
+                        <TodoListItemTitle>{el.title}</TodoListItemTitle>
+                        <TodoCardDate>
+                          <span className="th">{START_FROM}</span>
+                          <span className="tb">
+                            {el.startAt ? dayjs(el.startAt).format('YYYY/MM/DD') : '----/--/--'}
+                          </span>
+                        </TodoCardDate>
+                        <TodoCardDate>
+                          <span className="th">{END_TO}</span>
+                          <span className="tb">{el.endAt ? dayjs(el.endAt).format('YYYY/MM/DD') : '----/--/--'}</span>
+                        </TodoCardDate>
+                        <button onClick={() => handleDeleteTodo(el.id)}>
+                          <AiOutlineClose />
+                        </button>
+                      </TodoListItem>
+                    );
+                  })}
+                </TodoListContainer>
+                <TodoInputBox>
+                  <DefaultTextFiled {...thirdTarget.register('title')} />
+                  <OButton onClick={thirdTarget.handleSubmit(handleSetTodoTarget)} size="sm">
+                    {REGISTRATION_BTN}
+                  </OButton>
+                </TodoInputBox>
+              </ContainerBottom>
             </>
           )}
-
-          <DetailSectionColumn>
-            <PageAction>
-              <OButton onClick={handleStepTwo} palette="black" size="sm" variant="outlined">
-                {PREV_BTN_TITLE}
-              </OButton>
-              <OButton disabled={!isClear} className={clearBtnStyle} size="sm" onClick={handleEndTutorials}>
-                {TUTORIALS_CLEAR_BTN}
-              </OButton>
-            </PageAction>
-          </DetailSectionColumn>
+          <PageAction>
+            <OButton onClick={handleStepTwo} palette="black" size="sm" variant="outlined">
+              {PREV_BTN_TITLE}
+            </OButton>
+            <OButton disabled={!isClear} className={clearBtnStyle} size="sm" onClick={handleEndTutorials}>
+              {TUTORIALS_CLEAR_BTN}
+            </OButton>
+          </PageAction>
         </DetailSection>
+      ) : (
+        <></>
       )}
     </>
   );
@@ -365,31 +362,60 @@ const MainTextFiled = styled(DefaultTextFiled)`
   ${(props) => props.theme.typography.B1_Body_18_R}
 `;
 
-const CordBox = styled.div`
+const TargetCardContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  align-items: flex-start;
   gap: 16px;
-  align-items: start;
+  .item {
+    flex: 0 0 auto;
+  }
 `;
 
-const DetailCardContainer = styled.div`
-  padding: 16px 0 30px;
-  min-height: 140px;
-  border-top: 1px solid ${(props) => props.theme.palette.gray[200]};
-  border-bottom: 1px solid ${(props) => props.theme.palette.gray[200]};
+const ContainerTop = styled.div`
+  padding-top: 16px;
+  padding-bottom: 16px;
+  height: 158px;
 `;
 
-const DetailSection = styled.div`
+const ContainerMiddle = styled.div<{ scrollOff: boolean }>`
+  padding: 16px 16px 0;
+  border: 1px solid ${(props) => props.theme.palette.gray[200]};
+  overflow-x: ${(props) => (!props.scrollOff ? 'auto' : 'clip')};
+  ${(props) => (!props.scrollOff ? '' : 'padding-bottom: 5px')};
+  min-height: 168px;
+  /* custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf;
+  }
+`;
+const ContainerBottom = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 16px;
 `;
 
-const DetailSectionColumn = styled.div`
+const DetailCardContainer = styled.div``;
+
+const DetailSection = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  align-items: stretch;
   gap: 16px;
 `;
 
