@@ -1,5 +1,5 @@
 import { ModalView } from '@/widgets/modal/ModalView';
-import { ModalInfo } from '@/interface/modal';
+import { ModalInfo } from '@/app/interface/modal';
 import { useState } from 'react';
 
 type Modals<T extends string> = {

@@ -1,4 +1,4 @@
-import { Target } from '@/interface/target';
+import { Target } from '@/app/interface/target';
 import { LabelTextField, MultiLineTextField } from '../common/textFiled';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import styled from '@emotion/styled';

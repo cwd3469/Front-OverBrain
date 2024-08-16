@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ReFreshTokenInterface } from '@/interface/auth.ts';
+import { ReFreshTokenInterface } from '@/app/interface/auth.ts';
 
 /** 토큰 재발급 요청  */
 export const postRefreshToken = (): Promise<ReFreshTokenInterface> => {

@@ -1,4 +1,4 @@
-import { type ModalInfo } from '@/interface/modal';
+import { type ModalInfo } from '@/app/interface/modal';
 import styled from '@emotion/styled';
 import OButton from '../common/button/OButton';
 import { ReactNode, useEffect } from 'react';

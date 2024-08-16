@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import useAuth from '@/hooks/useAuth';
 import { postRefreshToken } from './auth/login';
-import { APIBaseResponseDto } from '@/interface';
+import { APIBaseResponseDto } from '@/app/interface';
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_API_PATH,

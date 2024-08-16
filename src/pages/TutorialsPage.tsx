@@ -8,7 +8,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { CoreTarget, DetailTarget, Target, TodoTarget } from '@/interface/target';
+import { CoreTarget, DetailTarget, Target, TodoTarget } from '@/app/interface/target';
 import OButton from '@/widgets/common/button/OButton';
 import TargetCard from '@/widgets/main/TargetCard';
 import TargetInputs from '@/widgets/main/TargetInputs';

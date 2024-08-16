@@ -1,4 +1,4 @@
-import { UserInfoDataInterface } from '@/interface/auth';
+import { UserInfoDataInterface } from '@/app/interface/auth';
 import { clearAuthToken, setAuthToken } from '@/service/instance';
 import { jwtDecode } from 'jwt-decode';
 import { StateCreator, create } from 'zustand';
