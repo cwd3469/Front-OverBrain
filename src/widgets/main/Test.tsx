@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import FirebaseConfig from '@/shared/service/firebase';
-import LPButton from '../common/button/OButton';
-import { DefaultTextFiled } from '@/widgets/common/textFiled';
+import LPButton from '../../shared/uiKit/button/OButton';
+import { DefaultTextFiled } from '@/shared/uiKit/textFiled';
 const { db } = FirebaseConfig();
 
 type KeyValue = { [key: string]: string };

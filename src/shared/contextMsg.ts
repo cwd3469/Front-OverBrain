@@ -1,4 +1,4 @@
-import { MessageBoxProps } from '@/widgets/common/textFiled';
+import { MessageBoxProps } from '@/shared/uiKit/textFiled';
 import { FieldErrors } from 'react-hook-form';
 
 export const inputMessage = (err: FieldErrors, name: string) => {

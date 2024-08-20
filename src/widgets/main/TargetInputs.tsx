@@ -1,5 +1,5 @@
 import { Target } from '@/app/interface/target';
-import { LabelTextField, MultiLineTextField } from '../common/textFiled';
+import { LabelTextField, MultiLineTextField } from '../../shared/uiKit/textFiled';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import styled from '@emotion/styled';
 

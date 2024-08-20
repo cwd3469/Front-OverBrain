@@ -1,6 +1,6 @@
 import { type ModalInfo } from '@/app/interface/modal';
 import styled from '@emotion/styled';
-import OButton from '../common/button/OButton';
+import OButton from '../../shared/uiKit/button/OButton';
 import { ReactNode, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import TutorialsPage from './pages/TutorialsPage';
-import MainLayout from './pages/layout/MainLayout';
+import MainLayout from './widgets/screen/MainLayout';
 import ToastContainer from './widgets/toast/ToastContainer';
 import { Path } from './shared/constants/path';
 

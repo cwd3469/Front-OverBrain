@@ -1,4 +1,4 @@
-import { ButtonProps } from '@/widgets/common/button/OButton';
+import { ButtonProps } from '@/shared/uiKit/button/OButton';
 
 type BtnType = {
   onClick?: () => void;

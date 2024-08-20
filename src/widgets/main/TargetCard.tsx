@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import styled from '@emotion/styled';
 import { AiOutlineClose } from 'react-icons/ai';
 
-import OPopper from '../common/button/OPopper';
+import OPopper from '../../shared/uiKit/button/OPopper';
 
 type Props = Target & {
   checked?: boolean;

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/reset.css';
+import './app/styles/reset.css';
 import { ThemeProvider } from '@emotion/react';
 import { theme } from './app/styles/theme';
 import App from './App';
