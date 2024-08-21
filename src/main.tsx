@@ -1,28 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import MainPage from '@/pages/MainPage';
-import SigninPage from '@/pages/SigninPage';
-import BoardPage from '@/pages/BoardPage';
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <MainPage />,
-  },
-  {
-    path: '/signin',
-    element: <SigninPage />,
-  },
-  {
-    path: '/board',
-    element: <BoardPage />,
-  },
-]);
+import './app/styles/reset.css';
+import { ThemeProvider } from '@emotion/react';
+import { theme } from './app/styles/theme';
+import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>,
 );

@@ -13,18 +13,18 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+
     /* Linting */
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
       "@/*": ["src/*"]
     }
   },
   "plugins": ["require('@tailwindcss/forms')"],
-  "include": ["src"],
+  "include": ["src", "**/*.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
