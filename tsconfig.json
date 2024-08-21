@@ -25,6 +25,6 @@
     }
   },
   "plugins": ["require('@tailwindcss/forms')"],
-  "include": ["src", "svg.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["src", "**/*.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

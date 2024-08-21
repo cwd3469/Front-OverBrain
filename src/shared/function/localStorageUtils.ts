@@ -1,4 +1,4 @@
-import { CoreTarget } from '@/types/main';
+import { CoreTarget } from '@/app/interface/target';
 import { LOCAL_STORAGE_ITEM_CORE_TARGET } from '../constants/localStorage';
 
 /** local storage 내 [LOCAL_STORAGE_ITEM_CORE_TARGET] 값 존재여부 */

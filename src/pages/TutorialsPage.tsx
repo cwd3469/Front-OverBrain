@@ -208,13 +208,13 @@ const TutorialsPage = () => {
       return next;
     });
 
-  /** step-3 core target 저장 */
+  /** step-3 TUTORIALS_PAGE 모달 core target 저장 */
   const handleEndTutorials = () => {
     coreTarget && setLocalStorageCoreTargetValue(coreTarget);
     navigate('/');
   };
 
-  /** step-3 end modal open */
+  /** step-3 TUTORIALS_PAGE modal open */
   const handleEndTutorialsModalOpen = () => {
     openModal('TUTORIALS_PAGE');
   };
