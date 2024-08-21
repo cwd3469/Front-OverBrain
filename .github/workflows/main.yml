@@ -19,6 +19,8 @@ jobs:
           echo VITE_GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }} >> .env
           # ...이런식으로 환경 변수 삽입
           cat .env
+      - name: Use Yarn version
+        run: yarn set version 4.0.2
       - name: Yarn Install
         run: |
           yarn install
