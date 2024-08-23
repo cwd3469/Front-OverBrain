@@ -11,23 +11,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-              uses: actions/setup-node@v3
-              with:
-                node-version: '16'  
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Install correct Yarn version
-        run: corepack prepare yarn@4.0.2 --activate
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Build the project
-        run: yarn build
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Create env file
+        run: |
+          touch .env
+          echo VITE_GOOGLE_CLIENT_ID=${{ secrets.VITE_GOOGLE_CLIENT_ID }} >> .env
+          cat .env
+      - name: Yarn Install
+        run: |
+          yarn install
+      - name: Yarn Build
+        run: |
+          yarn build
       - name: Deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
