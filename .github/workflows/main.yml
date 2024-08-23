@@ -3,6 +3,9 @@ on:
   push: # master Branch에서 push 이벤트가 일어났을 때만 실행
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
